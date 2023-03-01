@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.shape.Box?>
+<GridPane alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tourplanner.MainController">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="30" />
+        <ColumnConstraints percentWidth="70" />
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints percentHeight="100" />
+    </rowConstraints>
+
+    <stylesheets>
+        <URL value="@../css/main-view.css" />
+    </stylesheets>
+
+    <VBox styleClass="leftMainContainer" GridPane.columnIndex="0" GridPane.fillHeight="true" GridPane.fillWidth="true">
+        <fx:include fx:id="newTripButtonFile" source="new-trip-button.fxml"/>
+        <fx:include fx:id="searchBoxFile" source="search-box.fxml"/>
+        <fx:include fx:id="tripListFile" source="tour-list.fxml"/>
+    </VBox>
+
+    <VBox styleClass="rightMainContainer" GridPane.columnIndex="1" GridPane.fillHeight="true" GridPane.fillWidth="true">
+        <fx:include fx:id="mapFile" source="map.fxml"/>
+        <fx:include fx:id="tourInfoFile" source="tour-info.fxml"/>
+    </VBox>
+
+
+
+</GridPane>

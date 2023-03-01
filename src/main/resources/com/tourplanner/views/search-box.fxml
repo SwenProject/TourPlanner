@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxWidth="Infinity" styleClass="searchContainer" stylesheets="@../css/search-box.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tourplanner.SearchBoxController">
+
+    <HBox alignment="CENTER_LEFT" maxWidth="Infinity" spacing="5" styleClass="SearchBar">
+        <Region styleClass="searchIcon" />
+        <TextField fx:id="searchTextField" promptText="Search by tour name..." styleClass="searchBoxTextField" HBox.hgrow="ALWAYS" />
+        <Region visible="false" fx:id="clearSearchButton" onMouseClicked="#onClearSearch" styleClass="clearSearchButton" />
+    </HBox>
+
+    <VBox fx:id="advancedSearchContainer" managed="false" maxWidth="Infinity" spacing="5" styleClass="advancedSearchContainer" visible="false">
+        <padding>
+            <Insets bottom="10" left="10.0" right="10.0" top="10.0" />
+        </padding>
+
+        <HBox alignment="CENTER_LEFT" maxWidth="Infinity">
+
+            <padding>
+                <Insets bottom="5" />
+            </padding>
+
+            <Label styleClass="advancedSearchLabel">Advanced Search</Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="clearAdvancedSearchButton" onAction="#onClearAdvancedSearch" disable="true" styleClass="clearAllButton">Clear All</Button>
+        </HBox>
+
+        <GridPane alignment="CENTER_LEFT" hgap="5" maxWidth="Infinity" vgap="10">
+
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Start Location:</Label>
+            <TextField fx:id="searchStartLocationField" promptText="Tours from..." GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" />
+
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="1">End Location:</Label>
+            <TextField fx:id="searchEndLocationField" promptText="Tours to..." GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="2">Max. Distance:</Label>
+            <HBox minHeight="25" alignment="CENTER_LEFT" maxWidth="Infinity" GridPane.hgrow="ALWAYS" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <Label styleClass="distance-label" fx:id="searchMaxDistanceLabel" text="50 km" />
+                <Slider fx:id="searchMaxDistanceSlider" max="50" min="1" HBox.hgrow="ALWAYS"/>
+            </HBox>
+
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="3">Min. Distance:</Label>
+            <HBox minHeight="20" alignment="CENTER_LEFT" maxWidth="Infinity" GridPane.hgrow="ALWAYS" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <Label styleClass="distance-label" fx:id="searchMinDistanceLabel" text="50 km" />
+                <Slider fx:id="searchMinDistanceSlider" max="50" min="1"  HBox.hgrow="ALWAYS"/>
+            </HBox>
+
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+        </GridPane>
+
+
+
+        <!-- additional search fields and settings -->
+    </VBox>
+    <Button fx:id="advancedSearchButton" alignment="CENTER" maxWidth="Infinity" onAction="#toggleAdvancedSearch" styleClass="advancedSearchButton" text="Show Advanced Search" />
+</VBox>

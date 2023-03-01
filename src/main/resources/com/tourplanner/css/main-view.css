@@ -1,0 +1,13 @@
+.leftMainContainer {
+    -fx-padding: 10;
+    -fx-background-color: #ffffff;
+    -fx-spacing: 10;
+}
+
+.rightMainContainer{
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-background-color: #ffffff;
+    -fx-border-width: 0 0 0 1;
+    -fx-border-color: #b9b9b9;
+}
