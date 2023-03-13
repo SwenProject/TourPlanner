@@ -17,6 +17,8 @@ public class TourPlannerApp extends Application {
         stage.setScene(scene);
         //maximize window
         stage.setMaximized(true);
+        stage.setMinHeight(700);
+        stage.setMinWidth(800);
         stage.show();
     }
 

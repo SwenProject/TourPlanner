@@ -15,15 +15,19 @@
 .rightMainContainer{
     -fx-padding: 10 10 10 0;
     -fx-spacing: 10;
-    -fx-background-color: #ffffff;
+    /*-fx-background-color: #ffffff;*/
 }
 
 .rightMainContainer > .split-pane-divider {
     -fx-background-color: rgba(255, 255, 255, 0);
+    /*-fx-background-color: black;*/
     -fx-padding: 5;
-    /*-fx-shape: "M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z";*/
-    /*-fx-scale-shape: false;*/
-    /*-fx-scale-x: 0.02;*/
-    /*-fx-scale-y: 0.02;*/
-    /*-fx-border-width: 20;*/
+    /*-fx-shape: "M32 288c-17.7 0-32 14.3-32 32s14.3 32 32 32l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L32 288zm0-128c-17.7 0-32 14.3-32 32s14.3 32 32 32l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L32 160z";*/
+    /*-fx-background-image: url("./images/grip.png") !important;*/
+    /*-fx-background-size: auto !important;*/
+    /*-fx-background-repeat: no-repeat !important;*/
+    /*-fx-background-position: center !important;*/
+    /*!*-fx-scale-x: 0.1;*!*/
+    /*!*-fx-scale-y: 0.5;*!*/
+    /*-fx-border-width: 0;*/
 }
