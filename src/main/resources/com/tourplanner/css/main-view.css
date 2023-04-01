@@ -1,33 +1,33 @@
 .mainContainer {
-}
-
-.mainContainer > .split-pane-divider {
-    -fx-background-color: rgba(255, 255, 255, 0);
-    -fx-padding: 5;
+    -fx-background-color: #F4F1DE;
 }
 
 .leftMainContainer {
     -fx-padding: 10 0 10 10;
-    -fx-background-color: #ffffff;
     -fx-spacing: 10;
 }
 
 .rightMainContainer{
+    -fx-background-color: transparent;
     -fx-padding: 10 10 10 0;
     -fx-spacing: 10;
-    /*-fx-background-color: #ffffff;*/
 }
 
 .rightMainContainer > .split-pane-divider {
-    -fx-background-color: rgba(255, 255, 255, 0);
-    /*-fx-background-color: black;*/
-    -fx-padding: 5;
-    /*-fx-shape: "M32 288c-17.7 0-32 14.3-32 32s14.3 32 32 32l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L32 288zm0-128c-17.7 0-32 14.3-32 32s14.3 32 32 32l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L32 160z";*/
-    /*-fx-background-image: url("./images/grip.png") !important;*/
-    /*-fx-background-size: auto !important;*/
-    /*-fx-background-repeat: no-repeat !important;*/
-    /*-fx-background-position: center !important;*/
-    /*!*-fx-scale-x: 0.1;*!*/
-    /*!*-fx-scale-y: 0.5;*!*/
-    /*-fx-border-width: 0;*/
+    -fx-background-color: transparent;
+    -fx-background-image: url("../images/SplitPane_Divider_Indicator_Horizontal.png") !important;
+    -fx-background-size: 105px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center !important;
+    -fx-padding: 15px !important;
 }
+
+.mainContainer > .split-pane-divider {
+    -fx-background-color: transparent;
+    -fx-background-image: url("../images/SplitPane_Divider_Indicator_Vertical.png") !important;
+    -fx-background-size: 15px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center !important;
+    -fx-padding: 15px !important;
+}
+

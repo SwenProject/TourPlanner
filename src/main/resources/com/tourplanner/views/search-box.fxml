@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxWidth="Infinity" styleClass="searchContainer" stylesheets="@../css/search-box.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tourplanner.SearchBoxController">
+<VBox maxWidth="Infinity" styleClass="searchContainer" stylesheets="@../css/search-box.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tourplanner.controller.SearchBoxController">
 
     <HBox alignment="CENTER_LEFT" maxWidth="Infinity" spacing="5" styleClass="SearchBar">
         <Region styleClass="searchIcon" />

@@ -1,13 +1,17 @@
-package com.tourplanner;
+package com.tourplanner.controller;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.SVGPath;
 
-public class MainController {
+public class NewTripButtonController {
+
+
 
     public void initialize(){
     }
 
+
+    public void onCreateNewTrip(ActionEvent actionEvent) {
+    }
 }

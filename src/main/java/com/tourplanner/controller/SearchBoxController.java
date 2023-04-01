@@ -1,4 +1,4 @@
-package com.tourplanner;
+package com.tourplanner.controller;
 
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;

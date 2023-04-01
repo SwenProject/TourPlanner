@@ -8,7 +8,7 @@
 
 <Button xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.tourplanner.NewTripButtonController"
+            fx:controller="com.tourplanner.controller.NewTripButtonController"
             stylesheets="@../css/new-trip-button.css"
             onAction="#onCreateNewTrip"
             maxWidth="Infinity"

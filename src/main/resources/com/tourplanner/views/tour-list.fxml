@@ -8,7 +8,7 @@
 
 <VBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.tourplanner.TourListController"
+            fx:controller="com.tourplanner.controller.TourListController"
             stylesheets="@../css/trip-list.css"
             maxWidth="Infinity"
             maxHeight="Infinity"
