@@ -19,15 +19,15 @@
     -fx-background-size: 105px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center !important;
-    -fx-padding: 15px !important;
+    -fx-padding: 12px !important;
 }
 
 .mainContainer > .split-pane-divider {
     -fx-background-color: transparent;
     -fx-background-image: url("../images/SplitPane_Divider_Indicator_Vertical.png") !important;
-    -fx-background-size: 15px;
+    -fx-background-size: 13px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center !important;
-    -fx-padding: 15px !important;
+    -fx-padding: 12px !important;
 }
 
