@@ -1,0 +1,2 @@
+DROP TABLE tours CASCADE;
+DROP TABLE tourlogs CASCADE;
