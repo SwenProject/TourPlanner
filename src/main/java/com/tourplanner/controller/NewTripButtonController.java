@@ -1,12 +1,15 @@
 package com.tourplanner.controller;
 
+import com.tourplanner.logic.TourLogic;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 
 public class NewTripButtonController {
 
+    private final TourLogic tourLogic;
 
+    public NewTripButtonController(TourLogic tourLogic) {
+        this.tourLogic = tourLogic;
+    }
 
     public void initialize(){
     }

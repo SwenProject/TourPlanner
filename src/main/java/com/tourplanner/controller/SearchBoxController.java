@@ -1,5 +1,6 @@
 package com.tourplanner.controller;
 
+import com.tourplanner.logic.TourLogic;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -11,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class SearchBoxController {
+    private final TourLogic tourLogic;
     public VBox advancedSearchContainer;
     public Button advancedSearchButton;
     public TextField searchTextField;
@@ -22,6 +24,10 @@ public class SearchBoxController {
     public Slider searchMinDistanceSlider;
     public Label searchMaxDistanceLabel;
     public Label searchMinDistanceLabel;
+
+    public SearchBoxController(TourLogic tourLogic) {
+        this.tourLogic = tourLogic;
+    }
 
     public void initialize(){
         //only show clear search button if search field is not empty
