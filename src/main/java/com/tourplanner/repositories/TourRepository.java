@@ -17,23 +17,16 @@ public class TourRepository {
     }
 
     public void save(Tour tour) {
-
-        //TODO: Map API calls for:
-        // - rating calculation
-        // - distance and estimated time calculations
-        // - map image creation
-
         entityManager.getTransaction().begin();
-
-        if(tour.getId() == null) {
-            entityManager.persist(tour); //tour is new
-        } else {
-            entityManager.merge(tour); //update existing tour
-        }
-
+        entityManager.persist(tour);
         entityManager.getTransaction().commit();
-
         //tour id should be set now and is in tour object
+    }
+
+    public void update(Tour tour) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(tour);
+        entityManager.getTransaction().commit();
     }
 
     public void delete(Tour tour) {

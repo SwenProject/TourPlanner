@@ -10,6 +10,9 @@ module TourPlanner {
     opens com.tourplanner to javafx.fxml;
     exports com.tourplanner;
     exports com.tourplanner.controller;
+    exports com.tourplanner.models;
     opens com.tourplanner.controller to javafx.fxml;
     opens com.tourplanner.models to org.hibernate.orm.core;
+    exports com.tourplanner.logic;
+    opens com.tourplanner.logic to javafx.fxml;
 }
