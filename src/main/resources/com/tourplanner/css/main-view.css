@@ -1,3 +1,20 @@
+@font-face {
+    -fx-font-family: "JetBrains Mono-Bold";
+    src: url('../css/JetBrainsMono-Bold.ttf');
+
+    /*src: url("./JetBrainsMono-Bold.ttf");*/
+}
+
+.root {
+    -fx-font-family: "JetBrains Mono-Bold";
+    /*-fx-font-smoothing-type: lcd;*/
+}
+
+
+.split-pane-divider {
+    -fx-background-color: transparent;
+}
+
 .mainContainer {
     -fx-background-color: #F4F1DE;
 }
@@ -7,10 +24,14 @@
     -fx-spacing: 10;
 }
 
-.rightMainContainer{
+#tripListFile {
+    -fx-background-color: #F2CC8F;
+
+}
+
+.rightMainContainer {
     -fx-background-color: transparent;
     -fx-padding: 10 10 10 0;
-    -fx-spacing: 10;
 }
 
 .rightMainContainer > .split-pane-divider {
@@ -20,6 +41,8 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center !important;
     -fx-padding: 12px !important;
+    -fx-effect: dropshadow(three-pass-box, rgba(61, 64, 91, 0.44), 2, 0, 0, 3.5);
+
 }
 
 .mainContainer > .split-pane-divider {
@@ -29,5 +52,7 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center !important;
     -fx-padding: 12px !important;
+    -fx-effect: dropshadow(three-pass-box, rgba(61, 64, 91, 0.44), 2, 0, 0, 3.5);
+
 }
 

@@ -1,14 +1,16 @@
-.newTourButton:hover{
+.newTourButton:hover {
     -fx-background-color: #454545;
 }
 
 .newTourButton {
-    -fx-background-color: #5e5e5e;
+    -fx-background-color: #81b29a;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-min-height: 40px;
-    -fx-font-family: "Segoe UI";
+    /*-fx-font-family: "Segoe UI";*/
     -fx-font-size: 20px;
     -fx-text-fill: #ffffff;
     -fx-font-weight: bold;
+
 }
+

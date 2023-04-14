@@ -16,7 +16,7 @@ public class TourPlannerApp extends Application {
 //        Scene scene = new Scene(fxmlLoader.load(), 700, 700);
         //scene.setFill(Color.TRANSPARENT);
         stage.initStyle(StageStyle.DECORATED);
-        stage.setTitle("TourPlanner");
+        stage.setTitle("Tour Planner");
         stage.setScene(scene);
         //maximize window
         stage.setMaximized(true);
