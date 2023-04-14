@@ -3,11 +3,11 @@ package com.tourplanner.controller;
 import com.tourplanner.logic.TourLogic;
 import javafx.event.ActionEvent;
 
-public class NewTripButtonController {
+public class NewImportExportController {
 
     private final TourLogic tourLogic;
 
-    public NewTripButtonController(TourLogic tourLogic) {
+    public NewImportExportController(TourLogic tourLogic) {
         this.tourLogic = tourLogic;
     }
 
@@ -16,5 +16,6 @@ public class NewTripButtonController {
 
 
     public void onCreateNewTrip(ActionEvent actionEvent) {
+        tourLogic.createNewTour();
     }
 }

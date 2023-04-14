@@ -19,4 +19,7 @@
 
     <Label text="Saved tours will appear here!" />
 
+    <!--Temporary Buttons for switching between tours since listview is not implemented yet-->
+    <Button text="Next Tour" onAction="#onNextTour" />
+    <Button text="Previous Tour" onAction="#onPreviousTour" />
 </VBox>

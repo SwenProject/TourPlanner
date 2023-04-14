@@ -10,8 +10,8 @@ public class ControllerFactory {
             return new MainController(tourLogic);
         } else if (controllerClass == MapController.class){
             return new MapController(tourLogic);
-        } else if (controllerClass == NewTripButtonController.class){
-            return new NewTripButtonController(tourLogic);
+        } else if (controllerClass == NewImportExportController.class){
+            return new NewImportExportController(tourLogic);
         } else if (controllerClass == SearchBoxController.class){
             return new SearchBoxController(tourLogic);
         } else if (controllerClass == TourInfoController.class){

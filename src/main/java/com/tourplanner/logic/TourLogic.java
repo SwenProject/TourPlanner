@@ -1,5 +1,6 @@
 package com.tourplanner.logic;
 
+import com.tourplanner.enums.TransportType;
 import com.tourplanner.models.Tour;
 import com.tourplanner.repositories.TourRepository;
 import javafx.beans.property.ObjectProperty;
@@ -34,7 +35,13 @@ public class TourLogic {
     }
 
     public void createNewTour(){
-        selectedTour.set(new Tour());
+
+        Tour newTour = new Tour();
+
+        //set default selected Transport Type
+        newTour.setTransportType(TransportType.CAR);
+
+        selectedTour.set(newTour);
     }
 
     public void saveSelectedTour(){
@@ -53,6 +60,11 @@ public class TourLogic {
         //update existing tour
         tourRepository.update(selectedTour.get());
         //tour in all tours list is already updated because it is a reference to the selected tour
+
+        //reset selected tour to reload map and tour info
+        Tour tempTour = selectedTour.get();
+        selectedTour.set(null);
+        selectedTour.set(tempTour);
 
     }
 
@@ -73,6 +85,10 @@ public class TourLogic {
     }
 
     public void deleteTour(Tour tour){
+        if(selectedTour.get() == tour){
+            selectedTour.set(null);
+        }
+
         tourRepository.delete(tour);
         allTours.remove(tour);
     }

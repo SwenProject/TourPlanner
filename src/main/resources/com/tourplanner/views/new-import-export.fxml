@@ -8,8 +8,8 @@
 
 <Button xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.tourplanner.controller.NewTripButtonController"
-            stylesheets="@../css/new-trip-button.css"
+            fx:controller="com.tourplanner.controller.NewImportExportController"
+            stylesheets="@../css/new-import-export.css"
             onAction="#onCreateNewTrip"
             maxWidth="Infinity"
             styleClass="newTourButton"

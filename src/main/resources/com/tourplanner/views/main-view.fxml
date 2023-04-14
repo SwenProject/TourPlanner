@@ -11,7 +11,7 @@
     </stylesheets>
 
     <VBox fx:id="leftContainer" styleClass="leftMainContainer" minWidth="350" prefWidth="400">
-        <fx:include fx:id="newTripButtonFile" source="new-trip-button.fxml"/>
+        <fx:include fx:id="newTripButtonFile" source="new-import-export.fxml"/>
         <fx:include fx:id="searchBoxFile" source="search-box.fxml"/>
         <fx:include fx:id="tripListFile" source="tour-list.fxml"/>
     </VBox>
