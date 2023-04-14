@@ -21,7 +21,7 @@ public class TourPlannerApp extends Application {
         // Scene scene = new Scene(fxmlLoader.load(), 700, 700);
 
         stage.initStyle(StageStyle.DECORATED);
-        stage.setTitle("TourPlanner");
+        stage.setTitle("Tour Planner");
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.setMinHeight(800);

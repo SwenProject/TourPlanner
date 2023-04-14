@@ -1,5 +1,7 @@
-.map-container{
+.map-container {
     -fx-background-color: #baffac;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(61, 64, 91, 0.44), 2, 0, 0, 3.5);
+
 }

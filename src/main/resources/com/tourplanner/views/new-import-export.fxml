@@ -13,5 +13,5 @@
             onAction="#onCreateNewTrip"
             maxWidth="Infinity"
             styleClass="newTourButton"
-            text="New Tour"
+            text="Create New Tour"
 />

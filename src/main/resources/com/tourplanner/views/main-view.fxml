@@ -10,7 +10,7 @@
         <URL value="@../css/main-view.css" />
     </stylesheets>
 
-    <VBox fx:id="leftContainer" styleClass="leftMainContainer" minWidth="350" prefWidth="400">
+    <VBox fx:id="leftContainer" minWidth="350" prefWidth="400" styleClass="leftMainContainer" >
         <fx:include fx:id="newTripButtonFile" source="new-import-export.fxml"/>
         <fx:include fx:id="searchBoxFile" source="search-box.fxml"/>
         <fx:include fx:id="tripListFile" source="tour-list.fxml"/>
