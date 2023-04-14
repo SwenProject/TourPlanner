@@ -1,3 +1,13 @@
+@font-face {
+    -fx-font-family: "JetBrains Mono";
+    src: url("../fonts/jetbrains_mono/JetBrainsMono-Bold.ttf");
+}
+
+.root {
+    -fx-font-family: "JetBrains Mono";
+}
+
+
 .mainContainer {
     -fx-background-color: #F4F1DE;
 }
