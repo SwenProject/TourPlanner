@@ -84,6 +84,8 @@ public class TourLogic {
         selectedTour.set(null);
     }
 
+    //TODO: delete map image from file system
+    //to delete specific tour e.g. in tour list edit mode
     public void deleteTour(Tour tour){
         if(selectedTour.get() == tour){
             selectedTour.set(null);
