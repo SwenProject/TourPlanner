@@ -2,8 +2,6 @@
     -fx-background-color: #F2CC8F;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
-
-
 }
 
 .advancedSearchButton {
@@ -11,15 +9,12 @@
     -fx-background-radius: 0 0 10 10;
     /*-fx-focus-color: rgb(61, 64, 91);*/
     -fx-faint-focus-color: rgba(224, 122, 95, 0.53);
-    -fx-effect: dropshadow(three-pass-box, rgba(61, 64, 91, 0.44), 2, 0, 0, 3.5);
-
+    -fx-effect: innershadow(gaussian, rgba(61, 64, 91, 0.44), -5, 3, 0, -3);
 }
 
 .advancedSearchContainer {
     -fx-border-width: 1px 0 0 0;
     -fx-border-color: #afafaf;
-
-
 }
 
 .searchIcon {
@@ -29,8 +24,6 @@
     -fx-max-width: 15px;
     -fx-min-height: 15px;
     -fx-min-width: 15px;
-
-
 }
 
 .clearSearchButton {
@@ -50,11 +43,9 @@
     -fx-background-radius: 0 ;
     -fx-background-color: transparent;
     -fx-padding: 5 0 5 2;
-    -fx-font-family: "JetBrains Mono";
     -fx-font-weight: bold;
     -fx-font-size: 15px;
     -fx-text-fill: rgb(61, 64, 91);
-
 }
 
 .SearchBar {
@@ -63,35 +54,29 @@
     -fx-background-radius: 30;
     -fx-background-insets: 10;
     -fx-padding: 10 20 10 20;
-
 }
 
 .advancedSearchLabel {
     -fx-font-size: 15px;
     -fx-font-weight: bold;
     -fx-text-fill: rgb(61, 64, 91);
+}
 
-
+.text-field,
+.label {
+    -fx-text-fill: rgb(61, 64, 91);
 }
 
 .clearAllButton {
-    -fx-text-fill: rgb(255, 0, 0);
-
+    -fx-text-fill: rgb(224, 122, 95) !important;
 }
 
 .button {
     -fx-background-color: #FFE0AF;
     -fx-text-fill: rgb(61, 64, 91);
-
 }
 
 .distance-label {
     -fx-min-width: 45px;
-
 }
 
-.text-field {
-    -fx-font-family: "JetBrains Mono";
-    -fx-text-fill: rgb(61, 64, 91);
-
-}

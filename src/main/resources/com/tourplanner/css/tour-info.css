@@ -2,8 +2,7 @@
     -fx-background-color: #ffa446;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
-    -fx-effect: dropshadow(three-pass-box, rgba(61, 64, 91, 0.44), 2, 0, 0, 3.5);
-
+    -fx-effect: innershadow(gaussian, rgba(61, 64, 91, 0.44), -5, 4, 0, -3);
 
     -fx-font-size: 20px;
 }

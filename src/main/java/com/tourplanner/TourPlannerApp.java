@@ -4,6 +4,7 @@ import com.tourplanner.controller.ControllerFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
@@ -18,9 +19,13 @@ public class TourPlannerApp extends Application {
         fxmlLoader.setControllerFactory(controllerFactory::create); //set ControllerFactory for fxmlLoader
 
         Scene scene = new Scene(fxmlLoader.load());
+//      Scene scene = new Scene(fxmlLoader.load(), 700, 700);
+        //scene.setFill(Color.TRANSPARENT);
         // Scene scene = new Scene(fxmlLoader.load(), 700, 700);
 
         stage.initStyle(StageStyle.DECORATED);
+//      stage.getIcons().add(new Image("https://genuinecoder.com/wp-content/uploads/2022/06/genuine_coder-3.png"));
+        stage.getIcons().add(new Image(TourPlannerApp.class.getResourceAsStream("images/iconicon.png")));
         stage.setTitle("Tour Planner");
         stage.setScene(scene);
         stage.setMaximized(true);
