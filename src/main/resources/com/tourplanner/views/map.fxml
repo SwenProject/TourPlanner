@@ -16,6 +16,9 @@
             alignment="CENTER"
             styleClass="map-container"
 >
-<!--   TODO: image zum databinden mit mapcontroller -> immer wenn selectedTour sich ändert entweder Karte laden oder wenn NUll dann Text Displayen -->
-    <Label>The map will appear here!</Label>
+
+    <VBox maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" alignment="CENTER" styleClass="map-main-box">
+        <!--TODO: image zum databinden mit mapcontroller -> immer wenn selectedTour sich ändert entweder Karte laden oder wenn NUll dann Text Displayen -->
+        <Label>The map will appear here!</Label>
+    </VBox>
 </VBox>

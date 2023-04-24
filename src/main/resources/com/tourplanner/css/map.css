@@ -1,7 +1,12 @@
 .map-container {
+    -fx-background-color: transparent;
+    -fx-padding: 0 6px 4px 4px;
+}
+
+.map-main-box {
+    /*add shadow*/
     -fx-background-color: #baffac;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
-    -fx-effect: innershadow(gaussian, rgba(61, 64, 91, 0.44), -5, 3, 0, -3);
-
+    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
 }

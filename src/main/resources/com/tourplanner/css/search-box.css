@@ -2,6 +2,7 @@
     -fx-background-color: #F2CC8F;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
 }
 
 .advancedSearchButton {
@@ -9,7 +10,6 @@
     -fx-background-radius: 0 0 10 10;
     /*-fx-focus-color: rgb(61, 64, 91);*/
     -fx-faint-focus-color: rgba(224, 122, 95, 0.53);
-    -fx-effect: innershadow(gaussian, rgba(61, 64, 91, 0.44), -5, 3, 0, -3);
 }
 
 .advancedSearchContainer {

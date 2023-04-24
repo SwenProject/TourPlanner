@@ -17,7 +17,7 @@
 }
 
 .leftMainContainer {
-    -fx-padding: 10 0 10 10;
+    -fx-padding: 10 4 10 10;
     -fx-spacing: 10;
 }
 
@@ -28,7 +28,7 @@
 
 .rightMainContainer {
     -fx-background-color: transparent;
-    -fx-padding: 10 10 10 0;
+    -fx-padding: 10 4 4 0;
 
 }
 

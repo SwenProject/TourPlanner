@@ -16,110 +16,113 @@
             styleClass="tour-info-container"
 >
 
-    <!--Label for when there is no tour selected-->
-    <Label maxHeight="Infinity" maxWidth="Infinity" VBox.vgrow="ALWAYS" fx:id="noTourSelectedText" alignment="CENTER">Select a tour to show it here!</Label>
+    <VBox maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" styleClass="tour-info-main-box">
 
-    <!--Selected Tour is shown here-->
-    <StackPane fx:id="tourInfos" styleClass="tour-infos" managed="false" visible="false" VBox.vgrow="ALWAYS">
+        <!--Label for when there is no tour selected-->
+        <Label maxHeight="Infinity" maxWidth="Infinity" VBox.vgrow="ALWAYS" fx:id="noTourSelectedText" alignment="CENTER">Select a tour to show it here!</Label>
 
-        <!--VIEW MODE-->
-        <BorderPane fx:id="viewModeBorderPane" VBox.vgrow="ALWAYS">
-            <!--Tour info is displayed at the top of the BorderPane-->
-            <top>
-                <GridPane hgap="5" maxWidth="Infinity">
+        <!--Selected Tour is shown here-->
+        <StackPane fx:id="tourInfos" styleClass="tour-infos" managed="false" visible="false" VBox.vgrow="ALWAYS">
 
-                    <!--Set both columns to 50% width-->
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="50"/>
-                        <ColumnConstraints percentWidth="50"/>
-                    </columnConstraints>
+            <!--VIEW MODE-->
+            <BorderPane fx:id="viewModeBorderPane" VBox.vgrow="ALWAYS">
+                <!--Tour info is displayed at the top of the BorderPane-->
+                <top>
+                    <GridPane hgap="5" maxWidth="Infinity">
 
-                    <VBox HBox.hgrow="ALWAYS" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                        <HBox spacing="10">
-                            <Label>Tour Name:</Label>
-                            <Label fx:id="tourName"/>
-                        </HBox>
-                        <HBox spacing="10">
-                            <Label>Starting Point:</Label>
-                            <Label fx:id="startingPoint"/>
-                        </HBox>
-                        <HBox spacing="10">
-                            <Label>Destination:</Label>
-                            <Label fx:id="destinationPoint"/>
-                        </HBox>
-                        <HBox spacing="10">
-                            <Label>Distance:</Label>
-                            <Label fx:id="distance"/>
-                        </HBox>
-                        <HBox spacing="10">
-                            <Label>Duration</Label>
-                            <Label fx:id="duration"/>
-                        </HBox>
-                        <HBox spacing="10">
-                            <Label>Rating</Label>
-                            <Label fx:id="rating"/>
-                        </HBox>
-                        <HBox spacing="10">
-                            <Label>Transport Type:</Label>
-                            <Label fx:id="transportType"/>
-                        </HBox>
-                    </VBox>
-                    <VBox HBox.hgrow="ALWAYS" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <!--Set both columns to 50% width-->
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="50"/>
+                            <ColumnConstraints percentWidth="50"/>
+                        </columnConstraints>
+
+                        <VBox HBox.hgrow="ALWAYS" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <HBox spacing="10">
+                                <Label>Tour Name:</Label>
+                                <Label fx:id="tourName"/>
+                            </HBox>
+                            <HBox spacing="10">
+                                <Label>Starting Point:</Label>
+                                <Label fx:id="startingPoint"/>
+                            </HBox>
+                            <HBox spacing="10">
+                                <Label>Destination:</Label>
+                                <Label fx:id="destinationPoint"/>
+                            </HBox>
+                            <HBox spacing="10">
+                                <Label>Distance:</Label>
+                                <Label fx:id="distance"/>
+                            </HBox>
+                            <HBox spacing="10">
+                                <Label>Duration</Label>
+                                <Label fx:id="duration"/>
+                            </HBox>
+                            <HBox spacing="10">
+                                <Label>Rating</Label>
+                                <Label fx:id="rating"/>
+                            </HBox>
+                            <HBox spacing="10">
+                                <Label>Transport Type:</Label>
+                                <Label fx:id="transportType"/>
+                            </HBox>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                <Label>Description:</Label>
+                                <TextArea fx:id="description" wrapText="true" editable="false" prefHeight="200"/>
+                        </VBox>
+                    </GridPane>
+                </top>
+                <!--Buttons are at the bottom of the BorderPane-->
+                <bottom>
+                    <HBox styleClass="tourInfoButtonBar" spacing="10" alignment="BOTTOM_RIGHT">
+                        <Button text="Delete Tour" onAction="#onDeleteTour"/>
+                        <Button text="Edit Tour" onAction="#onEditTour"/>
+                    </HBox>
+                </bottom>
+            </BorderPane>
+
+            <!--EDIT MODE-->
+            <BorderPane fx:id="editModeBorderPane" VBox.vgrow="ALWAYS">
+                <!--Tour editing fields are displayed here-->
+                <top>
+                    <GridPane hgap="5" maxWidth="Infinity">
+                        <!--Set both columns to 50% width-->
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="50"/>
+                            <ColumnConstraints percentWidth="50"/>
+                        </columnConstraints>
+
+                        <VBox HBox.hgrow="ALWAYS" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <HBox spacing="10">
+                                <Label>Tour Name:</Label>
+                                <TextField fx:id="tourNameEdit"/>
+                            </HBox>
+                            <HBox spacing="10">
+                                <Label>Starting Point:</Label>
+                                <TextField fx:id="startingPointEdit"/>
+                            </HBox>
+                            <HBox spacing="10">
+                                <Label>Destination:</Label>
+                                <TextField fx:id="destinationPointEdit"/>
+                            </HBox>
+                            <HBox spacing="10">
+                                <Label>Transport Type:</Label>
+                                <TextField fx:id="transportTypeEdit"/>
+                            </HBox>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS" GridPane.columnIndex="1" GridPane.rowIndex="0">
                             <Label>Description:</Label>
-                            <TextArea fx:id="description" wrapText="true" editable="false" prefHeight="200"/>
-                    </VBox>
-                </GridPane>
-            </top>
-            <!--Buttons are at the bottom of the BorderPane-->
-            <bottom>
-                <HBox styleClass="tourInfoButtonBar" spacing="10" alignment="BOTTOM_RIGHT">
-                    <Button text="Delete Tour" onAction="#onDeleteTour"/>
-                    <Button text="Edit Tour" onAction="#onEditTour"/>
-                </HBox>
-            </bottom>
-        </BorderPane>
-
-        <!--EDIT MODE-->
-        <BorderPane fx:id="editModeBorderPane" VBox.vgrow="ALWAYS">
-            <!--Tour editing fields are displayed here-->
-            <top>
-                <GridPane hgap="5" maxWidth="Infinity">
-                    <!--Set both columns to 50% width-->
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="50"/>
-                        <ColumnConstraints percentWidth="50"/>
-                    </columnConstraints>
-
-                    <VBox HBox.hgrow="ALWAYS" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                        <HBox spacing="10">
-                            <Label>Tour Name:</Label>
-                            <TextField fx:id="tourNameEdit"/>
-                        </HBox>
-                        <HBox spacing="10">
-                            <Label>Starting Point:</Label>
-                            <TextField fx:id="startingPointEdit"/>
-                        </HBox>
-                        <HBox spacing="10">
-                            <Label>Destination:</Label>
-                            <TextField fx:id="destinationPointEdit"/>
-                        </HBox>
-                        <HBox spacing="10">
-                            <Label>Transport Type:</Label>
-                            <TextField fx:id="transportTypeEdit"/>
-                        </HBox>
-                    </VBox>
-                    <VBox HBox.hgrow="ALWAYS" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                        <Label>Description:</Label>
-                        <TextArea fx:id="descriptionEdit" wrapText="true" prefHeight="200"/>
-                    </VBox>
-                </GridPane>
-            </top>
-            <bottom> <!--Buttons are at the bottom of the BorderPane-->
-                <HBox spacing="10" alignment="BOTTOM_RIGHT">
-                    <Button text="Cancel" onAction="#onCancelEdit"/>
-                    <Button text="Save Tour" onAction="#onSaveTour"/>
-                </HBox>
-            </bottom>
-        </BorderPane>
-    </StackPane>
+                            <TextArea fx:id="descriptionEdit" wrapText="true" prefHeight="200"/>
+                        </VBox>
+                    </GridPane>
+                </top>
+                <bottom> <!--Buttons are at the bottom of the BorderPane-->
+                    <HBox spacing="10" alignment="BOTTOM_RIGHT">
+                        <Button text="Cancel" onAction="#onCancelEdit"/>
+                        <Button text="Save Tour" onAction="#onSaveTour"/>
+                    </HBox>
+                </bottom>
+            </BorderPane>
+        </StackPane>
+    </VBox>
 </VBox>
