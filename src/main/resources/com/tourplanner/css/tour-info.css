@@ -7,6 +7,8 @@
     /*-fx-font-size: 20px;*/
 }
 
-.tour-infos {
-    -fx-padding: 10 20 10 20;
+.tourInfoButtonBar {
+    -fx-background-color: red;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 0 0 10px 10px;
 }

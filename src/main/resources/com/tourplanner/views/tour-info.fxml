@@ -72,7 +72,7 @@
             </top>
             <!--Buttons are at the bottom of the BorderPane-->
             <bottom>
-                <HBox spacing="10" alignment="BOTTOM_RIGHT">
+                <HBox styleClass="tourInfoButtonBar" spacing="10" alignment="BOTTOM_RIGHT">
                     <Button text="Delete Tour" onAction="#onDeleteTour"/>
                     <Button text="Edit Tour" onAction="#onEditTour"/>
                 </HBox>
