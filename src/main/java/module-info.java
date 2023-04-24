@@ -5,6 +5,7 @@ module TourPlanner {
     requires lombok;
     requires java.sql;
     requires org.hibernate.orm.core;
+    requires org.json;
 
 
     opens com.tourplanner to javafx.fxml;
