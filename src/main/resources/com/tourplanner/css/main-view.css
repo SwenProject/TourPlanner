@@ -1,10 +1,12 @@
 @font-face {
     -fx-font-family: "JetBrains Mono";
-    src: url("../fonts/jetbrains_mono/JetBrainsMono-Bold.ttf");
+    src: url("../fonts/jetbrains_mono/JetBrainsMono-Regular.ttf");
 }
 
 .root {
     -fx-font-family: "JetBrains Mono";
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
 }
 
 

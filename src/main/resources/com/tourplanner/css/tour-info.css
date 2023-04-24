@@ -3,20 +3,80 @@
     /*-fx-padding: 0 0 10px 0;*/
     -fx-padding: 4px 6px 6px 4px;
     /*-fx-effect: innershadow(gaussian, rgba(61, 64, 91, 0.44), -5, 4, 0, -3);*/
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
 
-    /*-fx-font-size: 20px;*/
+}
+
+.text-field {
+    -fx-background-radius: 5;
+    -fx-padding: 10px;
+    -fx-background-color: #F4F1DE;
+    -fx-prompt-text-fill: rgba(224, 122, 95, 0.50);
+    -fx-text-fill: rgb(61, 64, 91);
+}
+
+.text-area {
+    -fx-border-radius: 10px;
+    -fx-background-color: #F4F1DE;
+    -fx-background-radius: 30;
+    -fx-prompt-text-fill: rgba(224, 122, 95, 0.50);
+    -fx-text-fill: rgb(61, 64, 91);
+
 }
 
 .tourInfoButtonBar {
-    -fx-background-color: red;
+    -fx-background-color: #FFE0AF;
     -fx-border-radius: 10px;
     -fx-background-radius: 0 0 10px 10px;
+    -fx-padding: 0 15 0 0;
+    -fx-text-fill: rgb(61, 64, 91);
 }
 
 .tour-info-main-box {
     /*add shadow*/
-    -fx-background-color: #ffa446;
+    -fx-background-color: #F2CC8F;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
 }
+
+.editModeLeft {
+    -fx-padding: 15px;
+    -fx-spacing: 10;
+}
+
+.editModeRight {
+    -fx-padding: 15px;
+}
+
+.viewModeLeft {
+    -fx-padding: 15px;
+    -fx-spacing: 10;
+}
+
+.viewModeRight {
+    -fx-padding: 15px;
+}
+
+.tourDescription {
+    -fx-border-radius: 10px;
+    -fx-background-color: #F4F1DE;
+    -fx-background-radius: 30;
+    -fx-prompt-text-fill: rgba(224, 122, 95, 0.50);
+    -fx-text-fill: rgb(61, 64, 91);
+}
+
+.button {
+    -fx-pref-width: 110;
+    -fx-background-color: #F4F1DE;
+    -fx-text-fill: rgb(61, 64, 91);
+    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
+
+}
+
+.saveButton {
+    -fx-background-color: #81B29A;
+    -fx-text-fill: rgb(255, 255, 255);
+}
+
