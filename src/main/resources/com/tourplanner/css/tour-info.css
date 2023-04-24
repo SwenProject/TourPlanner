@@ -4,7 +4,7 @@
     -fx-background-radius: 10;
     -fx-effect: innershadow(gaussian, rgba(61, 64, 91, 0.44), -5, 4, 0, -3);
 
-    -fx-font-size: 20px;
+    /*-fx-font-size: 20px;*/
 }
 
 .tour-infos {

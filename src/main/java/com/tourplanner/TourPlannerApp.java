@@ -24,8 +24,7 @@ public class TourPlannerApp extends Application {
         // Scene scene = new Scene(fxmlLoader.load(), 700, 700);
 
         stage.initStyle(StageStyle.DECORATED);
-//      stage.getIcons().add(new Image("https://genuinecoder.com/wp-content/uploads/2022/06/genuine_coder-3.png"));
-        stage.getIcons().add(new Image(TourPlannerApp.class.getResourceAsStream("images/iconicon.png")));
+        stage.getIcons().add(new Image(TourPlannerApp.class.getResourceAsStream("images/app_icon.png")));
         stage.setTitle("Tour Planner");
         stage.setScene(scene);
         stage.setMaximized(true);
