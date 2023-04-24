@@ -7,10 +7,10 @@
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-min-height: 40px;
-    /*-fx-font-family: "Segoe UI";*/
     -fx-font-size: 20px;
     -fx-text-fill: #ffffff;
     -fx-font-weight: bold;
+    -fx-effect: innershadow(gaussian, rgba(61, 64, 91, 0.34), -5, 3, 0, -3);
 
 }
 
