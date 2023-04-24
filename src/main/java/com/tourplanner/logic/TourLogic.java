@@ -46,10 +46,10 @@ public class TourLogic {
 
     public void saveSelectedTour(){
 
-        //TODO: Map API calls for:
+        //TODO:
         // - rating calculation
-        // - distance and estimated time calculations
-        // - map image creation
+        // - use TourMapService -> inject in constr of TourLogic
+
 
         if(selectedTour.get().getId() == null) { //tour is new and has no id
             tourRepository.save(selectedTour.get()); //save new tour to db
