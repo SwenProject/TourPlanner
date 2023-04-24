@@ -17,12 +17,21 @@
 }
 
 .text-area {
-    -fx-border-radius: 10px;
     -fx-background-color: #F4F1DE;
-    -fx-background-radius: 30;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
     -fx-prompt-text-fill: rgba(224, 122, 95, 0.50);
     -fx-text-fill: rgb(61, 64, 91);
+}
 
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
 }
 
 .tourInfoButtonBar {
