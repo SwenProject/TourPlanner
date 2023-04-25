@@ -3,6 +3,7 @@ package com.tourplanner.logic;
 import com.tourplanner.enums.TransportType;
 import com.tourplanner.models.Tour;
 import com.tourplanner.repositories.TourRepository;
+import com.tourplanner.services.ITourMapService;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -51,9 +52,18 @@ public class TourLogic {
         // - use TourMapService -> inject in constr of TourLogic
 
 
+        ITourMapService tourMapService = new TourMapServiceMapQuest();
+        tourMapService.calculateRoute(selectedTour.get());
+
         if(selectedTour.get().getId() == null) { //tour is new and has no id
             tourRepository.save(selectedTour.get()); //save new tour to db
             allTours.add(selectedTour.get()); //add new tour to all tours list
+
+            //reset selected tour to reload map and tour info
+            Tour tempTour = selectedTour.get();
+            selectedTour.set(null);
+            selectedTour.set(tempTour);
+
             return;
         }
 
