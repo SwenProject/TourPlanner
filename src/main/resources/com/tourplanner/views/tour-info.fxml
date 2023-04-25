@@ -6,14 +6,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.skin.SplitPaneSkin.Content?>
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.tourplanner.controller.TourInfoController"
-            stylesheets="@../css/tour-info.css"
-            maxWidth="Infinity"
-            maxHeight="Infinity"
-            VBox.vgrow="ALWAYS"
-            styleClass="tour-info-container"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.tourplanner.controller.TourInfoController"
+      stylesheets="@../css/tour-info.css"
+      maxWidth="Infinity"
+      maxHeight="Infinity"
+      VBox.vgrow="ALWAYS"
+      styleClass="tour-info-container"
 >
 
     <VBox maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" styleClass="tour-info-main-box">
@@ -117,9 +120,16 @@
                     </GridPane>
                 </top>
                 <bottom> <!--Buttons are at the bottom of the BorderPane-->
-                    <HBox styleClass="tourInfoButtonBar" spacing="10" alignment="CENTER_RIGHT" minHeight="50">
-                        <Button text="Cancel" onAction="#onCancelEdit"/>
-                        <Button text="Save Tour" onAction="#onSaveTour" styleClass="saveButton"/>
+                    <HBox styleClass="tourInfoButtonBar" spacing="15" alignment="CENTER_RIGHT" minHeight="50">
+                        <Button onAction="#onCancelEdit" text="Cancel"/>
+                        <Button onAction="#onSaveTour" styleClass="saveButton">
+                            <graphic>
+                                <HBox alignment="CENTER">
+                                    <Label styleClass="buttonTextBig">Save</Label>
+                                    <Label styleClass="buttonTextSmall">tour</Label>
+                                </HBox>
+                            </graphic>
+                        </Button>
                     </HBox>
                 </bottom>
             </BorderPane>

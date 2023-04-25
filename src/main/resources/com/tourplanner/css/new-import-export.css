@@ -9,7 +9,6 @@
     -fx-min-height: 40px;
     -fx-font-size: 20px;
     -fx-text-fill: #ffffff;
-    -fx-font-weight: bold;
     /*-fx-effect: innershadow(gaussian, rgba(61, 64, 91, 0.34), -5, 3, 0, -3);*/
     -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.34), 3, 0, 3, 3);
 

@@ -1,12 +1,54 @@
 @font-face {
-    -fx-font-family: "JetBrains Mono";
-    src: url("../fonts/jetbrains_mono/JetBrainsMono-Regular.ttf");
+    -fx-font-family: "JetBrains Mono NL ExtraBold";
+    -fx-font-weight: 800;
+    src: url("../fonts/jetbrains_mono/JetBrainsMonoNL-ExtraBold.ttf");
+}
+
+@font-face {
+    -fx-font-family: "JetBrains Mono NL Bold";
+    -fx-font-weight: 700;
+    src: url("../fonts/jetbrains_mono/JetBrainsMonoNL-Bold.ttf");
+}
+
+@font-face {
+    -fx-font-family: "JetBrains Mono NL SemiBold";
+    -fx-font-weight: 600;
+    src: url("../fonts/jetbrains_mono/JetBrainsMonoNL-SemiBold.ttf");
+}
+
+@font-face {
+    -fx-font-family: "JetBrains Mono NL Medium";
+    -fx-font-weight: 500;
+    src: url("../fonts/jetbrains_mono/JetBrainsMonoNL-Medium.ttf");
+}
+
+@font-face {
+    -fx-font-family: "JetBrains Mono NL Regular";
+    -fx-font-weight: 400;
+    src: url("../fonts/jetbrains_mono/JetBrainsMonoNL-Regular.ttf");
+}
+
+@font-face {
+    -fx-font-family: "JetBrains Mono NL Light";
+    -fx-font-weight: 300;
+    src: url("../fonts/jetbrains_mono/JetBrainsMonoNL-Light.ttf");
+}
+
+@font-face {
+    -fx-font-family: "JetBrains Mono NL ExtraLight";
+    -fx-font-weight: 200;
+    src: url("../fonts/jetbrains_mono/JetBrainsMonoNL-ExtraLight.ttf");
+}
+
+@font-face {
+    -fx-font-family: "JetBrains Mono NL Thin";
+    -fx-font-weight: 100;
+    src: url("../fonts/jetbrains_mono/JetBrainsMonoNL-Thin.ttf");
 }
 
 .root {
-    -fx-font-family: "JetBrains Mono";
+    -fx-font-family: "JetBrains Mono NL Regular";
     -fx-font-size: 15px;
-    -fx-font-weight: bold;
 }
 
 

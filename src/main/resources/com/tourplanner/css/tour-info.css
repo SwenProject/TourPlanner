@@ -77,15 +77,31 @@
 }
 
 .button {
+    -fx-padding: 0;
+    -fx-font-size: 15px;
     -fx-pref-width: 110;
+    -fx-pref-height: 35;
+    -fx-max-height: 35;
     -fx-background-color: #F4F1DE;
     -fx-text-fill: rgb(61, 64, 91);
     -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
+    -fx-alignment: center;
+    -fx-content-display: center;
+}
 
+.buttonTextBig {
+    -fx-font-size: 15px;
+    -fx-padding: 0 3px 0 0;
+    -fx-font-family: "JetBrains Mono NL ExtraBold";
+}
+
+.buttonTextSmall {
+    -fx-padding: 4px 0 0 0;
+    -fx-font-family: "JetBrains Mono NL ExtraBold";
+    -fx-font-size: 11px;
 }
 
 .saveButton {
     -fx-background-color: #81B29A;
     -fx-text-fill: rgb(255, 255, 255);
 }
-
