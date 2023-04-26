@@ -22,6 +22,9 @@
     -fx-background-radius: 10px;
     -fx-prompt-text-fill: rgba(224, 122, 95, 0.50);
     -fx-text-fill: rgb(61, 64, 91);
+
+    /*padding for the scroll bar*/
+    -fx-padding: 3px 5px 3px 3px;
 }
 
 .text-area .scroll-pane {
@@ -61,18 +64,37 @@
 
 .viewModeLeft {
     -fx-padding: 15px;
-    -fx-spacing: 10;
+    -fx-spacing: 5px;
+}
+
+.viewModeLeft .viewLabel {
+    -fx-padding: 5px;
+    -fx-background-color: #F9DCA3;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: rgb(61, 64, 91);
+}
+
+.viewModeLeft .labelName {
+    -fx-font-size: 20px;
+    -fx-font-family: "JetBrains Mono NL Bold";
 }
 
 .viewModeRight {
     -fx-padding: 15px;
 }
 
+.viewModeRight .text-area {
+    -fx-background-color: #F9DCA3;
+    -fx-border-radius: 10px;
+    -fx-border-color: rgb(61, 64, 91);
+}
+
 .tourDescription {
     -fx-border-radius: 10px;
     -fx-background-color: #F4F1DE;
     -fx-background-radius: 30;
-    -fx-prompt-text-fill: rgba(224, 122, 95, 0.50);
+    -fx-prompt-text-fill: rgba(224, 122, 95, 0.60);
     -fx-text-fill: rgb(61, 64, 91);
 }
 
@@ -97,11 +119,11 @@
 
 .buttonTextSmall {
     -fx-padding: 4px 0 0 0;
-    -fx-font-family: "JetBrains Mono NL ExtraBold";
+    -fx-font-family: "JetBrains Mono NL Regular";
     -fx-font-size: 11px;
 }
 
-.saveButton {
+.specialButton {
     -fx-background-color: #81B29A;
     -fx-text-fill: rgb(255, 255, 255);
 }

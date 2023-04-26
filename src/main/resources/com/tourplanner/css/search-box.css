@@ -14,7 +14,9 @@
 
 .advancedSearchContainer {
     -fx-border-width: 1px 0 0 0;
-    -fx-border-color: #afafaf;
+    /*-fx-border-color: #afafaf;*/
+    -fx-border-color: #FFE0AF;
+    -fx-background-color: #F2CC8F;
 }
 
 .searchIcon {
@@ -40,16 +42,14 @@
     -fx-focus-color: rgba(61, 64, 91);
     -fx-faint-focus-color: rgba(224, 122, 95, 0.53);
     -fx-background-insets: 0, 0 0 0 0 ;
-    -fx-background-radius: 0 ;
+    -fx-background-radius: 0;
     -fx-background-color: transparent;
     -fx-padding: 5 0 5 2;
-    -fx-font-weight: bold;
-    -fx-font-size: 15px;
     -fx-text-fill: rgb(61, 64, 91);
 }
 
 .SearchBar {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #F4F1DE;
     -fx-border-radius: 30;
     -fx-background-radius: 30;
     -fx-background-insets: 10;
@@ -58,13 +58,16 @@
 
 .advancedSearchLabel {
     -fx-font-size: 15px;
-    -fx-font-weight: bold;
     -fx-text-fill: rgb(61, 64, 91);
+    -fx-font-family: "JetBrains Mono NL Bold";
 }
 
-.text-field,
-.label {
+.text-field {
     -fx-text-fill: rgb(61, 64, 91);
+    -fx-prompt-text-fill: rgba(224, 122, 95, 0.60);
+    -fx-background-color: #F4F1DE;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
 }
 
 .clearAllButton {
@@ -79,4 +82,18 @@
 .distance-label {
     -fx-min-width: 45px;
 }
+
+/*-----------------testing-------------------*/
+/* Styling the slider track */
+.distanceSlider>.track {
+    -fx-pref-height: 10;
+    -fx-background-color: #F4F1DE;
+    -fx-effect: innershadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0.5, -0.5, 2);
+}
+
+/* Styling the slider thumb */
+.distanceSlider>.thumb {
+    -fx-background-color: rgba(224, 122, 95);
+}
+
 
