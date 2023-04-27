@@ -53,6 +53,12 @@ public class SearchBoxController {
         advancedSearchContainer.setVisible(!advancedSearchContainer.isVisible());
         advancedSearchContainer.setManaged(!advancedSearchContainer.isManaged());
         advancedSearchButton.setText(advancedSearchContainer.isVisible() ? "Hide Advanced Search" : "Show Advanced Search");
+
+        //reset advanced search fields on hide
+        if(!advancedSearchContainer.isVisible()){
+            onClearAdvancedSearch(actionEvent);
+        }
+
     }
 
     public void onClearSearch(MouseEvent actionEvent) {
