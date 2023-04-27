@@ -39,13 +39,13 @@
             <Label GridPane.columnIndex="0" GridPane.rowIndex="2">Max. Distance:</Label>
             <HBox minHeight="25" alignment="CENTER_LEFT" maxWidth="Infinity" GridPane.hgrow="ALWAYS" GridPane.columnIndex="1" GridPane.rowIndex="2">
                 <Label styleClass="distance-label" fx:id="searchMaxDistanceLabel" text="50 km"/>
-                <Slider fx:id="searchMaxDistanceSlider" max="50" min="1" HBox.hgrow="ALWAYS" styleClass="distanceSlider"/>
+                <Slider fx:id="searchMaxDistanceSlider" max="100" min="1" HBox.hgrow="ALWAYS" styleClass="distanceSlider"/>
             </HBox>
 
             <Label GridPane.columnIndex="0" GridPane.rowIndex="3">Min. Distance:</Label>
             <HBox minHeight="20" alignment="CENTER_LEFT" maxWidth="Infinity" GridPane.hgrow="ALWAYS" GridPane.columnIndex="1" GridPane.rowIndex="3">
                 <Label styleClass="distance-label" fx:id="searchMinDistanceLabel" text="50 km"/>
-                <Slider fx:id="searchMinDistanceSlider" max="50" min="1"  HBox.hgrow="ALWAYS" styleClass="distanceSlider"/>
+                <Slider fx:id="searchMinDistanceSlider" max="100" min="1"  HBox.hgrow="ALWAYS" styleClass="distanceSlider"/>
             </HBox>
 
          <columnConstraints>
