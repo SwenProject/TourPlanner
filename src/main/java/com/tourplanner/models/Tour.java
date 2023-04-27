@@ -20,6 +20,7 @@ public class Tour {
     String startingPoint;
     @Column(name = "destination_point")
     String destinationPoint;
+    @Column(columnDefinition = "TEXT")
     String description;
     double distance;
     Duration duration;
