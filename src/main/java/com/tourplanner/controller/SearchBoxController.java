@@ -1,7 +1,11 @@
 package com.tourplanner.controller;
 
 import com.tourplanner.logic.TourLogic;
+import com.tourplanner.models.Tour;
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,6 +34,13 @@ public class SearchBoxController {
     }
 
     public void initialize(){
+
+        //call onSearch() to load all tours when search box is initialized
+        onSearch(null);
+
+        //when allTours list changes, redo search
+        tourLogic.getAllToursList().addListener(((ListChangeListener<Tour>) c -> onSearch(null)));
+
         //only show clear search button if search field is not empty
         clearSearchButton.visibleProperty().bind(Bindings.isNotEmpty(searchTextField.textProperty())); //Bind clear search button to search text field
 
@@ -47,6 +58,16 @@ public class SearchBoxController {
         //set default values for sliders
         searchMinDistanceSlider.setValue(searchMinDistanceSlider.getMin());
         searchMaxDistanceSlider.setValue(searchMaxDistanceSlider.getMax());
+    }
+
+    public void onSearch(ActionEvent actionEvent) {
+        //TODO: implement actual search
+
+        //for now, just show all tours
+        ObservableList<Tour> allTours = FXCollections.observableArrayList();
+        allTours.addAll(tourLogic.getAllToursList());
+        allTours.sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
+        tourLogic.getSearchedToursList().setAll(allTours);
     }
 
     public void toggleAdvancedSearch(ActionEvent actionEvent) {

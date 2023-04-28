@@ -1,18 +1,45 @@
 package com.tourplanner.controller;
 
 import com.tourplanner.logic.TourLogic;
+import com.tourplanner.models.Tour;
 import javafx.event.ActionEvent;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.util.Callback;
 
 public class TourListController {
     private final TourLogic tourLogic;
+    public ListView<Tour> tourList;
 
     public TourListController(TourLogic tourLogic) {
         this.tourLogic = tourLogic;
     }
 
+    public void initialize(){
+        tourList.setItems(tourLogic.getSearchedToursList());
+        tourList.setCellFactory(new Callback<ListView<Tour>, ListCell<Tour>>() {
+            @Override
+            public TourListCell<Tour> call(ListView<Tour> listView) {
+                return new TourListCell<>();
+            }
+        });
 
-    //TODO: Actual List for selecting tours
+        //change selectedTour when new tour is selected in list
+        tourList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null){
+                tourLogic.setSelectedTour(newValue);
+            }
+        });
 
+        //change selected tour in list when selectedTour changes
+        tourLogic.getSelectedTourProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != tourList.getSelectionModel().getSelectedItem()){
+                tourList.getSelectionModel().select(newValue);
+            }
+
+        });
+
+    }
 
     //temporary function for switching between tours for selectedTour since List is not implemented yet
     //TODO: remove
