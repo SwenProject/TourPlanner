@@ -83,7 +83,6 @@
     -fx-min-width: 80px;
 }
 
-/*-----------------testing-------------------*/
 /* Styling the slider track */
 .distanceSlider>.track {
     -fx-pref-height: 10;

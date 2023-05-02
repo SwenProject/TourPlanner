@@ -45,27 +45,37 @@
                                     <!--<Label>Tour Name:</Label>-->
                                     <Label fx:id="tourName"/>
                                 </HBox>
-                                <HBox spacing="10" styleClass="viewLabel">
-                                    <Label>Starting Point:</Label>
+                                <HBox spacing="15" styleClass="viewLabel">
+<!--                                    <Label>Starting Point:</Label>-->
+                                    <Region styleClass="startingPoint"/>
                                     <Label fx:id="startingPoint"/>
                                 </HBox>
-                                <HBox spacing="10" styleClass="viewLabel">
-                                    <Label>Destination:</Label>
+                                <HBox spacing="15" styleClass="viewLabel">
+<!--                                    <Label>Destination:</Label>-->
+                                    <Region styleClass="destinationPoint"/>
                                     <Label fx:id="destinationPoint"/>
                                 </HBox>
-                                <HBox spacing="10" styleClass="viewLabel">
-                                    <Label>Distance:</Label>
+                                <HBox spacing="15" styleClass="viewLabel">
+<!--                                    <Label>Distance:</Label>-->
+                                    <Region styleClass="distance"/>
                                     <Label fx:id="distance"/>
                                 </HBox>
-                                <HBox spacing="10" styleClass="viewLabel">
-                                    <Label>Duration</Label>
+                                <HBox spacing="15" styleClass="viewLabel">
+<!--                                    <Label>Duration</Label>-->
+                                    <Region styleClass="duration"/>
                                     <Label fx:id="duration"/>
                                 </HBox>
-                                <HBox spacing="10" styleClass="viewLabel">
-                                    <Label>Rating</Label>
+                                <HBox spacing="15" styleClass="viewLabel" alignment="CENTER_RIGHT">
+<!--                                    <Label>Rating</Label>-->
                                     <Label fx:id="rating"/>
+                                    <Region styleClass="rating"/>
+                                    <Region styleClass="rating"/>
+                                    <Region styleClass="rating"/>
+                                    <Region styleClass="rating"/>
+                                    <Region styleClass="rating"/>
+
                                 </HBox>
-                                <HBox spacing="10" styleClass="viewLabel">
+                                <HBox spacing="15" styleClass="viewLabel">
                                     <Label>Transport Type:</Label>
                                     <Label fx:id="transportType"/>
                                 </HBox>
