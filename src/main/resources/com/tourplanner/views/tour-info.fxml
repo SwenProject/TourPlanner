@@ -59,26 +59,30 @@
 <!--                                    <Label>Distance:</Label>-->
                                     <Region styleClass="distance"/>
                                     <Label fx:id="distance"/>
+                                    <HBox spacing="15" styleClass="viewLabel">
+                                        <!--<Label>Duration</Label>-->
+                                        <Region styleClass="duration"/>
+                                        <Label fx:id="duration"/>
+                                    </HBox>
                                 </HBox>
-                                <HBox spacing="15" styleClass="viewLabel">
-<!--                                    <Label>Duration</Label>-->
-                                    <Region styleClass="duration"/>
-                                    <Label fx:id="duration"/>
-                                </HBox>
-                                <HBox spacing="15" styleClass="viewLabel" alignment="CENTER_RIGHT">
-<!--                                    <Label>Rating</Label>-->
-                                    <Label fx:id="rating"/>
-                                    <Region styleClass="rating"/>
-                                    <Region styleClass="rating"/>
-                                    <Region styleClass="rating"/>
-                                    <Region styleClass="rating"/>
-                                    <Region styleClass="rating"/>
 
+                                <HBox spacing="95" alignment="CENTER_RIGHT">
+                                    <HBox spacing="15" alignment="CENTER">
+<!--                                        <Label>Transport Type:</Label>-->
+                                        <Region styleClass="transportTypeFeet"/>
+                                        <Label fx:id="transportType"/>
+                                    </HBox>
+                                    <HBox spacing="15">
+    <!--                                    <Label>Rating</Label>-->
+    <!--                                    <Label fx:id="rating"/>-->
+                                        <Region styleClass="rating"/>
+                                        <Region styleClass="rating"/>
+                                        <Region styleClass="rating"/>
+                                        <Region styleClass="rating"/>
+                                        <Region styleClass="rating"/>
+                                    </HBox>
                                 </HBox>
-                                <HBox spacing="15" styleClass="viewLabel">
-                                    <Label>Transport Type:</Label>
-                                    <Label fx:id="transportType"/>
-                                </HBox>
+
                             </VBox>
                             <VBox HBox.hgrow="ALWAYS" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="viewModeRight">
                                     <!--<Label>Description:</Label>-->
