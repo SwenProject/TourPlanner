@@ -3,17 +3,19 @@ package com.tourplanner.controller;
 import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
 import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class SearchBoxController {
     private final TourLogic tourLogic;
@@ -34,9 +36,6 @@ public class SearchBoxController {
     }
 
     public void initialize(){
-
-        //call onSearch() to load all tours when search box is initialized
-        onSearch(null);
 
         //when allTours list changes, redo search
         tourLogic.getAllToursList().addListener(((ListChangeListener<Tour>) c -> onSearch(null)));
@@ -60,14 +59,23 @@ public class SearchBoxController {
         searchMaxDistanceSlider.setValue(searchMaxDistanceSlider.getMax());
     }
 
-    public void onSearch(ActionEvent actionEvent) {
+    public void onSearch(KeyEvent actionEvent) {
+        //reset predicate to redo search in filteredList
+        tourLogic.getSearchedToursList().setPredicate(this::matchesSearch);
+    }
+
+    public boolean matchesSearch(Tour tour){
         //TODO: implement actual search
 
-        //for now, just show all tours
-        ObservableList<Tour> allTours = FXCollections.observableArrayList();
-        allTours.addAll(tourLogic.getAllToursList());
-        allTours.sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
-        tourLogic.getSearchedToursList().setAll(allTours);
+        String[] searchedWords = searchTextField.getText().split(" ");
+
+        for (String word : searchedWords){
+            if(tour.getName().toLowerCase().replace(" ", "").contains(word.toLowerCase())){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void toggleAdvancedSearch(ActionEvent actionEvent) {

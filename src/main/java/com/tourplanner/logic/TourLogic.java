@@ -8,18 +8,19 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 public class TourLogic {
     private final TourRepository tourRepository = new TourRepository();
     private final ObservableList<Tour> allTours = FXCollections.observableArrayList();
-    private final ObservableList<Tour> searchedTours = FXCollections.observableArrayList();
+    private final FilteredList<Tour> searchedTours = new FilteredList<>(allTours);
     private final ObjectProperty<Tour> selectedTour = new SimpleObjectProperty<>();
 
     public ObservableList<Tour> getAllToursList() {
         return allTours;
     }
 
-    public ObservableList<Tour> getSearchedToursList() {
+    public FilteredList<Tour> getSearchedToursList() {
         return searchedTours;
     }
 
