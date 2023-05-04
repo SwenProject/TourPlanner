@@ -27,7 +27,7 @@ public class TourListController {
         //change selectedTour when new tour is selected in list
         tourList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null){
-                tourLogic.setSelectedTour(newValue);
+                tourLogic.selectTour(newValue);
             }
         });
 
@@ -49,7 +49,7 @@ public class TourListController {
             return;
 
         if(tourLogic.getSelectedTourProperty().get() == null){
-            tourLogic.setSelectedTour(tourLogic.getAllToursList().get(0));
+            tourLogic.selectTour(tourLogic.getAllToursList().get(0));
             return;
         }
 
@@ -58,12 +58,12 @@ public class TourListController {
 
         //if it's the last tour in the list, set selectedTour to first tour in list
         if(currentIndex == tourLogic.getAllToursList().size()-1){
-            tourLogic.setSelectedTour(tourLogic.getAllToursList().get(0));
+            tourLogic.selectTour(tourLogic.getAllToursList().get(0));
         }
 
         //else set selectedTour to next tour in list
         else{
-            tourLogic.setSelectedTour(tourLogic.getAllToursList().get(currentIndex+1));
+            tourLogic.selectTour(tourLogic.getAllToursList().get(currentIndex+1));
         }
 
     }
@@ -76,7 +76,7 @@ public class TourListController {
             return;
 
         if(tourLogic.getSelectedTourProperty().get() == null){
-            tourLogic.setSelectedTour(tourLogic.getAllToursList().get(0));
+            tourLogic.selectTour(tourLogic.getAllToursList().get(0));
             return;
         }
 
@@ -85,12 +85,12 @@ public class TourListController {
 
         //if it's the first tour in the list, set selectedTour to last tour in list
         if(currentIndex == 0){
-            tourLogic.setSelectedTour(tourLogic.getAllToursList().get(tourLogic.getAllToursList().size()-1));
+            tourLogic.selectTour(tourLogic.getAllToursList().get(tourLogic.getAllToursList().size()-1));
         }
 
         //else set selectedTour to previous tour in list
         else{
-            tourLogic.setSelectedTour(tourLogic.getAllToursList().get(currentIndex-1));
+            tourLogic.selectTour(tourLogic.getAllToursList().get(currentIndex-1));
         }
     }
 }

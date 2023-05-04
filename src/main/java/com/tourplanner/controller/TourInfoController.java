@@ -3,6 +3,7 @@ package com.tourplanner.controller;
 import com.tourplanner.enums.TransportType;
 import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -50,7 +51,7 @@ public class TourInfoController {
 
         //bind listener to selectedTour object property
         //this calls loadTour() whenever the selectedTour is changed
-        tourLogic.getSelectedTourProperty().addListener((observable, oldValue, newValue) -> loadTour(newValue));
+        tourLogic.getSelectedTourProperty().addListener((observable, oldValue, newValue) -> loadTour(oldValue, newValue));
 
         //bind visibility of viewModeBorderPane and editModeBorderPane to editMode
         //this automatically switches between view and edit mode when editMode is changed
@@ -68,10 +69,24 @@ public class TourInfoController {
         description.textProperty().bindBidirectional(descriptionEdit.textProperty());
     }
 
-    private void loadTour(Tour tour){
+    private void loadTour(Tour oldTour, Tour newTour){
+
+        //if the old tour is not null, unbind all properties
+        if(oldTour != null) {
+            tourName.textProperty().unbindBidirectional(oldTour.getNameProperty());
+            startingPoint.textProperty().unbindBidirectional(oldTour.getStartingPointProperty());
+            destinationPoint.textProperty().unbindBidirectional(oldTour.getDestinationPointProperty());
+            distance.textProperty().unbindBidirectional(oldTour.getDistanceProperty());
+            duration.textProperty().unbindBidirectional(oldTour.getDurationProperty());
+            //TODO: Handle Rating unbinding
+            //TODO: Handle TransportType unbinding
+            description.textProperty().unbindBidirectional(oldTour.getDescriptionProperty());
+        }
+
+
 
         //if no tour was selected, hide tour info and show noTourSelectedText
-        if(tour == null) {
+        if(newTour == null) {
             noTourSelectedText.setVisible(true);
             noTourSelectedText.setManaged(true);
             tourInfos.setVisible(false);
@@ -86,18 +101,25 @@ public class TourInfoController {
         tourInfos.setManaged(true);
 
         //if the selected tour is new, automatically switch to edit mode
-        editMode.set(tour.getId() == null);
+        editMode.set(newTour.getId() == 0);
 
-        //load tour info into view mode elements
-        //this automatically also copies the values to edit mode elements because of the bidirectional binding
-        tourName.setText(tour.getName());
-        startingPoint.setText(tour.getStartingPoint());
-        destinationPoint.setText(tour.getDestinationPoint());
-        distance.setText(String.valueOf(tour.getDistance()));
-        duration.setText(String.valueOf(tour.getDuration()));
-        rating.setText(String.valueOf(tour.getRating()));
-        transportType.setText((String.valueOf(tour.getTransportType().ordinal())));
-        description.setText(tour.getDescription());
+        //bind fields to currently selected tour
+        tourName.textProperty().bindBidirectional(newTour.getNameProperty());
+        startingPoint.textProperty().bindBidirectional(newTour.getStartingPointProperty());
+        destinationPoint.textProperty().bindBidirectional(newTour.getDestinationPointProperty());
+        distance.textProperty().bind(Bindings.createStringBinding(() -> {
+                    if (newTour.getDistance() == 0.0) {
+                        return "Could not calculate distance";
+                    } else {
+                        return String.format("%.2f km", newTour.getDistance());
+                    }
+                }, newTour.getDistanceProperty()));
+
+
+        //duration.textProperty().bind(Bindings.format("%2d:%02d", newTour.getDurationProperty().get().getSeconds() / 3600, (newTour.getDurationProperty().get().getSeconds() % 3600) / 60));
+        //TODO: Handle Rating binding
+        //TODO: Handle TransportType binding
+        description.textProperty().bindBidirectional(newTour.getDescriptionProperty());
     }
 
     public void onEditTour(ActionEvent actionEvent) {
@@ -105,13 +127,6 @@ public class TourInfoController {
     }
 
     public void onSaveTour(ActionEvent actionEvent) {
-
-        //save changes to tour object
-        tourLogic.getSelectedTourProperty().get().setName(tourNameEdit.getText());
-        tourLogic.getSelectedTourProperty().get().setStartingPoint(startingPointEdit.getText());
-        tourLogic.getSelectedTourProperty().get().setDestinationPoint(destinationPointEdit.getText());
-        tourLogic.getSelectedTourProperty().get().setTransportType(TransportType.values()[Integer.parseInt(transportTypeEdit.getText())]);
-        tourLogic.getSelectedTourProperty().get().setDescription(descriptionEdit.getText());
 
         //save tour to database
         //this also recalculates the distance, duration, rating and map image
@@ -125,14 +140,12 @@ public class TourInfoController {
 
         //if tour was a new tour, cancelling deletes it
         //this sets the selected tour to null, which will hide the tour info
-        if(tourLogic.getSelectedTourProperty().get().getId() == null) {
+        if(tourLogic.getSelectedTourProperty().get().getId() == 0) {
             tourLogic.deleteSelectedTour();
             return;
         }
 
-        //otherwise reload tour to load old values (changes were not yet saved to tour object or db)
-        //reloading the tour also switches to view mode
-        loadTour(tourLogic.getSelectedTourProperty().get());
+        //TODO: Handle cancelling an edit on an existing tour by reloading the tour from the database
     }
 
     public void onDeleteTour(ActionEvent actionEvent) {

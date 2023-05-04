@@ -39,4 +39,8 @@ public class TourRepository {
         return new ArrayList<>(entityManager.createQuery("SELECT t FROM Tour t", Tour.class).getResultList());
     }
 
+    public Tour getById(long id) {
+        return entityManager.find(Tour.class, id);
+    }
+
 }

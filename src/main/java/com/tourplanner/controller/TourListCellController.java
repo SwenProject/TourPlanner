@@ -31,7 +31,8 @@ public class TourListCellController {
     }
 
     public void updateData(Tour tour) {
-        tourNameLabel.setText(tour.getName());
+        //bind name property to name label
+        tourNameLabel.textProperty().bind(tour.getNameProperty());
     }
 
     public VBox getTourListCell() {
