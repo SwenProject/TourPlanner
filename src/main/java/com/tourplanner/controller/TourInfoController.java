@@ -107,19 +107,28 @@ public class TourInfoController {
         tourName.textProperty().bindBidirectional(newTour.getNameProperty());
         startingPoint.textProperty().bindBidirectional(newTour.getStartingPointProperty());
         destinationPoint.textProperty().bindBidirectional(newTour.getDestinationPointProperty());
+        description.textProperty().bindBidirectional(newTour.getDescriptionProperty());
+
+        //distance needs a string converter because it is a double
         distance.textProperty().bind(Bindings.createStringBinding(() -> {
-                    if (newTour.getDistance() == 0.0) {
+                    if (newTour.getDistanceProperty().get() == 0.0) {
                         return "Could not calculate distance";
                     } else {
-                        return String.format("%.2f km", newTour.getDistance());
+                        return String.format("%.2f km", newTour.getDistanceProperty().get());
                     }
                 }, newTour.getDistanceProperty()));
 
+        //duration also needs a string converter because it is a Duration object
+        duration.textProperty().bind(Bindings.createStringBinding(() -> {
+                    if (newTour.getDurationProperty().get() == null) {
+                        return "Could not calculate duration";
+                    } else {
+                        return String.format("%2d:%02d", newTour.getDurationProperty().get().getSeconds() / 3600, (newTour.getDurationProperty().get().getSeconds() % 3600) / 60);
+                    }
+                }, newTour.getDistanceProperty()));
 
-        //duration.textProperty().bind(Bindings.format("%2d:%02d", newTour.getDurationProperty().get().getSeconds() / 3600, (newTour.getDurationProperty().get().getSeconds() % 3600) / 60));
         //TODO: Handle Rating binding
         //TODO: Handle TransportType binding
-        description.textProperty().bindBidirectional(newTour.getDescriptionProperty());
     }
 
     public void onEditTour(ActionEvent actionEvent) {
