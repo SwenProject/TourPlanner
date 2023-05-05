@@ -1,15 +1,21 @@
 package com.tourplanner.controller;
 
 import com.tourplanner.logic.TourLogic;
+import com.tourplanner.models.Tour;
 import javafx.beans.binding.Bindings;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class SearchBoxController {
     private final TourLogic tourLogic;
@@ -30,6 +36,10 @@ public class SearchBoxController {
     }
 
     public void initialize(){
+
+        //when allTours list changes, redo search
+        tourLogic.getAllToursList().addListener(((ListChangeListener<Tour>) c -> onSearch(null)));
+
         //only show clear search button if search field is not empty
         clearSearchButton.visibleProperty().bind(Bindings.isNotEmpty(searchTextField.textProperty())); //Bind clear search button to search text field
 
@@ -47,6 +57,25 @@ public class SearchBoxController {
         //set default values for sliders
         searchMinDistanceSlider.setValue(searchMinDistanceSlider.getMin());
         searchMaxDistanceSlider.setValue(searchMaxDistanceSlider.getMax());
+    }
+
+    public void onSearch(KeyEvent actionEvent) {
+        //reset predicate to redo search in filteredList
+        tourLogic.getSearchedToursList().setPredicate(this::matchesSearch);
+    }
+
+    public boolean matchesSearch(Tour tour){
+        //TODO: implement actual search
+
+        String[] searchedWords = searchTextField.getText().split(" ");
+
+        for (String word : searchedWords){
+            if(tour.getName().toLowerCase().replace(" ", "").contains(word.toLowerCase())){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void toggleAdvancedSearch(ActionEvent actionEvent) {
