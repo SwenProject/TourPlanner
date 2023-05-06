@@ -10,6 +10,7 @@
     -fx-background-radius: 0 0 10 10;
     /*-fx-focus-color: rgb(61, 64, 91);*/
     -fx-faint-focus-color: rgba(224, 122, 95, 0.53);
+    -fx-cursor: hand;
 }
 
 .advancedSearchContainer {
@@ -35,7 +36,7 @@
     -fx-max-width: 15px;
     -fx-min-height: 15px;
     -fx-min-width: 15px;
-
+    -fx-cursor: hand;
 }
 
 .searchBoxTextField {
@@ -72,6 +73,7 @@
 
 .clearAllButton {
     -fx-text-fill: rgb(224, 122, 95) !important;
+    -fx-cursor: hand;
 }
 
 .button {

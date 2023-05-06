@@ -1,47 +1,17 @@
+/*-----------STYLING OF OUTER BOX, SHADOW AND SCROLL-PANE-----------*/
+
 .tour-info-container {
     -fx-background-color: transparent;
-    /*-fx-padding: 0 0 10px 0;*/
     -fx-padding: 4px 6px 6px 4px;
-    /*-fx-effect: innershadow(gaussian, rgba(61, 64, 91, 0.44), -5, 4, 0, -3);*/
     -fx-border-radius: 10;
     -fx-background-radius: 10;
-
 }
 
-.tour-infos .scroll-bar {
-    /*padding for the scroll bar*/
-    -fx-padding: 3px 5px 3px 3px;
-}
-
-.text-field {
-    -fx-background-radius: 5;
-    -fx-padding: 10px;
-    -fx-background-color: #F4F1DE;
-    -fx-prompt-text-fill: rgba(224, 122, 95, 0.50);
-    -fx-text-fill: rgb(61, 64, 91);
-}
-
-.text-area {
-    -fx-background-color: #F4F1DE;
-    -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
-    -fx-prompt-text-fill: rgba(224, 122, 95, 0.50);
-    -fx-text-fill: rgb(61, 64, 91);
-}
-
-.text-area .scroll-pane {
-    -fx-background-color: transparent;
-}
-.text-area .scroll-pane .viewport{
-    -fx-background-color: transparent;
-}
-.text-area .scroll-pane .content{
-    -fx-background-color: transparent;
-}
-
-.text-area .scroll-bar:horizontal .thumb,
-.text-area .scroll-bar:vertical .thumb {
-    -fx-background-color: rgba(224, 122, 95, 0.5);
+.tour-info-main-box {
+    -fx-background-color: #F2CC8F; /* main background color of tour-info */
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
 }
 
 .tourInfoButtonBar {
@@ -52,63 +22,92 @@
     -fx-text-fill: rgb(61, 64, 91);
 }
 
-.tour-info-main-box {
-    -fx-background-color: #F2CC8F;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
+/*-----------STYLING OF TEXT AND TEXT-FIELDS-----------*/
+
+/*--View Mode --*/
+
+.view-mode-tour-info-hbox {
+    -fx-spacing: 20px;
+    -fx-padding: 15px 15px 20px 20px;
 }
 
-.editModeLeft {
-    -fx-padding: 15px;
-    -fx-spacing: 10;
+.view-mode-border-pane-center {
+    -fx-padding: 0px 5px 0px 0px;
 }
 
-.editModeRight {
-    -fx-padding: 15px;
+.viewModeLeft{
+    -fx-spacing: 15px;
 }
 
-.viewModeLeft {
-    -fx-padding: 15px;
-    -fx-spacing: 5px;
+.viewModeRight {
+    -fx-padding: 5px 0 0 0;
 }
 
-.viewModeLeft .viewLabel {
-    -fx-alignment: center-left;
-    -fx-padding: 0 0 0 10px;
+.viewModeRight .text-area {
+    -fx-background-color: #F9DCA3;
+    -fx-min-height: 260px;
+    -fx-border-radius: 5px;
+    -fx-border-color: rgb(61, 64, 91);
 }
+
+.tour-name-label {
+    -fx-font-size: 20px;
+    -fx-font-family: "JetBrains Mono NL Bold";
+    -fx-padding: 0 0 5px 0;
+}
+
 
 .viewModeLeft .viewLabel .label {
-    -fx-padding: 5px;
+    -fx-min-height: 40px;
     -fx-background-color: #F9DCA3;
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
     -fx-border-color: rgb(61, 64, 91);
     -fx-pref-width: 450;
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 10px;
 }
 
-.viewModeLeft .labelName {
-    -fx-font-size: 20px;
-    -fx-font-family: "JetBrains Mono NL Bold";
+
+.viewModeLeft .center-label {
+    -fx-padding: 0 !important;
+    -fx-alignment: center !important;
 }
 
-.viewModeRight {
-    -fx-padding: 10px;
+/*--Edit Mode --*/
+
+.edit-mode-tour-info-hbox {
+    -fx-spacing: 20px;
+    -fx-padding: 20px 15px 20px 20px;
 }
 
-.viewModeRight .text-area {
-    -fx-background-color: #F9DCA3;
-    -fx-border-radius: 10px;
-    -fx-border-color: rgb(61, 64, 91);
+.edit-mode-border-pane-center {
+    -fx-padding: 0px 5px 0px 0px;
 }
 
-.tourDescription {
-    -fx-border-radius: 10px;
+.editModeLeft {
+    -fx-spacing: 15px;
+}
+
+.text-field {
+    -fx-background-radius: 5;
+    -fx-min-height: 40px;
+    /*-fx-padding: 10px;*/
     -fx-background-color: #F4F1DE;
-    -fx-background-radius: 30;
-    -fx-prompt-text-fill: rgba(224, 122, 95, 0.60);
+    -fx-prompt-text-fill: rgba(224, 122, 95, 0.50);
     -fx-text-fill: rgb(61, 64, 91);
 }
+
+.text-area {
+    -fx-min-height: 260px;
+    -fx-background-color: #F4F1DE;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-prompt-text-fill: rgba(224, 122, 95, 0.50);
+    -fx-text-fill: rgb(61, 64, 91);
+}
+
+/*-----------BUTTON STYLING-----------*/
 
 .button {
     -fx-padding: 0;
@@ -121,6 +120,7 @@
     -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
     -fx-alignment: center;
     -fx-content-display: center;
+    -fx-cursor: hand;
 }
 
 .buttonTextBig {
@@ -135,9 +135,24 @@
     -fx-font-size: 11px;
 }
 
-.specialButton {
+.greenButton {
     -fx-background-color: #81B29A;
     -fx-text-fill: rgb(255, 255, 255);
+    -fx-cursor: hand;
+}
+
+/*-----------MAKE BACKGROUNDS TRANSPARENT-----------*/
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
 }
 
 .scroll-pane {
@@ -148,25 +163,68 @@
     -fx-background-color: transparent;
 }
 
-.startingPoint {
-    -fx-shape: "M8.286 3.407A1.5 1.5 0 0 0 6 4.684v14.632a1.5 1.5 0 0 0 2.286 1.277l11.888-7.316a1.5 1.5 0 0 0 0-2.555L8.286 3.407z";
-    -fx-background-color: #3D405B;
-    -fx-max-height: 17px;
-    -fx-max-width: 16px;
-    -fx-min-height: 17px;
-    -fx-min-width: 16px;
+/*-----------SCROLL-BAR STYLING-----------*/
+
+.scroll-bar .track {
+    -fx-background-color: transparent !important;
 }
 
-.destinationPoint {
-    -fx-shape: "M486.869,40.363c-2.789-1.752-5.959-2.63-9.145-2.63c-2.551,0-5.098,0.558-7.472,1.704l-30.271,14.689 c-14.084,6.836-29.346,10.245-44.593,10.245c-16.123,0-32.214-3.808-46.919-11.392c-14.673-7.568-30.699-11.327-46.695-11.327 c-16.728,0-33.441,4.095-48.592,12.252V42.8c0-10.149-8.236-18.37-18.369-18.37c-10.133,0-18.354,8.221-18.354,18.37v328.94 c0,10.133,8.221,18.354,18.354,18.354c10.133,0,18.369-8.221,18.369-18.354V203.853c15.15-8.157,31.88-12.268,48.607-12.268 c15.996,0,32.007,3.76,46.68,11.326c14.705,7.584,30.796,11.393,46.902,11.393c15.247,0,30.51-3.41,44.609-10.244l45.245-21.953 c5.927-2.868,9.686-8.859,9.686-15.438V54.908C494.914,48.981,491.855,43.485,486.869,40.363z";
-    -fx-background-color: #3D405B;
-    -fx-max-height: 17px;
-    -fx-max-width: 14px;
-    -fx-min-height: 17px;
-    -fx-min-width: 14px;
+.tour-infos .scroll-bar:vertical {
+    /*padding for the vertical scroll bar*/
+    -fx-padding: 3px 0 3px 5px;
+    -fx-background-color: transparent;
 }
 
-.distance {
+.tour-infos .scroll-bar:horizontal {
+    /*padding for the horizontal scroll bar*/
+    -fx-padding: 3px 5px 3px 10px;
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-bar:vertical {
+    /*padding for the vertical scroll bar in text-area*/
+    -fx-padding: 0 5px 0 0;
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-bar:horizontal .thumb,
+.text-area .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(224, 122, 95, 0.5);
+}
+
+/*-----------TOUR INFO ICONS-----------*/
+
+.startingPointIcon {
+    -fx-shape: "M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z";
+    -fx-background-color: #3D405B;
+    -fx-opacity: 0.8;
+    -fx-max-height: 22px;
+    -fx-max-width: 20px;
+    -fx-min-height: 22px;
+    -fx-min-width: 20px;
+}
+
+.destinationPointIcon {
+
+    /*flag*/
+    /*-fx-shape: "M48 24C48 10.7 37.3 0 24 0S0 10.7 0 24V64 350.5 400v88c0 13.3 10.7 24 24 24s24-10.7 24-24V388l80.3-20.1c41.1-10.3 84.6-5.5 122.5 13.4c44.2 22.1 95.5 24.8 141.7 7.4l34.7-13c12.5-4.7 20.8-16.6 20.8-30V66.1c0-23-24.2-38-44.8-27.7l-9.6 4.8c-46.3 23.2-100.8 23.2-147.1 0c-35.1-17.6-75.4-22-113.5-12.5L48 52V24zm0 77.5l96.6-24.2c27-6.7 55.5-3.6 80.4 8.8c54.9 27.4 118.7 29.7 175 6.8V334.7l-24.4 9.1c-33.7 12.6-71.2 10.7-103.4-5.4c-48.2-24.1-103.3-30.1-155.6-17.1L48 338.5v-237z";*/
+
+    /*flag filled*/
+    /*-fx-shape: "M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32V64 368 480c0 17.7 14.3 32 32 32s32-14.3 32-32V352l64.3-16.1c41.1-10.3 84.6-5.5 122.5 13.4c44.2 22.1 95.5 24.8 141.7 7.4l34.7-13c12.5-4.7 20.8-16.6 20.8-30V66.1c0-23-24.2-38-44.8-27.7l-9.6 4.8c-46.3 23.2-100.8 23.2-147.1 0c-35.1-17.6-75.4-22-113.5-12.5L64 48V32z";*/
+
+    /*flag checkered*/
+    -fx-shape: "M32 0C49.7 0 64 14.3 64 32V48l69-17.2c38.1-9.5 78.3-5.1 113.5 12.5c46.3 23.2 100.8 23.2 147.1 0l9.6-4.8C423.8 28.1 448 43.1 448 66.1V345.8c0 13.3-8.3 25.3-20.8 30l-34.7 13c-46.2 17.3-97.6 14.6-141.7-7.4c-37.9-19-81.3-23.7-122.5-13.4L64 384v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V400 334 64 32C0 14.3 14.3 0 32 0zM64 187.1l64-13.9v65.5L64 252.6V318l48.8-12.2c5.1-1.3 10.1-2.4 15.2-3.3V238.7l38.9-8.4c8.3-1.8 16.7-2.5 25.1-2.1l0-64c13.6 .4 27.2 2.6 40.4 6.4l23.6 6.9v66.7l-41.7-12.3c-7.3-2.1-14.8-3.4-22.3-3.8v71.4c21.8 1.9 43.3 6.7 64 14.4V244.2l22.7 6.7c13.5 4 27.3 6.4 41.3 7.4V194c-7.8-.8-15.6-2.3-23.2-4.5l-40.8-12v-62c-13-3.8-25.8-8.8-38.2-15c-8.2-4.1-16.9-7-25.8-8.8v72.4c-13-.4-26 .8-38.7 3.6L128 173.2V98L64 114v73.1zM320 335.7c16.8 1.5 33.9-.7 50-6.8l14-5.2V251.9l-7.9 1.8c-18.4 4.3-37.3 5.7-56.1 4.5v77.4zm64-149.4V115.4c-20.9 6.1-42.4 9.1-64 9.1V194c13.9 1.4 28 .5 41.7-2.6l22.3-5.2z";
+
+    -fx-background-color: #3D405B;
+    -fx-opacity: 0.8;
+    -fx-padding: 0 1px 0 1px; /*to make it same width as startingPointIcon*/
+    -fx-max-height: 22px;
+    -fx-max-width: 20px;
+    -fx-min-height: 22px;
+    -fx-min-width: 20px;
+}
+
+.distanceIcon {
     -fx-shape: "M11.39 10.39L7.5 14.277 3.61 10.39a5.5 5.5 0 1 1 7.78 0zM7.5 8.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm12.89 10.89l-3.89 3.888-3.89-3.889a5.5 5.5 0 1 1 7.78 0zM16.5 17.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z";
     -fx-background-color: #3D405B;
     -fx-max-height: 16px;
@@ -175,7 +233,7 @@
     -fx-min-width: 15px;
 }
 
-.duration {
+.durationIcon {
     -fx-shape: "M234.98,185.064h-49.98v-49.982c0-8.284-6.716-15-15.001-15c-8.284,0-15,6.716-15,15v64.982 c0,8.284,6.716,15,15,15h64.98c8.284,0,15-6.716,15-15C249.98,191.779,243.264,185.064,234.98,185.064z M267.046,99.193l18.56-18.56c5.858-5.858,5.858-15.355,0-21.213c-5.856-5.858-15.354-5.857-21.213,0 L243.14,80.671C225.87,70.046,206.132,63.065,185,60.804V30h45c8.284,0,15-6.716,15-15s-6.716-15-15-15H110 c-8.284,0-15,6.716-15,15s6.716,15,15,15h45v30.804c-21.132,2.261-40.871,9.243-58.142,19.868L75.607,59.42 c-5.858-5.858-15.355-5.857-21.213,0c-5.858,5.858-5.858,15.356,0,21.213l18.56,18.561C46.491,124.678,30,160.448,30,200 c0,77.196,62.804,140,140,140c77.196,0,140-62.804,140-140C310,160.447,293.509,124.678,267.046,99.193z M170,310 c-60.654,0-110-49.346-110-110c0-60.655,49.346-110.001,110-110.001c60.654,0,110,49.346,110,110.001 C280,260.654,230.654,310,170,310z";
     -fx-background-color: #3D405B;
     -fx-max-height: 18px;
@@ -184,49 +242,74 @@
     -fx-min-width: 15px;
 }
 
-.rating {
-    -fx-shape: "M13.73 3.51001L15.49 7.03001C15.73 7.52002 16.37 7.99001 16.91 8.08001L20.1 8.61001C22.14 8.95001 22.62 10.43 21.15 11.89L18.67 14.37C18.25 14.79 18.02 15.6 18.15 16.18L18.86 19.25C19.42 21.68 18.13 22.62 15.98 21.35L12.99 19.58C12.45 19.26 11.56 19.26 11.01 19.58L8.01997 21.35C5.87997 22.62 4.57997 21.67 5.13997 19.25L5.84997 16.18C5.97997 15.6 5.74997 14.79 5.32997 14.37L2.84997 11.89C1.38997 10.43 1.85997 8.95001 3.89997 8.61001L7.08997 8.08001C7.61997 7.99001 8.25997 7.52002 8.49997 7.03001L10.26 3.51001C11.22 1.60001 12.78 1.60001 13.73 3.51001Z";
-    /*color should change to #E07A5F to show how many stars it has*/
+/*-----------TRANSPORT TYPE ICONS AND CONTAINER-----------*/
+
+.transportTypeBikeIcon {
+    -fx-background-image: url("../images/bike.png");
+    -fx-background-size: 60px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-opacity: 0.4;
+}
+
+.transportTypeCarIcon {
+    -fx-background-image: url("../images/car.png");
+    -fx-background-size: 90px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-opacity: 0.5;
+}
+
+.transportTypeFeetIcon {
+    -fx-background-image: url("../images/footsteps.png");
+    -fx-background-size: 90px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-opacity: 0.4;
+}
+
+.transportTypeIconContainer {
+    -fx-border-width: 1px;
+    -fx-max-height: 40px;
+    -fx-max-width: 100px;
+    -fx-min-height: 40px;
+    -fx-min-width: 100px;
+}
+
+/*-----------TRANSPORT TYPE SELECTOR-----------*/
+
+.edit-transport-type-grid-pane {
+    -fx-min-height: 40px;
+    -fx-max-width: 300px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
     -fx-background-color: #F4F1DE;
-    -fx-max-height: 30px;
-    -fx-max-width: 30px;
-    -fx-min-height: 30px;
-    -fx-min-width: 30px;
+    -fx-cursor: hand;
 }
 
-.transportTypePlane {
-    -fx-shape: "M407.72,208c-2.72,0-14.44.08-18.67.31l-57.77,1.52L198.06,48H135.25l74.59,164.61-97.31,1.44L68.25,160H16.14l20.61,94.18c.15.54.33,1.07.53,1.59a.26.26,0,0,1,0,.15,15.42,15.42,0,0,0-.53,1.58L15.86,352H67.64l45.45-55,96.77,2.17L135.24,464h63l133-161.75,57.77,1.54c4.29.23,16,.31,18.66.31,24.35,0,44.27-3.34,59.21-9.94C492.22,283,496,265.46,496,256,496,225.94,463,208,407.72,208Zm-71.29,87.9v0Z";
+.edit-transport-type-grid-pane .selectedTransportType {
     -fx-background-color: #3D405B;
-    -fx-max-height: 30px;
-    -fx-max-width: 43px;
-    -fx-min-height: 30px;
-    -fx-min-width: 43px;
+    -fx-text-fill: #F4F1DE !important;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
 
-.transportTypeCar {
-    -fx-shape: "M171.3 96H224v96H111.3l30.4-75.9C146.5 104 158.2 96 171.3 96zM272 192V96h81.2c9.7 0 18.9 4.4 25 12l67.2 84H272zm256.2 1L428.2 68c-18.2-22.8-45.8-36-75-36H171.3c-39.3 0-74.6 23.9-89.1 60.3L40.6 196.4C16.8 205.8 0 228.9 0 256V368c0 17.7 14.3 32 32 32H65.3c7.6 45.4 47.1 80 94.7 80s87.1-34.6 94.7-80H385.3c7.6 45.4 47.1 80 94.7 80s87.1-34.6 94.7-80H608c17.7 0 32-14.3 32-32V320c0-65.2-48.8-119-111.8-127zM434.7 368a48 48 0 1 1 90.5 32 48 48 0 1 1 -90.5-32zM160 336a48 48 0 1 1 0 96 48 48 0 1 1 0-96z";
-    -fx-background-color: #3D405B;
-    -fx-max-height: 30px;
+/*-----------RATING STARS STYLING AND CONTAINER-----------*/
+
+.rating-star-container {
+    -fx-padding: 0 10px 0 10px;
+}
+
+.rating-star {
+    -fx-shape: "M13.73 3.51001L15.49 7.03001C15.73 7.52002 16.37 7.99001 16.91 8.08001L20.1 8.61001C22.14 8.95001 22.62 10.43 21.15 11.89L18.67 14.37C18.25 14.79 18.02 15.6 18.15 16.18L18.86 19.25C19.42 21.68 18.13 22.62 15.98 21.35L12.99 19.58C12.45 19.26 11.56 19.26 11.01 19.58L8.01997 21.35C5.87997 22.62 4.57997 21.67 5.13997 19.25L5.84997 16.18C5.97997 15.6 5.74997 14.79 5.32997 14.37L2.84997 11.89C1.38997 10.43 1.85997 8.95001 3.89997 8.61001L7.08997 8.08001C7.61997 7.99001 8.25997 7.52002 8.49997 7.03001L10.26 3.51001C11.22 1.60001 12.78 1.60001 13.73 3.51001Z";
+    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.3), 3, 0, 3, 3);
+    -fx-background-color: #F4F1DE;
+    -fx-max-height: 40px;
     -fx-max-width: 40px;
-    -fx-min-height: 30px;
+    -fx-min-height: 40px;
     -fx-min-width: 40px;
 }
 
-.transportTypeBike {
-    -fx-shape: "M18.184,11.019c-.043-.253-1.237-7.419-1.2-7.184A1,1,0,0,0,16,3H12a1,1,0,0,0,0,2h3.153l.586,3.517L9.566,12.505a5.106,5.106,0,1,0,1.081,1.682l5.45-3.521.113.679a5,5,0,1,0,1.974-.326ZM6,19a3,3,0,0,1,0-6,2.967,2.967,0,0,1,1.821.633L5.458,15.16a1,1,0,1,0,1.084,1.68l2.37-1.531A2.972,2.972,0,0,1,9,16,3,3,0,0,1,6,19Zm12,0a2.99,2.99,0,0,1-1.449-5.611l.463,2.776a1,1,0,1,0,1.972-.33l-.463-2.782A3,3,0,0,1,18,19ZM8.707,6.293l2,2A1,1,0,1,1,9.293,9.707L7.586,8H6A1,1,0,0,1,6,6H8A1,1,0,0,1,8.707,6.293Z";
-    -fx-background-color: #3D405B;
-    -fx-max-height: 30px;
-    -fx-max-width: 38px;
-    -fx-min-height: 30px;
-    -fx-min-width: 38px;
-}
-
-.transportTypeFeet {
-    /*human walking*/
-    -fx-shape: "M160 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zM126.5 199.3c-1 .4-1.9 .8-2.9 1.2l-8 3.5c-16.4 7.3-29 21.2-34.7 38.2l-2.6 7.8c-5.6 16.8-23.7 25.8-40.5 20.2s-25.8-23.7-20.2-40.5l2.6-7.8c11.4-34.1 36.6-61.9 69.4-76.5l8-3.5c20.8-9.2 43.3-14 66.1-14c44.6 0 84.8 26.8 101.9 67.9L281 232.7l21.4 10.7c15.8 7.9 22.2 27.1 14.3 42.9s-27.1 22.2-42.9 14.3L247 287.3c-10.3-5.2-18.4-13.8-22.8-24.5l-9.6-23-19.3 65.5 49.5 54c5.4 5.9 9.2 13 11.2 20.8l23 92.1c4.3 17.1-6.1 34.5-23.3 38.8s-34.5-6.1-38.8-23.3l-22-88.1-70.7-77.1c-14.8-16.1-20.3-38.6-14.7-59.7l16.9-63.5zM68.7 398l25-62.4c2.1 3 4.5 5.8 7 8.6l40.7 44.4-14.5 36.2c-2.4 6-6 11.5-10.6 16.1L54.6 502.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L68.7 398z";
-    -fx-background-color: #3D405B;
-    -fx-max-height: 30px;
-    -fx-max-width: 20px;
-    -fx-min-height: 30px;
-    -fx-min-width: 20px;
+.rating-star-container .active-rating-star {
+    -fx-background-color: #E07A5F !important;
 }

@@ -147,6 +147,10 @@
     -fx-background-radius: 2.0em;
 }
 
+.scroll-pane .corner {
+    -fx-background-color: transparent ;
+}
+
 .scroll-pane {
     -fx-background-color: transparent;
 }

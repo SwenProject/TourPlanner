@@ -4,13 +4,14 @@ import com.tourplanner.enums.TransportType;
 import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 public class TourInfoController {
@@ -31,9 +32,15 @@ public class TourInfoController {
     public Label destinationPoint;
     public Label distance;
     public Label duration;
-    public Label rating;
-    public Label transportType;
     public TextArea description;
+    public Region transportTypeCarIcon;
+    public Region transportTypeFeetIcon;
+    public Region transportTypeBikeIcon;
+    public Region ratingStar1;
+    public Region ratingStar2;
+    public Region ratingStar3;
+    public Region ratingStar4;
+    public Region ratingStar5;
 
     //----EDIT MODE FXML ELEMENTS----
     public TextField tourNameEdit;
@@ -41,7 +48,13 @@ public class TourInfoController {
     public TextField destinationPointEdit;
     public TextField transportTypeEdit;
     public TextArea descriptionEdit;
+    public Label transportTypeSelectorCar;
+    public Label transportTypeSelectorFeet;
+    public Label transportTypeSelectorBike;
 
+    //----PROPERTIES FOR BINDING----
+    private final ObjectProperty<TransportType> currentTransportType = new SimpleObjectProperty<>();
+    private final IntegerProperty currentRating = new SimpleIntegerProperty();
 
     public TourInfoController(TourLogic tourLogic) {
         this.tourLogic = tourLogic;
@@ -65,25 +78,37 @@ public class TourInfoController {
         tourName.textProperty().bindBidirectional(tourNameEdit.textProperty());
         startingPoint.textProperty().bindBidirectional(startingPointEdit.textProperty());
         destinationPoint.textProperty().bindBidirectional(destinationPointEdit.textProperty());
-        transportType.textProperty().bindBidirectional(transportTypeEdit.textProperty());
         description.textProperty().bindBidirectional(descriptionEdit.textProperty());
+
+        //bind transportType Icons to currentTransportType property
+        //this automatically switches the icons when currentTransportType is changed
+        transportTypeCarIcon.visibleProperty().bind(currentTransportType.isEqualTo(TransportType.CAR));
+        transportTypeCarIcon.managedProperty().bind(currentTransportType.isEqualTo(TransportType.CAR));
+        transportTypeFeetIcon.visibleProperty().bind(currentTransportType.isEqualTo(TransportType.FEET));
+        transportTypeFeetIcon.managedProperty().bind(currentTransportType.isEqualTo(TransportType.FEET));
+        transportTypeBikeIcon.visibleProperty().bind(currentTransportType.isEqualTo(TransportType.BIKE));
+        transportTypeBikeIcon.managedProperty().bind(currentTransportType.isEqualTo(TransportType.BIKE));
+
+        //add listener to currentTransportType property to change the transportType selector in edit mode
+        currentTransportType.addListener((observable, oldValue, newValue) -> onTransportTypeChanged(newValue));
+
+        //add listener to currentRating property to change the rating stars in view mode
+        currentRating.addListener((observable, oldValue, newValue) -> onRatingChanged(newValue.intValue()));
     }
 
     private void loadTour(Tour oldTour, Tour newTour){
 
-        //if the old tour is not null, unbind all properties
+        //if the old tour is not null, unbind all old properties
         if(oldTour != null) {
             tourName.textProperty().unbindBidirectional(oldTour.getNameProperty());
             startingPoint.textProperty().unbindBidirectional(oldTour.getStartingPointProperty());
             destinationPoint.textProperty().unbindBidirectional(oldTour.getDestinationPointProperty());
             distance.textProperty().unbindBidirectional(oldTour.getDistanceProperty());
             duration.textProperty().unbindBidirectional(oldTour.getDurationProperty());
-            //TODO: Handle Rating unbinding
-            //TODO: Handle TransportType unbinding
+            currentTransportType.unbindBidirectional(oldTour.getTransportTypeProperty());
+            currentRating.unbindBidirectional(oldTour.getRatingProperty());
             description.textProperty().unbindBidirectional(oldTour.getDescriptionProperty());
         }
-
-
 
         //if no tour was selected, hide tour info and show noTourSelectedText
         if(newTour == null) {
@@ -107,6 +132,8 @@ public class TourInfoController {
         tourName.textProperty().bindBidirectional(newTour.getNameProperty());
         startingPoint.textProperty().bindBidirectional(newTour.getStartingPointProperty());
         destinationPoint.textProperty().bindBidirectional(newTour.getDestinationPointProperty());
+        currentTransportType.bindBidirectional(newTour.getTransportTypeProperty());
+        currentRating.bindBidirectional(newTour.getRatingProperty());
         description.textProperty().bindBidirectional(newTour.getDescriptionProperty());
 
         //distance needs a string converter because it is a double
@@ -123,12 +150,9 @@ public class TourInfoController {
                     if (newTour.getDurationProperty().get() == null) {
                         return "Could not calculate duration";
                     } else {
-                        return String.format("%2d:%02d", newTour.getDurationProperty().get().getSeconds() / 3600, (newTour.getDurationProperty().get().getSeconds() % 3600) / 60);
+                        return String.format("%d:%02d", newTour.getDurationProperty().get().getSeconds() / 3600, (newTour.getDurationProperty().get().getSeconds() % 3600) / 60);
                     }
                 }, newTour.getDistanceProperty()));
-
-        //TODO: Handle Rating binding
-        //TODO: Handle TransportType binding
     }
 
     public void onEditTour(ActionEvent actionEvent) {
@@ -157,7 +181,47 @@ public class TourInfoController {
         //TODO: Handle cancelling an edit on an existing tour by reloading the tour from the database
     }
 
+    private void onTransportTypeChanged(TransportType newTransportType){
+        transportTypeSelectorCar.getStyleClass().clear();
+        transportTypeSelectorFeet.getStyleClass().clear();
+        transportTypeSelectorBike.getStyleClass().clear();
+
+        switch (newTransportType) {
+            case CAR -> transportTypeSelectorCar.getStyleClass().add("selectedTransportType");
+            case FEET -> transportTypeSelectorFeet.getStyleClass().add("selectedTransportType");
+            case BIKE -> transportTypeSelectorBike.getStyleClass().add("selectedTransportType");
+        }
+    }
+
+    public void changeTransportTypeToCar(MouseEvent mouseEvent) {
+        this.currentTransportType.set(TransportType.CAR);
+    }
+
+    public void changeTransportTypeToFeet(MouseEvent mouseEvent) {
+        this.currentTransportType.set(TransportType.FEET);
+    }
+
+    public void changeTransportTypeToBike(MouseEvent mouseEvent) {
+        this.currentTransportType.set(TransportType.BIKE);
+    }
+
     public void onDeleteTour(ActionEvent actionEvent) {
         tourLogic.deleteSelectedTour();
     }
+
+    private void onRatingChanged(int newRating) {
+        ratingStar1.getStyleClass().remove("active-rating-star");
+        ratingStar2.getStyleClass().remove("active-rating-star");
+        ratingStar3.getStyleClass().remove("active-rating-star");
+        ratingStar4.getStyleClass().remove("active-rating-star");
+        ratingStar5.getStyleClass().remove("active-rating-star");
+
+        if(newRating >= 1) ratingStar1.getStyleClass().add("active-rating-star");
+        if(newRating >= 2) ratingStar2.getStyleClass().add("active-rating-star");
+        if(newRating >= 3) ratingStar3.getStyleClass().add("active-rating-star");
+        if(newRating >= 4) ratingStar4.getStyleClass().add("active-rating-star");
+        if(newRating >= 5) ratingStar5.getStyleClass().add("active-rating-star");
+
+    }
+
 }
