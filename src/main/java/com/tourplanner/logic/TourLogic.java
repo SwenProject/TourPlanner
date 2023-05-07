@@ -90,6 +90,10 @@ public class TourLogic {
         selectedTourProperty.set(null);
     }
 
+    public void reloadSelectedTourFromDB(){
+        tourRepository.reloadFromDB(selectedTourProperty.get());
+    }
+
     //TODO: delete map image from file system
     //to delete specific tour e.g. in tour list edit mode
     public void deleteTour(Tour tour){

@@ -178,7 +178,11 @@ public class TourInfoController {
             return;
         }
 
-        //TODO: Handle cancelling an edit on an existing tour by reloading the tour from the database
+        //reload tour from database to get old values
+        tourLogic.reloadSelectedTourFromDB();
+
+        //disable edit mode
+        editMode.set(false);
     }
 
     private void onTransportTypeChanged(TransportType newTransportType){

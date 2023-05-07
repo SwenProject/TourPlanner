@@ -43,4 +43,8 @@ public class TourRepository {
         return entityManager.find(Tour.class, id);
     }
 
+    public void reloadFromDB(Tour tour) {
+        entityManager.refresh(tour);
+    }
+
 }
