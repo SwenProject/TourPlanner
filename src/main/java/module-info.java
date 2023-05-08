@@ -12,8 +12,12 @@ module TourPlanner {
     exports com.tourplanner;
     exports com.tourplanner.controller;
     exports com.tourplanner.models;
+    exports com.tourplanner.services;
+    exports com.tourplanner.repositories;
+    exports com.tourplanner.enums;
     opens com.tourplanner.controller to javafx.fxml;
     opens com.tourplanner.models to org.hibernate.orm.core;
     exports com.tourplanner.logic;
     opens com.tourplanner.logic to javafx.fxml;
+    opens com.tourplanner.services to javafx.fxml;
 }

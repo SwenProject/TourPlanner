@@ -4,20 +4,29 @@ import com.tourplanner.enums.TransportType;
 import com.tourplanner.models.Tour;
 import com.tourplanner.repositories.TourRepository;
 import com.tourplanner.services.ITourMapService;
+import com.tourplanner.services.TourMapRequestTask;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
+import java.util.concurrent.Semaphore;
+
 public class TourLogic {
-    private final TourRepository tourRepository = new TourRepository();
+    private final TourRepository tourRepository;
+    private final ITourMapService tourMapService;
+    private final Semaphore tourMapRequestLock = new Semaphore(1); //semaphore to ensure that only one api request is made at a time
     private final ObservableList<Tour> allTours = FXCollections.observableArrayList();
     private final FilteredList<Tour> searchedTours = new FilteredList<>(allTours);
     private final ObjectProperty<Tour> selectedTourProperty = new SimpleObjectProperty<>();
 
-    public TourLogic(){ //load all tours from db in constructor
-        allTours.setAll(tourRepository.getAll());
+
+    public TourLogic(TourRepository tourRepository, ITourMapService tourMapService) {
+        this.tourRepository = tourRepository;
+        this.tourMapService = tourMapService;
+
+        allTours.setAll(tourRepository.getAll()); //load all tours from db in constructor
     }
 
     public ObservableList<Tour> getAllToursList() {
@@ -50,28 +59,25 @@ public class TourLogic {
 
         //TODO:
         // - rating calculation
-        // - use TourMapService -> inject in constr of TourLogic
 
-
-        ITourMapService tourMapService = new TourMapServiceMapQuest();
-        tourMapService.calculateRoute(selectedTourProperty.get());
+        //create new task for api request (to run async)
+        TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(selectedTourProperty.get(), tourMapService, tourMapRequestLock); //create new task
 
         if(selectedTourProperty.get().getId() == 0) { //tour is new and has no id
-            tourRepository.save(selectedTourProperty.get()); //save new tour to db
+
+            //set callback of task to db save function
+            tourMapRequestTask.setCallback(tourRepository::save);
+
             allTours.add(selectedTourProperty.get()); //add new tour to all tours list
+        } else { //tour is not new and has an id
 
-            //reset selected tour to reload map and tour info
-            Tour tempTour = selectedTourProperty.get();
-            selectedTourProperty.set(null);
-            selectedTourProperty.set(tempTour);
-
-            return;
+            //set callback of task to db update function
+            tourMapRequestTask.setCallback(tourRepository::update);
         }
 
-        //update existing tour
-        tourRepository.update(selectedTourProperty.get());
-        //tour in all tours list is already updated because it is a reference to the selected tour
-
+        Thread thread = new Thread(tourMapRequestTask);
+        thread.setDaemon(true); //so that app can close even if api request is still running
+        thread.start();
     }
 
     public void deleteSelectedTour(){

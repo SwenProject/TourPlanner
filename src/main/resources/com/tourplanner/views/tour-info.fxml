@@ -28,7 +28,7 @@
                     <HBox styleClass="view-mode-border-pane-center">
                         <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS">
                             <HBox HBox.hgrow="ALWAYS" styleClass="view-mode-tour-info-hbox">
-                                <VBox HBox.hgrow="ALWAYS" styleClass="viewModeLeft" maxWidth="500" minWidth="400">
+                                <VBox HBox.hgrow="ALWAYS" styleClass="viewModeLeft" maxWidth="520" minWidth="450">
                                     <Label styleClass="tour-name-label" fx:id="tourName"/>
                                     <HBox spacing="10" styleClass="viewLabel" alignment="CENTER_LEFT" maxWidth="Infinity">
                                         <Region styleClass="startingPointIcon"/>
@@ -38,18 +38,27 @@
                                         <Region styleClass="destinationPointIcon"/>
                                         <Label fx:id="destinationPoint" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                                     </HBox>
-                                    <HBox spacing="10" styleClass="viewLabel" alignment="CENTER_LEFT">
+                                    <HBox styleClass="viewLabel" alignment="CENTER_LEFT">
                                         <HBox alignment="CENTER" styleClass="transportTypeIconContainer">
                                             <Region fx:id="transportTypeCarIcon" visible="false" managed="false" styleClass="transportTypeCarIcon" HBox.hgrow="ALWAYS"/>
                                             <Region fx:id="transportTypeFeetIcon" visible="false" managed="false" styleClass="transportTypeFeetIcon" HBox.hgrow="ALWAYS"/>
                                             <Region fx:id="transportTypeBikeIcon" visible="false" managed="false" styleClass="transportTypeBikeIcon" HBox.hgrow="ALWAYS"/>
                                         </HBox>
-                                        <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
-                                        <Region styleClass="distanceIcon"/>
-                                        <Label fx:id="distance" styleClass="center-label"/>
-                                        <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
-                                        <Region styleClass="durationIcon"/>
-                                        <Label fx:id="duration" styleClass="center-label"/>
+                                        <HBox fx:id="distanceIcon" alignment="CENTER" styleClass="distance-icon-container">
+                                            <Region styleClass="distanceIcon"/>
+                                        </HBox>
+                                        <HBox fx:id="distanceSpinner" visible="false" managed="false" alignment="CENTER" styleClass="distance-spinner-container">
+                                            <ProgressIndicator minWidth="22" maxWidth="22" minHeight="22" maxHeight="22"/>
+                                        </HBox>
+                                        <Label fx:id="distance" HBox.hgrow="ALWAYS" styleClass="center-label"/>
+
+                                        <HBox fx:id="durationIcon" alignment="CENTER" styleClass="duration-icon-container">
+                                            <Region styleClass="durationIcon"/>
+                                        </HBox>
+                                        <HBox fx:id="durationSpinner" visible="false" managed="false" alignment="CENTER" styleClass="duration-icon-container">
+                                            <ProgressIndicator minWidth="22" maxWidth="22" minHeight="22" maxHeight="22"/>
+                                        </HBox>
+                                        <Label fx:id="duration" HBox.hgrow="ALWAYS" styleClass="center-label"/>
                                     </HBox>
                                     <HBox VBox.vgrow="ALWAYS" maxWidth="Infinity" alignment="CENTER" styleClass="rating-star-container">
                                         <HBox HBox.hgrow="ALWAYS" maxWidth="300">

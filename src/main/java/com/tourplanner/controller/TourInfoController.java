@@ -11,6 +11,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
@@ -32,6 +33,10 @@ public class TourInfoController {
     public Label destinationPoint;
     public Label distance;
     public Label duration;
+    public HBox distanceIcon;
+    public HBox distanceSpinner;
+    public HBox durationIcon;
+    public HBox durationSpinner;
     public TextArea description;
     public Region transportTypeCarIcon;
     public Region transportTypeFeetIcon;
@@ -46,7 +51,6 @@ public class TourInfoController {
     public TextField tourNameEdit;
     public TextField startingPointEdit;
     public TextField destinationPointEdit;
-    public TextField transportTypeEdit;
     public TextArea descriptionEdit;
     public Label transportTypeSelectorCar;
     public Label transportTypeSelectorFeet;
@@ -55,6 +59,8 @@ public class TourInfoController {
     //----PROPERTIES FOR BINDING----
     private final ObjectProperty<TransportType> currentTransportType = new SimpleObjectProperty<>();
     private final IntegerProperty currentRating = new SimpleIntegerProperty();
+    private final BooleanProperty distanceIsLoading = new SimpleBooleanProperty(false);
+    private final BooleanProperty durationIsLoading = new SimpleBooleanProperty(false);
 
     public TourInfoController(TourLogic tourLogic) {
         this.tourLogic = tourLogic;
@@ -88,6 +94,18 @@ public class TourInfoController {
         transportTypeFeetIcon.managedProperty().bind(currentTransportType.isEqualTo(TransportType.FEET));
         transportTypeBikeIcon.visibleProperty().bind(currentTransportType.isEqualTo(TransportType.BIKE));
         transportTypeBikeIcon.managedProperty().bind(currentTransportType.isEqualTo(TransportType.BIKE));
+
+        //bind distance loading spinner to distanceIsLoading property
+        distanceSpinner.visibleProperty().bind(distanceIsLoading);
+        distanceSpinner.managedProperty().bind(distanceIsLoading);
+        distanceIcon.visibleProperty().bind(distanceIsLoading.not());
+        distanceIcon.managedProperty().bind(distanceIsLoading.not());
+
+        //bind duration loading spinner to durationIsLoading property
+        durationSpinner.visibleProperty().bind(durationIsLoading);
+        durationSpinner.managedProperty().bind(durationIsLoading);
+        durationIcon.visibleProperty().bind(durationIsLoading.not());
+        durationIcon.managedProperty().bind(durationIsLoading.not());
 
         //add listener to currentTransportType property to change the transportType selector in edit mode
         currentTransportType.addListener((observable, oldValue, newValue) -> onTransportTypeChanged(newValue));
@@ -139,8 +157,13 @@ public class TourInfoController {
         //distance needs a string converter because it is a double
         distance.textProperty().bind(Bindings.createStringBinding(() -> {
                     if (newTour.getDistanceProperty().get() == 0.0) {
-                        return "Could not calculate distance";
+                        distanceIsLoading.set(false);
+                        return "Error";
+                    } else if (newTour.getDistanceProperty().get() == -1.0){
+                        distanceIsLoading.set(true);
+                        return "...";
                     } else {
+                        distanceIsLoading.set(false);
                         return String.format("%.2f km", newTour.getDistanceProperty().get());
                     }
                 }, newTour.getDistanceProperty()));
@@ -148,8 +171,13 @@ public class TourInfoController {
         //duration also needs a string converter because it is a Duration object
         duration.textProperty().bind(Bindings.createStringBinding(() -> {
                     if (newTour.getDurationProperty().get() == null) {
-                        return "Could not calculate duration";
+                        durationIsLoading.set(false);
+                        return "Error";
+                    } else if (newTour.getDurationProperty().get().getSeconds() == -1){
+                        durationIsLoading.set(true);
+                        return "...";
                     } else {
+                        durationIsLoading.set(false);
                         return String.format("%d:%02d", newTour.getDurationProperty().get().getSeconds() / 3600, (newTour.getDurationProperty().get().getSeconds() % 3600) / 60);
                     }
                 }, newTour.getDurationProperty()));

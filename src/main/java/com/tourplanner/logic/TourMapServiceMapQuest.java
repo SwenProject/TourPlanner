@@ -5,12 +5,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Duration;
-import java.util.Iterator;
 
+import javafx.application.Platform;
 import org.json.JSONObject;
-
-
-
 
 import com.tourplanner.models.Tour;
 import com.tourplanner.services.ITourMapService;
@@ -49,10 +46,11 @@ public class TourMapServiceMapQuest implements ITourMapService {
             // Save route to access nested objects and values
             JSONObject route = jsonResponse.getJSONObject("route");
 
-            //write to tourObject
-            tour.setDistance(route.getFloat("distance"));
-            tour.setDuration(Duration.ofSeconds(route.getInt("time")));
-
+            //write to tourObject with Platform.runLater because Properties need to be updated on the JavaFX Application Thread
+            Platform.runLater(() -> {
+                tour.setDistance(route.getFloat("distance"));
+                tour.setDuration(Duration.ofSeconds(route.getInt("time")));
+            });
 
             // Retrieve sessionId and boundingBox for StaticMap request
             String sessionID = route.getString("sessionId");

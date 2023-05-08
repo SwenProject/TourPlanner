@@ -1,9 +1,15 @@
 package com.tourplanner.controller;
 
 import com.tourplanner.logic.TourLogic;
+import com.tourplanner.logic.TourMapServiceMapQuest;
+import com.tourplanner.repositories.TourRepository;
+import com.tourplanner.services.ITourMapService;
 
 public class ControllerFactory {
-    private final TourLogic tourLogic = new TourLogic();
+
+    private final TourRepository tourRepository = new TourRepository();
+    private final ITourMapService tourMapService = new TourMapServiceMapQuest();
+    private final TourLogic tourLogic = new TourLogic(tourRepository, tourMapService);
 
     public Object create(Class<?> controllerClass){
         if(controllerClass == MainController.class){
