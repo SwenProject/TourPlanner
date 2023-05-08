@@ -152,7 +152,7 @@ public class TourInfoController {
                     } else {
                         return String.format("%d:%02d", newTour.getDurationProperty().get().getSeconds() / 3600, (newTour.getDurationProperty().get().getSeconds() % 3600) / 60);
                     }
-                }, newTour.getDistanceProperty()));
+                }, newTour.getDurationProperty()));
     }
 
     public void onEditTour(ActionEvent actionEvent) {
