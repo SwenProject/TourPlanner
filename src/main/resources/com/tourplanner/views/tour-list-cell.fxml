@@ -12,7 +12,7 @@
             prefHeight="200"
             VBox.vgrow="ALWAYS"
             alignment="CENTER"
-            styleClass="map-container"
+            styleClass="list-cell-container"
 >
 
     <Label>This is a tour cell!</Label>

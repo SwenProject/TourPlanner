@@ -3,12 +3,14 @@ package com.tourplanner.controller;
 import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
 
 public class TourListController {
     private final TourLogic tourLogic;
+    public Label noToursLabel;
     public ListView<Tour> tourList;
 
     public TourListController(TourLogic tourLogic) {
@@ -16,6 +18,15 @@ public class TourListController {
     }
 
     public void initialize(){
+
+        //bind visibility of tourList to whether or not the list is empty
+        tourList.visibleProperty().bind(tourLogic.getSearchedToursListProperty().emptyProperty().not());
+        tourList.managedProperty().bind(tourLogic.getSearchedToursListProperty().emptyProperty().not());
+
+        //bind visibility of noToursLabel to whether or not the list is empty
+        noToursLabel.visibleProperty().bind(tourLogic.getSearchedToursListProperty().emptyProperty());
+        noToursLabel.managedProperty().bind(tourLogic.getSearchedToursListProperty().emptyProperty());
+
         tourList.setItems(tourLogic.getSearchedToursList());
         tourList.setCellFactory(new Callback<ListView<Tour>, ListCell<Tour>>() {
             @Override
@@ -26,7 +37,7 @@ public class TourListController {
 
         //change selectedTour when new tour is selected in list
         tourList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue != null){
+            if(newValue != null){ //user selected a new tour
                 tourLogic.selectTour(newValue);
             }
         });
@@ -41,56 +52,4 @@ public class TourListController {
 
     }
 
-    //temporary function for switching between tours for selectedTour since List is not implemented yet
-    //TODO: remove
-    public void onNextTour(ActionEvent actionEvent) {
-
-        if(tourLogic.getAllToursList().isEmpty())
-            return;
-
-        if(tourLogic.getSelectedTourProperty().get() == null){
-            tourLogic.selectTour(tourLogic.getAllToursList().get(0));
-            return;
-        }
-
-        //see which index tour is in tourlist
-        int currentIndex = tourLogic.getAllToursList().indexOf(tourLogic.getSelectedTourProperty().get());
-
-        //if it's the last tour in the list, set selectedTour to first tour in list
-        if(currentIndex == tourLogic.getAllToursList().size()-1){
-            tourLogic.selectTour(tourLogic.getAllToursList().get(0));
-        }
-
-        //else set selectedTour to next tour in list
-        else{
-            tourLogic.selectTour(tourLogic.getAllToursList().get(currentIndex+1));
-        }
-
-    }
-
-    //temporary function for switching between tours for selectedTour since List is not implemented yet
-    //TODO: remove
-    public void onPreviousTour(ActionEvent actionEvent) {
-
-        if(tourLogic.getAllToursList().isEmpty())
-            return;
-
-        if(tourLogic.getSelectedTourProperty().get() == null){
-            tourLogic.selectTour(tourLogic.getAllToursList().get(0));
-            return;
-        }
-
-        //see which index tour is in tourlist
-        int currentIndex = tourLogic.getAllToursList().indexOf(tourLogic.getSelectedTourProperty().get());
-
-        //if it's the first tour in the list, set selectedTour to last tour in list
-        if(currentIndex == 0){
-            tourLogic.selectTour(tourLogic.getAllToursList().get(tourLogic.getAllToursList().size()-1));
-        }
-
-        //else set selectedTour to previous tour in list
-        else{
-            tourLogic.selectTour(tourLogic.getAllToursList().get(currentIndex-1));
-        }
-    }
 }

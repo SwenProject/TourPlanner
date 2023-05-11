@@ -1,0 +1,53 @@
+.tourListContainer {
+    -fx-text-fill: rgb(61, 64, 91);
+    -fx-background-color: #d9d9d9;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    /*-fx-effect: innershadow(gaussian, rgba(61, 64, 91, 0.44), -5, 3, 0, -3);*/
+    /*-fx-effect: dropshadow(three-pass-box, rgba(61, 64, 91, 0.44), 2, 0, 0, 3.5);*/
+    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
+}
+
+/*remove default styling of listview and add padding*/
+
+.list-view {
+    -fx-background-color: transparent;
+    -fx-padding: 0 5px 0 0;
+
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 0 15px 20px 20px;
+}
+
+.first-list-cell {
+    -fx-padding: 20px 15px 20px 20px !important;
+}
+
+/*style un-selected list cell*/
+.list-cell .list-cell-container {
+    -fx-background-color: #F4F1DE;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
+}
+
+/*style selected list cell*/
+.list-cell:filled:selected .list-cell-container {
+    /*-fx-background-color: #F9DCA3;*/
+    -fx-border-width: 3px;
+    -fx-border-radius: 10;
+    -fx-border-color: rgb(61, 64, 91);
+    -fx-background-radius: 10;
+    -fx-background-insets: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
+}
+
+.list-cell .label{
+    -fx-text-fill: blue !important;
+}
+
+.list-cell:filled:selected .label{
+    -fx-text-fill: green !important;
+}

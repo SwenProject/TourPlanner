@@ -9,7 +9,7 @@
 <VBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.tourplanner.controller.TourListController"
-            stylesheets="@../css/trip-list.css"
+            stylesheets="@../css/tour-list.css"
             maxWidth="Infinity"
             maxHeight="Infinity"
             VBox.vgrow="ALWAYS"
@@ -17,13 +17,9 @@
             alignment="CENTER"
 >
 
-    <Label text="Saved tours will appear here!" />
-
-    <!--Temporary Buttons for switching between tours since listview is not implemented yet-->
-    <Button text="Next Tour" onAction="#onNextTour" />
-    <Button text="Previous Tour" onAction="#onPreviousTour" />
+    <Label fx:id="noToursLabel" text="No tours" />
 
     <!--ListView for displaying tours-->
-    <ListView fx:id="tourList" />
+    <ListView VBox.vgrow="ALWAYS" visible="false" managed="false" fx:id="tourList" />
 
 </VBox>

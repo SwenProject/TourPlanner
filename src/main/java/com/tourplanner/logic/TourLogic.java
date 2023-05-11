@@ -5,7 +5,9 @@ import com.tourplanner.models.Tour;
 import com.tourplanner.repositories.TourRepository;
 import com.tourplanner.services.ITourMapService;
 import com.tourplanner.services.TourMapRequestTask;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +21,7 @@ public class TourLogic {
     private final Semaphore tourMapRequestLock = new Semaphore(1); //semaphore to ensure that only one api request is made at a time
     private final ObservableList<Tour> allTours = FXCollections.observableArrayList();
     private final FilteredList<Tour> searchedTours = new FilteredList<>(allTours);
+    private final ListProperty<Tour> searchedToursListProperty = new SimpleListProperty<>(searchedTours);
     private final ObjectProperty<Tour> selectedTourProperty = new SimpleObjectProperty<>();
 
 
@@ -35,6 +38,10 @@ public class TourLogic {
 
     public FilteredList<Tour> getSearchedToursList() {
         return searchedTours;
+    }
+
+    public ListProperty<Tour> getSearchedToursListProperty() {
+        return searchedToursListProperty;
     }
 
     public ObjectProperty<Tour> getSelectedTourProperty() {
