@@ -17,7 +17,10 @@
             alignment="CENTER"
 >
 
-    <Label fx:id="noToursLabel" text="No tours" />
+    <VBox fx:id="noToursContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
+        <Region styleClass="no-tours-icon" />
+        <Label styleClass="no-tours-text" text="No tours" />
+    </VBox>
 
     <!--ListView for displaying tours-->
     <ListView VBox.vgrow="ALWAYS" visible="false" managed="false" fx:id="tourList" />
