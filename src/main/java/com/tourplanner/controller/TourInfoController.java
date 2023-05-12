@@ -35,6 +35,7 @@ public class TourInfoController {
     public HBox durationIcon;
     public HBox durationSpinner;
     public TextArea description;
+    public VBox noDescriptionContainer;
     public Region transportTypeCarIcon;
     public Region transportTypeFeetIcon;
     public Region transportTypeBikeIcon;
@@ -58,6 +59,7 @@ public class TourInfoController {
     private final IntegerProperty currentRating = new SimpleIntegerProperty();
     private final BooleanProperty distanceIsLoading = new SimpleBooleanProperty(false);
     private final BooleanProperty durationIsLoading = new SimpleBooleanProperty(false);
+
 
     public TourInfoController(TourLogic tourLogic) {
         this.tourLogic = tourLogic;
@@ -109,6 +111,15 @@ public class TourInfoController {
 
         //add listener to currentRating property to change the rating stars in view mode
         currentRating.addListener((observable, oldValue, newValue) -> onRatingChanged(newValue.intValue()));
+
+        //bind no description container to description text
+        noDescriptionContainer.visibleProperty().bind(description.textProperty().isEmpty());
+        noDescriptionContainer.managedProperty().bind(description.textProperty().isEmpty());
+
+    }
+
+    public void switchTabs(MouseEvent mouseEvent) {
+        tourLogic.getCurrentTabProperty().set(1);
     }
 
     private void loadTour(Tour oldTour, Tour newTour){
@@ -252,5 +263,4 @@ public class TourInfoController {
         if(newRating >= 5) ratingStar5.getStyleClass().add("active-rating-star");
 
     }
-
 }

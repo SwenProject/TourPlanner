@@ -5,10 +5,7 @@ import com.tourplanner.models.Tour;
 import com.tourplanner.repositories.TourRepository;
 import com.tourplanner.services.ITourMapService;
 import com.tourplanner.services.TourMapRequestTask;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -23,7 +20,7 @@ public class TourLogic {
     private final FilteredList<Tour> searchedTours = new FilteredList<>(allTours);
     private final ListProperty<Tour> searchedToursListProperty = new SimpleListProperty<>(searchedTours);
     private final ObjectProperty<Tour> selectedTourProperty = new SimpleObjectProperty<>();
-
+    private final IntegerProperty currentTabProperty = new SimpleIntegerProperty(0);
 
     public TourLogic(TourRepository tourRepository, ITourMapService tourMapService) {
         this.tourRepository = tourRepository;
@@ -46,6 +43,10 @@ public class TourLogic {
 
     public ObjectProperty<Tour> getSelectedTourProperty() {
         return selectedTourProperty;
+    }
+
+    public IntegerProperty getCurrentTabProperty() {
+        return currentTabProperty;
     }
 
     public void selectTour(Tour tour){

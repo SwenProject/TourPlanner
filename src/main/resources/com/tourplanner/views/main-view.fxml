@@ -18,7 +18,10 @@
 
     <SplitPane fx:id="rightContainer" orientation="VERTICAL" styleClass="rightMainContainer" minWidth="500" prefWidth="600">
         <fx:include fx:id="mapFile" source="map.fxml" minHeight="250"/>
-        <fx:include fx:id="tourInfoFile" source="tour-info.fxml" minHeight="120"/>
+        <StackPane>
+            <fx:include fx:id="tourInfoFile" source="tour-info.fxml" minHeight="170"/>
+            <fx:include fx:id="tourLogsFile" visible="false" managed="false" source="tour-logs.fxml" minHeight="120"/>
+        </StackPane>
     </SplitPane>
 
 </SplitPane>
