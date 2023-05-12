@@ -1,13 +1,21 @@
 package com.tourplanner.logic;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Iterator;
 
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Random;
+
 import javafx.application.Platform;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.tourplanner.models.Tour;
@@ -18,8 +26,21 @@ public class TourMapServiceMapQuest implements ITourMapService {
 
 //TODO:
 // request to staticMap API with SessionId and boundingBox
-    public void calculateRoute(Tour tour){
-        try{
+    public void calculateRoute(Tour tour) {
+
+        //delete old image from filesystem if valid path
+        try {
+            if (tour.getPathToMapImage() != null && !tour.getPathToMapImage().equals("error")) {
+                Files.delete(Paths.get(tour.getPathToMapImage()));
+            }
+        //set path to null
+            tour.setPathToMapImage(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+
             String url = "https://www.mapquestapi.com/directions/v2/optimizedroute" +
                     "?key=" + System.getenv("mapQuestAPIKey")
                     + "&from=" + tour.getStartingPoint()
@@ -28,10 +49,10 @@ public class TourMapServiceMapQuest implements ITourMapService {
                     + "&doReverseGeocode=false"
                     + "&outFormat=json";
 
-            switch (tour.getTransportType()){
-                case CAR -> url+="&routeType=fastest";
-                case FEET -> url+="&routeType=pedestrian";
-                case BIKE -> url+="&routeType=bicycle";
+            switch (tour.getTransportType()) {
+                case CAR -> url += "&routeType=fastest";
+                case FEET -> url += "&routeType=pedestrian";
+                case BIKE -> url += "&routeType=bicycle";
                 default -> throw new IllegalArgumentException("Invalid transport type");
             }
 
@@ -70,16 +91,90 @@ public class TourMapServiceMapQuest implements ITourMapService {
             System.out.println("boundingBox: " + boundingBox);
             System.out.println("distance: " + tour.getDistance());
 
+            //Make API Request and store Map jpeg to directory
+            getMapImageFromAPI(tour, sessionID, boundingBox);
 
+
+        } catch (JSONException e) {
+            Platform.runLater(() -> {
+                // -2 so that frontend can display error message
+                tour.setDistance(-2);
+                tour.setDuration(Duration.ofSeconds(-2));
+                // "error" because if null frontend displays loading spinner
+                tour.setPathToMapImage("error");
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void getMapImageFromAPI(Tour tour, String sessionId, JSONObject boundingBox){
+        try {
+            String url = "https://www.mapquestapi.com/staticmap/v5/map"
+                    + "?key=" + System.getenv("mapQuestAPIKey")
+                    + "&boundingBox="
+                    //upper left
+                        + boundingBox.getJSONObject("ul").getDouble("lat") + ","
+                        + boundingBox.getJSONObject("ul").getDouble("lng") + ","
+                    //lower right
+                        + boundingBox.getJSONObject("lr").getDouble("lat") + ","
+                        + boundingBox.getJSONObject("lr").getDouble("lng")
+                    + "&session=" + sessionId;
+
+            //TEST
+            System.out.println(url);
+
+            // Send the HTTP GET request to the API endpoint
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("GET");
+
+            // Get the input stream of the response
+            InputStream inputStream = connection.getInputStream();
+
+            //TEST
+            //System.out.println(Arrays.toString(inputStream.readNBytes(100)));
+
+            // Create the directory if it doesn't exist
+            Path parentDirectory = Paths.get("./src/main/resources/com/tourplanner/");  // Relative path to go two directories up
+            Path directory = parentDirectory.resolve("map_images");
+            if (!Files.exists(directory)) {
+                Files.createDirectories(directory);
+            }
+
+            // Define the file path and name
+            String fileName = String.valueOf(randomNumberGenerator()) + ".jpeg";
+            Path filePath = directory.resolve(fileName);
+
+            // Store the image file
+            FileOutputStream outputStream = new FileOutputStream(filePath.toFile());
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            outputStream.close();
+            inputStream.close();
+
+            //write path to tour object
+            Platform.runLater(() -> {
+                tour.setPathToMapImage(filePath.toString());
+            });
+
+            System.out.println("Image saved successfully!");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        //TODO: Map API calls for:
-        // - map image creation
-        // - save path in Tour.pathToImage
-        // - in resources zB Ordner mit Pics
+    }
+
+    public int randomNumberGenerator() {
+        Random random = new Random();
+        int min = 100000000;  // Minimum value with 9 digits
+        int max = 999999999;  // Maximum value with 9 digits
+
+        return random.nextInt(max - min + 1) + min;
     }
 
 }

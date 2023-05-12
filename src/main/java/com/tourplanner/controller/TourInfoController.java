@@ -153,7 +153,7 @@ public class TourInfoController {
 
         //distance needs a string converter because it is a double
         distance.textProperty().bind(Bindings.createStringBinding(() -> {
-                    if (newTour.getDistanceProperty().get() == 0.0) {
+                    if (newTour.getDistanceProperty().get() == -2.0 || newTour.getDistanceProperty().get() == 0.0) {
                         distanceIsLoading.set(false);
                         return "Error";
                     } else if (newTour.getDistanceProperty().get() == -1.0){
@@ -167,7 +167,7 @@ public class TourInfoController {
 
         //duration also needs a string converter because it is a Duration object
         duration.textProperty().bind(Bindings.createStringBinding(() -> {
-                    if (newTour.getDurationProperty().get() == null) {
+                    if (newTour.getDurationProperty().get().getSeconds() == -2 || newTour.getDurationProperty().get() == null) {
                         durationIsLoading.set(false);
                         return "Error";
                     } else if (newTour.getDurationProperty().get().getSeconds() == -1){
