@@ -1,0 +1,133 @@
+.tour-logs-container {
+    -fx-background-color: transparent;
+    -fx-padding: 4px 6px 6px 4px;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.tour-logs-main-box {
+    -fx-background-color: #F2CC8F; /* main background color of tour-info */
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
+}
+
+.tourLogsButtonBar {
+    -fx-background-color: #FFE0AF;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 0 0 10px 10px;
+    -fx-padding: 0 15 0 0;
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-padding: 0;
+    -fx-font-size: 15px;
+    -fx-pref-width: 110;
+    -fx-pref-height: 35;
+    -fx-max-height: 35;
+    -fx-background-color: #F4F1DE;
+    -fx-text-fill: rgb(61, 64, 91);
+    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
+    -fx-alignment: center;
+    -fx-content-display: center;
+    -fx-cursor: hand;
+}
+
+.buttonTextBig {
+    -fx-font-size: 15px;
+    -fx-padding: 0 3px 0 0;
+    -fx-font-family: "JetBrains Mono NL ExtraBold";
+}
+
+.buttonTextSmall {
+    -fx-padding: 4px 0 0 0;
+    -fx-font-family: "JetBrains Mono NL Regular";
+    -fx-font-size: 11px;
+}
+
+.greenButton {
+    -fx-background-color: #81B29A;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-cursor: hand;
+}
+
+.greenButton .label {
+   -fx-text-fill: white;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/*-----------SCROLL-BAR STYLING-----------*/
+
+.scroll-bar .track {
+    -fx-background-color: transparent !important;
+}
+
+.tour-infos .scroll-bar:vertical {
+    /*padding for the vertical scroll bar*/
+    -fx-padding: 3px 0 3px 5px;
+    -fx-background-color: transparent;
+}
+
+.tour-infos .scroll-bar:horizontal {
+    /*padding for the horizontal scroll bar*/
+    -fx-padding: 3px 5px 3px 10px;
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-bar:vertical {
+    /*padding for the vertical scroll bar in text-area*/
+    -fx-padding: 0 5px 0 0;
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-bar:horizontal .thumb,
+.text-area .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(224, 122, 95, 0.5);
+}
+
+.tour-logs-tab-bar {
+    -fx-background-color: rgba(61, 64, 91);
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-insets: 0 0 0 20px;
+    -fx-background-radius: 10 10 0 0;
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+}
+
+.tour-name-tab-label {
+    -fx-font-size: 20px;
+    -fx-font-family: "JetBrains Mono NL Bold";
+    -fx-padding: 0 0 0 0;
+}
+
+.tour-logs-tab-label {
+    -fx-font-size: 20px;
+    -fx-font-family: "JetBrains Mono NL Bold";
+    -fx-text-fill: #ffffff;
+    -fx-padding: 0 0 0 0;
+
+}
+
+.tour-name-tab-box {
+    -fx-background-color: #F2CC8F;
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+    -fx-padding: 0 20px 0 20px;
+}
+
+.tour-logs-tab-box {
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+    -fx-padding: 0 20px 0 0;
+}
+

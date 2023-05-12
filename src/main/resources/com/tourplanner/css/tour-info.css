@@ -40,7 +40,7 @@
 }
 
 .viewModeRight {
-    -fx-padding: 5px 0 0 0;
+    -fx-padding: 0 0 0 0;
 }
 
 .viewModeRight .text-area {
@@ -273,7 +273,7 @@
     -fx-background-size: 60px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-opacity: 0.4;
+    -fx-opacity: 0.7;
 }
 
 .transportTypeCarIcon {
@@ -281,7 +281,7 @@
     -fx-background-size: 90px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-opacity: 0.5;
+    -fx-opacity: 0.7;
 }
 
 .transportTypeFeetIcon {
@@ -289,7 +289,7 @@
     -fx-background-size: 90px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-opacity: 0.4;
+    -fx-opacity: 0.7;
 }
 
 .transportTypeIconContainer {
@@ -355,4 +355,64 @@
     -fx-text-fill: rgba(61, 64, 91, 0.3);
     -fx-font-size: 25px;
     -fx-padding: 10px 0 0 0;
+}
+
+/*-----------ICON WHEN THERE IS NO DESCRIPTION-----------*/
+
+.no-description-icon {
+    -fx-opacity: 0.3;
+    -fx-shape: "M256 448c141.4 0 256-93.1 256-208S397.4 32 256 32S0 125.1 0 240c0 45.1 17.7 86.8 47.7 120.9c-1.9 24.5-11.4 46.3-21.4 62.9c-5.5 9.2-11.1 16.6-15.2 21.6c-2.1 2.5-3.7 4.4-4.9 5.7c-.6 .6-1 1.1-1.3 1.4l-.3 .3 0 0 0 0 0 0 0 0c-4.6 4.6-5.9 11.4-3.4 17.4c2.5 6 8.3 9.9 14.8 9.9c28.7 0 57.6-8.9 81.6-19.3c22.9-10 42.4-21.9 54.3-30.6c31.8 11.5 67 17.9 104.1 17.9zM128 208a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm128 0a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm96 32a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z";
+    -fx-background-color: #3D405B;
+    -fx-max-height: 60px;
+    -fx-max-width: 69px;
+    -fx-min-height: 60px;
+    -fx-min-width: 69px;
+}
+
+.no-description-text {
+    -fx-font-family: "JetBrains Mono NL Bold";
+    -fx-text-fill: rgba(61, 64, 91, 0.3);
+    -fx-font-size: 20px;
+    -fx-padding: 10px 0 0 0;
+}
+
+/*-----------TAB BAR STYLING-----------*/
+
+.tour-info-tab-bar {
+    -fx-background-color: rgba(61, 64, 91);
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-insets: 0 0 0 20px;
+    -fx-background-radius: 10 10 0 0;
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+}
+
+.tour-name-tab-label {
+    -fx-font-size: 20px;
+    -fx-font-family: "JetBrains Mono NL Bold";
+    -fx-padding: 0 0 0 0;
+}
+
+.tour-logs-tab-label {
+    -fx-font-size: 20px;
+    -fx-font-family: "JetBrains Mono NL Bold";
+    -fx-text-fill: #ffffff;
+    -fx-padding: 0 0 0 0;
+
+}
+
+.tour-name-tab-box {
+    -fx-background-color: #F2CC8F;
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+    -fx-padding: 0 20px 0 20px;
+}
+
+.tour-logs-tab-box {
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+    -fx-padding: 0 20px 0 0;
+
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.tourplanner.controller.TourLogsController"
+      stylesheets="@../css/tour-logs.css"
+      maxWidth="Infinity"
+      maxHeight="Infinity"
+      VBox.vgrow="ALWAYS"
+      styleClass="tour-logs-container"
+>
+
+    <VBox maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" styleClass="tour-logs-main-box">
+
+        <!--Selected Tour is shown here-->
+        <StackPane fx:id="tourInfos" styleClass="tour-infos" VBox.vgrow="ALWAYS">
+
+            <VBox VBox.vgrow="ALWAYS">
+                <HBox styleClass="tour-logs-tab-bar" prefWidth="Infinity">
+                    <HBox onMouseClicked="#onSwitchTabs" styleClass="tour-name-tab-box" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
+                        <Label styleClass="tour-name-tab-label" fx:id="tourName"/>
+                    </HBox>
+                    <HBox styleClass="tour-logs-tab-box" alignment="CENTER_RIGHT" minWidth="200">
+                        <Label styleClass="tour-logs-tab-label" text="Tour logs" />
+                    </HBox>
+                </HBox>
+                <!--VIEW MODE-->
+                <BorderPane fx:id="viewModeBorderPane" VBox.vgrow="ALWAYS">
+                    <!--Tour info is displayed at the top of the BorderPane-->
+                    <center>
+                        <HBox styleClass="view-mode-border-pane-center">
+                            <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS">
+
+                            </ScrollPane>
+                        </HBox>
+                    </center>
+                    <bottom> <!--Buttons are at the bottom of the BorderPane-->
+                        <HBox styleClass="tourLogsButtonBar" spacing="10" alignment="CENTER_RIGHT" minHeight="50">
+                            <Button styleClass="greenButton">
+                                <graphic>
+                                    <HBox alignment="CENTER">
+                                        <Label styleClass="buttonTextBig">Add</Label>
+                                        <Label styleClass="buttonTextSmall">new log</Label>
+                                    </HBox>
+                                </graphic>
+                            </Button>
+                        </HBox>
+                    </bottom>
+                </BorderPane>
+            </VBox>
+        </StackPane>
+    </VBox>
+</VBox>
