@@ -19,7 +19,7 @@
 
     <VBox fx:id="noToursContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
         <Region styleClass="no-tours-icon" />
-        <Label styleClass="no-tours-text" text="No tours" />
+        <Label styleClass="no-tours-text" text="no tours" />
     </VBox>
 
     <!--ListView for displaying tours-->

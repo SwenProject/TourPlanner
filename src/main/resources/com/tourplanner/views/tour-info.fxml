@@ -16,7 +16,10 @@
     <VBox maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" styleClass="tour-info-main-box">
 
         <!--Label for when there is no tour selected-->
-        <Label maxHeight="Infinity" maxWidth="Infinity" VBox.vgrow="ALWAYS" fx:id="noTourSelectedText" alignment="CENTER">Select a tour to show it here!</Label>
+        <VBox fx:id="noTourSelectedContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
+            <Region styleClass="no-tour-info-icon" />
+<!--            <Label styleClass="no-tour-info-text" text="select a tour" />-->
+        </VBox>
 
         <!--Selected Tour is shown here-->
         <StackPane fx:id="tourInfos" styleClass="tour-infos" managed="false" visible="false" VBox.vgrow="ALWAYS">

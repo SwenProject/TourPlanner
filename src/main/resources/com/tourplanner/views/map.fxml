@@ -19,6 +19,10 @@
 
     <VBox maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" alignment="CENTER" styleClass="map-main-box">
         <!--TODO: image zum databinden mit mapcontroller -> immer wenn selectedTour sich ändert entweder Karte laden oder wenn NUll dann Text Displayen -->
-        <Label>The map will appear here!</Label>
+
+        <VBox fx:id="noMapContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
+            <Region styleClass="no-map-icon" />
+<!--            <Label styleClass="no-map-text" text="select a tour" />-->
+        </VBox>
     </VBox>
 </VBox>

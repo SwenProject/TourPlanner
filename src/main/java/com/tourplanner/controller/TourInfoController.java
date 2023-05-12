@@ -10,10 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 
 public class TourInfoController {
 
@@ -22,7 +19,7 @@ public class TourInfoController {
     private final BooleanProperty editMode = new SimpleBooleanProperty(false); //for switching between view and edit mode
 
     public StackPane tourInfos; //container for both view and edit mode (only hidden when no tour is selected)
-    public Label noTourSelectedText; //placeholder text shown when no tour is selected
+    public VBox noTourSelectedContainer; //placeholder text shown when no tour is selected
     public BorderPane viewModeBorderPane; //container for view mode
     public BorderPane editModeBorderPane; //container for edit mode
 
@@ -130,16 +127,16 @@ public class TourInfoController {
 
         //if no tour was selected, hide tour info and show noTourSelectedText
         if(newTour == null) {
-            noTourSelectedText.setVisible(true);
-            noTourSelectedText.setManaged(true);
+            noTourSelectedContainer.setVisible(true);
+            noTourSelectedContainer.setManaged(true);
             tourInfos.setVisible(false);
             tourInfos.setManaged(false);
             return;
         }
 
         //if a tour was selected, show tour info and hide noTourSelectedText
-        noTourSelectedText.setVisible(false);
-        noTourSelectedText.setManaged(false);
+        noTourSelectedContainer.setVisible(false);
+        noTourSelectedContainer.setManaged(false);
         tourInfos.setVisible(true);
         tourInfos.setManaged(true);
 
