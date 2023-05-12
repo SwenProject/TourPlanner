@@ -40,8 +40,9 @@
     -fx-border-radius: 10;
     -fx-border-color: rgb(61, 64, 91);
     -fx-background-radius: 10;
-    -fx-background-insets: 2px;
-    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
+    -fx-border-insets: -3px;
+    /*-fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);*/
+    -fx-effect: null;
 }
 
 .list-cell .label{
