@@ -23,9 +23,6 @@ import com.tourplanner.services.ITourMapService;
 
 public class TourMapServiceMapQuest implements ITourMapService {
 
-
-//TODO:
-// request to staticMap API with SessionId and boundingBox
     public void calculateRoute(Tour tour) {
 
         //delete old image from filesystem if valid path
@@ -120,7 +117,8 @@ public class TourMapServiceMapQuest implements ITourMapService {
                     //lower right
                         + boundingBox.getJSONObject("lr").getDouble("lat") + ","
                         + boundingBox.getJSONObject("lr").getDouble("lng")
-                    + "&session=" + sessionId;
+                    + "&session=" + sessionId
+                    + "&size=1920,1920@2x";
 
             //TEST
             System.out.println(url);
