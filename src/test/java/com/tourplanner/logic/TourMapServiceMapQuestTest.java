@@ -21,9 +21,14 @@ class TourMapServiceMapQuestTest {
         tour.setName("SuperTour");
         tour.setStartingPoint("Wien");
         tour.setDestinationPoint("Graz");
+        //tour.getTransportType()
 
         //act
         tourMapServiceMapQuest.calculateRoute(tour);
+
+        //assert
+        assertTrue(tour.getDistance() > 190 && tour.getDistance() < 210);
+        assertTrue(tour.getDuration().getSeconds() > 6500.00 && tour.getDuration().getSeconds() < 7500.00);
 
 
     }

@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Iterator;
 
 import javafx.application.Platform;
 import org.json.JSONObject;
@@ -15,7 +16,7 @@ import com.tourplanner.services.ITourMapService;
 public class TourMapServiceMapQuest implements ITourMapService {
 
 
-//TODO: transporttype ist noch hardgecoded
+//TODO:
 // request to staticMap API with SessionId and boundingBox
     public void calculateRoute(Tour tour){
         try{
@@ -24,9 +25,15 @@ public class TourMapServiceMapQuest implements ITourMapService {
                     + "&from=" + tour.getStartingPoint()
                     + "&to=" + tour.getDestinationPoint()
                     + "&unit=k" //kilometer
-                    + "&routeType=fastest" //options: fastest, shortest, pedestriann, bicycle
                     + "&doReverseGeocode=false"
                     + "&outFormat=json";
+
+            switch (tour.getTransportType()){
+                case CAR -> url+="&routeType=fastest";
+                case FEET -> url+="&routeType=pedestrian";
+                case BIKE -> url+="&routeType=bicycle";
+                default -> throw new IllegalArgumentException("Invalid transport type");
+            }
 
             // Send the HTTP GET request to the API endpoint
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
@@ -70,9 +77,9 @@ public class TourMapServiceMapQuest implements ITourMapService {
         }
 
         //TODO: Map API calls for:
-        // - distance and estimated time calculations -> write to tour object
         // - map image creation
         // - save path in Tour.pathToImage
+        // - in resources zB Ordner mit Pics
     }
 
 }

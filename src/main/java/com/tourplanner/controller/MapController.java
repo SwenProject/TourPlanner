@@ -9,9 +9,11 @@ public class MapController {
         this.tourLogic = tourLogic;
     }
 
+    public void initialize(){
 
+        //tourLogic.getSelectedTourProperty().addListener((observable, oldValue, newValue) -> loadTourImage(newValue));
+    }
     //TODO
-    // initialize function
     // loadTourImage() -> databinden auf image in map.fxml
     // Listener adden in initialize function so wie in TourInfoController -> loadTourImage()
 }
