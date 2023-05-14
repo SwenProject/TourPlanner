@@ -1,8 +1,6 @@
 package com.tourplanner.controller;
 
 import com.tourplanner.logic.TourLogic;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.*;
 
@@ -17,9 +15,6 @@ public class MainController {
     // tour logs and tour info files for switching between tabs
     public VBox tourInfoFile;
     public VBox tourLogsFile;
-
-    @FXML
-    private TourInfoController tourInfoFileController;
 
     public MainController(TourLogic tourLogic){
         this.tourLogic = tourLogic;

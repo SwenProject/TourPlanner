@@ -1,3 +1,5 @@
+src/main/resources/com/tourplanner/map_images
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

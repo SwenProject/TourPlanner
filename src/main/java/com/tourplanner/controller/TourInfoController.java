@@ -178,7 +178,7 @@ public class TourInfoController {
 
         //duration also needs a string converter because it is a Duration object
         duration.textProperty().bind(Bindings.createStringBinding(() -> {
-                    if (newTour.getDurationProperty().get().getSeconds() == -2 || newTour.getDurationProperty().get() == null) {
+                    if (newTour.getDurationProperty().get() == null || newTour.getDurationProperty().get().getSeconds() == -2) {
                         durationIsLoading.set(false);
                         return "Error";
                     } else if (newTour.getDurationProperty().get().getSeconds() == -1){
