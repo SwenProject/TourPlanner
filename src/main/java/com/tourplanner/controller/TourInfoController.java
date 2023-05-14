@@ -5,27 +5,26 @@ import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
-import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import java.time.Duration;
 
 public class TourInfoController {
 
     private final TourLogic tourLogic; //shared TourLogic instance (contains selectedTour property)
-
     private final BooleanProperty editMode = new SimpleBooleanProperty(false); //for switching between view and edit mode
 
-    public StackPane tourInfos; //container for both view and edit mode (only hidden when no tour is selected)
-    public VBox noTourSelectedContainer; //placeholder text shown when no tour is selected
     public BorderPane viewModeBorderPane; //container for view mode
     public BorderPane editModeBorderPane; //container for edit mode
 
+    //----TAB BAR FXML ELEMENTS----
+    public Label tourName;
+
 
     //----VIEW MODE FXML ELEMENTS----
-    public Label tourName;
     public Label startingPoint;
     public Label destinationPoint;
     public Label distance;
@@ -44,6 +43,7 @@ public class TourInfoController {
     public Region ratingStar3;
     public Region ratingStar4;
     public Region ratingStar5;
+    public Button editTourButton;
 
     //----EDIT MODE FXML ELEMENTS----
     public TextField tourNameEdit;
@@ -59,6 +59,7 @@ public class TourInfoController {
     private final IntegerProperty currentRating = new SimpleIntegerProperty();
     private final BooleanProperty distanceIsLoading = new SimpleBooleanProperty(false);
     private final BooleanProperty durationIsLoading = new SimpleBooleanProperty(false);
+    private final BooleanProperty imageIsLoading = new SimpleBooleanProperty(false);
 
 
     public TourInfoController(TourLogic tourLogic) {
@@ -116,40 +117,29 @@ public class TourInfoController {
         noDescriptionContainer.visibleProperty().bind(description.textProperty().isEmpty());
         noDescriptionContainer.managedProperty().bind(description.textProperty().isEmpty());
 
+        //bind editTourButton to imageIsLoading property (disables button while route calculation is in progress)
+        editTourButton.disableProperty().bind(imageIsLoading);
     }
 
-    public void switchTabs(MouseEvent mouseEvent) {
+    public void switchTabs() {
         tourLogic.getCurrentTabProperty().set(1);
     }
 
     private void loadTour(Tour oldTour, Tour newTour){
 
         //if the old tour is not null, unbind all old properties
+        //we don't need to unbind the unidirectional bindings, because they are automatically unbound when a new property is bound
         if(oldTour != null) {
             tourName.textProperty().unbindBidirectional(oldTour.getNameProperty());
             startingPoint.textProperty().unbindBidirectional(oldTour.getStartingPointProperty());
             destinationPoint.textProperty().unbindBidirectional(oldTour.getDestinationPointProperty());
-            distance.textProperty().unbindBidirectional(oldTour.getDistanceProperty());
-            duration.textProperty().unbindBidirectional(oldTour.getDurationProperty());
             currentTransportType.unbindBidirectional(oldTour.getTransportTypeProperty());
             currentRating.unbindBidirectional(oldTour.getRatingProperty());
             description.textProperty().unbindBidirectional(oldTour.getDescriptionProperty());
         }
 
         //if no tour was selected, hide tour info and show noTourSelectedText
-        if(newTour == null) {
-            noTourSelectedContainer.setVisible(true);
-            noTourSelectedContainer.setManaged(true);
-            tourInfos.setVisible(false);
-            tourInfos.setManaged(false);
-            return;
-        }
-
-        //if a tour was selected, show tour info and hide noTourSelectedText
-        noTourSelectedContainer.setVisible(false);
-        noTourSelectedContainer.setManaged(false);
-        tourInfos.setVisible(true);
-        tourInfos.setManaged(true);
+        if(newTour == null) return; //if no new tour was selected, we are done
 
         //if the selected tour is new, automatically switch to edit mode
         editMode.set(newTour.getId() == 0);
@@ -164,38 +154,36 @@ public class TourInfoController {
 
         //distance needs a string converter because it is a double
         distance.textProperty().bind(Bindings.createStringBinding(() -> {
-                    if (newTour.getDistanceProperty().get() == -2.0 || newTour.getDistanceProperty().get() == 0.0) {
-                        distanceIsLoading.set(false);
-                        return "Error";
-                    } else if (newTour.getDistanceProperty().get() == -1.0){
-                        distanceIsLoading.set(true);
+                    if (newTour.getDistanceProperty().get() == 0.0 || newTour.getDistanceProperty().get() == -1.0){ //-1 is loading, 0 is for new tours
                         return "...";
-                    } else {
-                        distanceIsLoading.set(false);
+                    } else if (newTour.getDistanceProperty().get() == -2.0) { //-2 is error
+                        return "Error";
+                    } else { //otherwise show distance
                         return String.format("%.2f km", newTour.getDistanceProperty().get());
                     }
                 }, newTour.getDistanceProperty()));
 
         //duration also needs a string converter because it is a Duration object
         duration.textProperty().bind(Bindings.createStringBinding(() -> {
-                    if (newTour.getDurationProperty().get() == null || newTour.getDurationProperty().get().getSeconds() == -2) {
-                        durationIsLoading.set(false);
-                        return "Error";
-                    } else if (newTour.getDurationProperty().get().getSeconds() == -1){
-                        durationIsLoading.set(true);
+                    if (newTour.getDurationProperty().get() == null || newTour.getDurationProperty().get().getSeconds() == -1){ //-1 is loading, null is for new tours
                         return "...";
+                    } else if (newTour.getDurationProperty().get().getSeconds() == -2) { //-2 is error
+                        return "Error";
                     } else {
-                        durationIsLoading.set(false);
                         return String.format("%d:%02d", newTour.getDurationProperty().get().getSeconds() / 3600, (newTour.getDurationProperty().get().getSeconds() % 3600) / 60);
                     }
                 }, newTour.getDurationProperty()));
+
+        distanceIsLoading.bind(newTour.getDistanceProperty().isEqualTo(-1));
+        durationIsLoading.bind(newTour.getDurationProperty().isEqualTo(Duration.ofSeconds(-1)));
+        imageIsLoading.bind(newTour.getPathToMapImageProperty().isEqualTo("loading"));
     }
 
-    public void onEditTour(ActionEvent actionEvent) {
+    public void onEditTour() {
         editMode.set(true);
     }
 
-    public void onSaveTour(ActionEvent actionEvent) {
+    public void onSaveTour() {
 
         //save tour to database
         //this also recalculates the distance, duration, rating and map image
@@ -205,7 +193,7 @@ public class TourInfoController {
         editMode.set(false);
     }
 
-    public void onCancelEdit(ActionEvent actionEvent) {
+    public void onCancelEdit() {
 
         //if tour was a new tour, cancelling deletes it
         //this sets the selected tour to null, which will hide the tour info
@@ -233,19 +221,19 @@ public class TourInfoController {
         }
     }
 
-    public void changeTransportTypeToCar(MouseEvent mouseEvent) {
+    public void changeTransportTypeToCar() {
         this.currentTransportType.set(TransportType.CAR);
     }
 
-    public void changeTransportTypeToFeet(MouseEvent mouseEvent) {
+    public void changeTransportTypeToFeet() {
         this.currentTransportType.set(TransportType.FEET);
     }
 
-    public void changeTransportTypeToBike(MouseEvent mouseEvent) {
+    public void changeTransportTypeToBike() {
         this.currentTransportType.set(TransportType.BIKE);
     }
 
-    public void onDeleteTour(ActionEvent actionEvent) {
+    public void onDeleteTour() {
         tourLogic.deleteSelectedTour();
     }
 

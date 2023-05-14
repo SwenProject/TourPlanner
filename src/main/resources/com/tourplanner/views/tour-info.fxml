@@ -3,156 +3,144 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
+<StackPane xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.tourplanner.controller.TourInfoController"
       stylesheets="@../css/tour-info.css"
       maxWidth="Infinity"
       maxHeight="Infinity"
       VBox.vgrow="ALWAYS"
-      styleClass="tour-info-container"
+      styleClass="tour-infos"
 >
-
-    <VBox maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" styleClass="tour-info-main-box">
-
-        <!--Label for when there is no tour selected-->
-        <VBox fx:id="noTourSelectedContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
-            <Region styleClass="no-tour-info-icon" />
-<!--            <Label styleClass="no-tour-info-text" text="select a tour" />-->
-        </VBox>
-
-        <!--Selected Tour is shown here-->
-        <StackPane fx:id="tourInfos" styleClass="tour-infos" managed="false" visible="false" VBox.vgrow="ALWAYS">
-
-            <VBox VBox.vgrow="ALWAYS">
-                <HBox styleClass="tour-info-tab-bar" prefWidth="Infinity">
-                    <HBox styleClass="tour-name-tab-box" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
-                        <Label styleClass="tour-name-tab-label" fx:id="tourName"/>
-                    </HBox>
-                    <HBox onMouseClicked="#switchTabs" styleClass="tour-logs-tab-box" alignment="CENTER_RIGHT" minWidth="200">
-                        <Label styleClass="tour-logs-tab-label" text="Tour logs" />
-                    </HBox>
+    <!--VIEW MODE-->
+    <BorderPane fx:id="viewModeBorderPane" VBox.vgrow="ALWAYS">
+        <!--Border Pane top-->
+        <top>
+            <HBox styleClass="tour-info-tab-bar" prefWidth="Infinity">
+                <HBox styleClass="tour-name-tab-box" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
+                    <Label styleClass="tour-name-tab-label" fx:id="tourName"/>
                 </HBox>
-                <!--VIEW MODE-->
-                <BorderPane fx:id="viewModeBorderPane" VBox.vgrow="ALWAYS">
-                    <!--Tour info is displayed at the top of the BorderPane-->
-                    <center>
-                        <HBox styleClass="view-mode-border-pane-center">
-                            <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS">
-                                <HBox HBox.hgrow="ALWAYS" styleClass="view-mode-tour-info-hbox">
-                                    <VBox HBox.hgrow="ALWAYS" styleClass="viewModeLeft" maxWidth="520" minWidth="450">
-<!--                                        <Label styleClass="tour-name-label" fx:id="tourName"/>-->
-                                        <HBox spacing="10" styleClass="viewLabel" alignment="CENTER_LEFT" maxWidth="Infinity">
-                                            <Region styleClass="startingPointIcon"/>
-                                            <Label fx:id="startingPoint" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                                        </HBox>
-                                        <HBox spacing="10" styleClass="viewLabel" alignment="CENTER_LEFT" maxWidth="Infinity">
-                                            <Region styleClass="destinationPointIcon"/>
-                                            <Label fx:id="destinationPoint" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                                        </HBox>
-                                        <HBox styleClass="viewLabel" alignment="CENTER_LEFT">
-                                            <HBox alignment="CENTER" styleClass="transportTypeIconContainer">
-                                                <Region fx:id="transportTypeCarIcon" visible="false" managed="false" styleClass="transportTypeCarIcon" HBox.hgrow="ALWAYS"/>
-                                                <Region fx:id="transportTypeFeetIcon" visible="false" managed="false" styleClass="transportTypeFeetIcon" HBox.hgrow="ALWAYS"/>
-                                                <Region fx:id="transportTypeBikeIcon" visible="false" managed="false" styleClass="transportTypeBikeIcon" HBox.hgrow="ALWAYS"/>
-                                            </HBox>
-                                            <HBox fx:id="distanceIcon" alignment="CENTER" styleClass="distance-icon-container">
-                                                <Region styleClass="distanceIcon"/>
-                                            </HBox>
-                                            <HBox fx:id="distanceSpinner" visible="false" managed="false" alignment="CENTER" styleClass="distance-spinner-container">
-                                                <ProgressIndicator minWidth="22" maxWidth="22" minHeight="22" maxHeight="22"/>
-                                            </HBox>
-                                            <Label fx:id="distance" HBox.hgrow="ALWAYS" styleClass="center-label"/>
+                <HBox onMouseClicked="#switchTabs" styleClass="tour-logs-tab-box" alignment="CENTER_RIGHT" minWidth="200">
+                    <Label styleClass="tour-logs-tab-label" text="Tour logs" />
+                </HBox>
+            </HBox>
+        </top>
 
-                                            <HBox fx:id="durationIcon" alignment="CENTER" styleClass="duration-icon-container">
-                                                <Region styleClass="durationIcon"/>
-                                            </HBox>
-                                            <HBox fx:id="durationSpinner" visible="false" managed="false" alignment="CENTER" styleClass="duration-icon-container">
-                                                <ProgressIndicator minWidth="22" maxWidth="22" minHeight="22" maxHeight="22"/>
-                                            </HBox>
-                                            <Label fx:id="duration" HBox.hgrow="ALWAYS" styleClass="center-label"/>
-                                        </HBox>
-                                        <HBox VBox.vgrow="ALWAYS" maxWidth="Infinity" alignment="CENTER" styleClass="rating-star-container">
-                                            <HBox HBox.hgrow="ALWAYS" maxWidth="300">
-                                                <Region fx:id="ratingStar1" styleClass="rating-star"/>
-                                                <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
-                                                <Region fx:id="ratingStar2" styleClass="rating-star"/>
-                                                <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
-                                                <Region fx:id="ratingStar3" styleClass="rating-star"/>
-                                                <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
-                                                <Region fx:id="ratingStar4" styleClass="rating-star"/>
-                                                <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
-                                                <Region fx:id="ratingStar5" styleClass="rating-star"/>
-                                            </HBox>
-                                        </HBox>
-                                    </VBox>
-                                    <VBox styleClass="viewModeRight" HBox.hgrow="ALWAYS" minWidth="200">
-                                            <StackPane>
-                                                <TextArea  fx:id="description" styleClass="tourDescription" wrapText="true" editable="false"/>
-                                                <VBox fx:id="noDescriptionContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
-                                                    <Region styleClass="no-description-icon" />  <!--after textarea so that it is in front-->
-                                                    <Label styleClass="no-description-text" text="no description" />
-                                                </VBox>
-                                            </StackPane>
-                                    </VBox>
+        <!--Tour info is displayed at the top of the BorderPane-->
+        <center>
+            <HBox styleClass="view-mode-border-pane-center">
+                <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS">
+                    <HBox HBox.hgrow="ALWAYS" styleClass="view-mode-tour-info-hbox">
+                        <VBox HBox.hgrow="ALWAYS" styleClass="viewModeLeft" maxWidth="520" minWidth="450">
+                            <!--<Label styleClass="tour-name-label" fx:id="tourName"/>-->
+                            <HBox spacing="10" styleClass="viewLabel" alignment="CENTER_LEFT" maxWidth="Infinity">
+                                <Region styleClass="startingPointIcon"/>
+                                <Label fx:id="startingPoint" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                            </HBox>
+                            <HBox spacing="10" styleClass="viewLabel" alignment="CENTER_LEFT" maxWidth="Infinity">
+                                <Region styleClass="destinationPointIcon"/>
+                                <Label fx:id="destinationPoint" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                            </HBox>
+                            <HBox styleClass="viewLabel" alignment="CENTER_LEFT">
+                                <HBox alignment="CENTER" styleClass="transportTypeIconContainer">
+                                    <Region fx:id="transportTypeCarIcon" visible="false" managed="false" styleClass="transportTypeCarIcon" HBox.hgrow="ALWAYS"/>
+                                    <Region fx:id="transportTypeFeetIcon" visible="false" managed="false" styleClass="transportTypeFeetIcon" HBox.hgrow="ALWAYS"/>
+                                    <Region fx:id="transportTypeBikeIcon" visible="false" managed="false" styleClass="transportTypeBikeIcon" HBox.hgrow="ALWAYS"/>
                                 </HBox>
-                            </ScrollPane>
-                        </HBox>
-                    </center>
-                    <!--Buttons are at the bottom of the BorderPane-->
-                    <bottom>
-                        <HBox styleClass="tourInfoButtonBar" spacing="10" alignment="CENTER_RIGHT" minHeight="50">
-                            <Button text="Delete Tour" onAction="#onDeleteTour"/>
-                            <Button text="Edit Tour" onAction="#onEditTour" styleClass="greenButton"/>
-                        </HBox>
-                    </bottom>
-                </BorderPane>
-
-                <!--EDIT MODE-->
-                <BorderPane fx:id="editModeBorderPane" VBox.vgrow="ALWAYS">
-                    <!--Tour editing fields are displayed here-->
-                    <center>
-                        <HBox styleClass="edit-mode-border-pane-center" maxWidth="Infinity">
-                            <ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="Infinity" HBox.hgrow="ALWAYS">
-                                <HBox HBox.hgrow="ALWAYS" styleClass="edit-mode-tour-info-hbox">
-                                    <VBox styleClass="editModeLeft" HBox.hgrow="ALWAYS" maxWidth="500" minWidth="400">
-                                            <TextField fx:id="tourNameEdit" promptText="name your tour..." maxWidth="Infinity"/>
-                                            <TextField fx:id="startingPointEdit" promptText="choose starting point..."/>
-                                            <TextField fx:id="destinationPointEdit" promptText="choose destination..."/>
-                                            <GridPane styleClass="edit-transport-type-grid-pane">
-                                                <columnConstraints>
-                                                    <ColumnConstraints percentWidth="33.3"/>
-                                                    <ColumnConstraints percentWidth="33.3"/>
-                                                    <ColumnConstraints percentWidth="33.4"/>
-                                                </columnConstraints>
-
-                                                <Label onMouseClicked="#changeTransportTypeToCar" fx:id="transportTypeSelectorCar" text="Car" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" GridPane.vgrow="ALWAYS"/>
-                                                <Label onMouseClicked="#changeTransportTypeToFeet" fx:id="transportTypeSelectorFeet" text="Feet" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" GridPane.vgrow="ALWAYS"/>
-                                                <Label onMouseClicked="#changeTransportTypeToBike" fx:id="transportTypeSelectorBike" text="Bike" alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" GridPane.vgrow="ALWAYS"/>
-                                            </GridPane>
-                                    </VBox>
-                                    <VBox styleClass="editModeRight" minWidth="200" HBox.hgrow="ALWAYS">
-                                        <TextArea fx:id="descriptionEdit" wrapText="true" promptText="tour description..."/>
-                                    </VBox>
+                                <HBox fx:id="distanceIcon" alignment="CENTER" styleClass="distance-icon-container">
+                                    <Region styleClass="distanceIcon"/>
                                 </HBox>
-                            </ScrollPane>
+                                <HBox fx:id="distanceSpinner" visible="false" managed="false" alignment="CENTER" styleClass="distance-spinner-container">
+                                    <ProgressIndicator minWidth="22" maxWidth="22" minHeight="22" maxHeight="22"/>
+                                </HBox>
+                                <Label fx:id="distance" HBox.hgrow="ALWAYS" styleClass="center-label"/>
+
+                                <HBox fx:id="durationIcon" alignment="CENTER" styleClass="duration-icon-container">
+                                    <Region styleClass="durationIcon"/>
+                                </HBox>
+                                <HBox fx:id="durationSpinner" visible="false" managed="false" alignment="CENTER" styleClass="duration-icon-container">
+                                    <ProgressIndicator minWidth="22" maxWidth="22" minHeight="22" maxHeight="22"/>
+                                </HBox>
+                                <Label fx:id="duration" HBox.hgrow="ALWAYS" styleClass="center-label"/>
+                            </HBox>
+                            <HBox VBox.vgrow="ALWAYS" maxWidth="Infinity" alignment="CENTER" styleClass="rating-star-container">
+                                <HBox HBox.hgrow="ALWAYS" maxWidth="300">
+                                    <Region fx:id="ratingStar1" styleClass="rating-star"/>
+                                    <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                                    <Region fx:id="ratingStar2" styleClass="rating-star"/>
+                                    <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                                    <Region fx:id="ratingStar3" styleClass="rating-star"/>
+                                    <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                                    <Region fx:id="ratingStar4" styleClass="rating-star"/>
+                                    <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                                    <Region fx:id="ratingStar5" styleClass="rating-star"/>
+                                </HBox>
+                            </HBox>
+                        </VBox>
+                        <VBox styleClass="viewModeRight" HBox.hgrow="ALWAYS" minWidth="200">
+                                <StackPane>
+                                    <TextArea  fx:id="description" wrapText="true" editable="false"/>
+                                    <VBox fx:id="noDescriptionContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
+                                        <Region styleClass="no-description-icon" />  <!--after textarea so that it is in front-->
+                                        <Label styleClass="no-description-text" text="no description" />
+                                    </VBox>
+                                </StackPane>
+                        </VBox>
+                    </HBox>
+                </ScrollPane>
+            </HBox>
+        </center>
+        <!--Buttons are at the bottom of the BorderPane-->
+        <bottom>
+            <HBox styleClass="tourInfoButtonBar" spacing="10" alignment="CENTER_RIGHT" minHeight="50">
+                <Button text="Delete Tour" onAction="#onDeleteTour"/>
+                <Button fx:id="editTourButton" text="Edit Tour" onAction="#onEditTour" styleClass="greenButton"/>
+            </HBox>
+        </bottom>
+    </BorderPane>
+
+    <!--EDIT MODE-->
+    <BorderPane fx:id="editModeBorderPane" VBox.vgrow="ALWAYS">
+        <!--Tour editing fields are displayed here-->
+        <center>
+            <HBox styleClass="edit-mode-border-pane-center" maxWidth="Infinity">
+                <ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="Infinity" HBox.hgrow="ALWAYS">
+                    <HBox HBox.hgrow="ALWAYS" styleClass="edit-mode-tour-info-hbox">
+                        <VBox styleClass="editModeLeft" HBox.hgrow="ALWAYS" maxWidth="500" minWidth="400">
+                            <TextField fx:id="tourNameEdit" promptText="name your tour..." maxWidth="Infinity"/>
+                            <TextField fx:id="startingPointEdit" promptText="choose starting point..."/>
+                            <TextField fx:id="destinationPointEdit" promptText="choose destination..."/>
+                            <GridPane styleClass="edit-transport-type-grid-pane">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="33.3"/>
+                                    <ColumnConstraints percentWidth="33.3"/>
+                                    <ColumnConstraints percentWidth="33.4"/>
+                                </columnConstraints>
+
+                                <Label onMouseClicked="#changeTransportTypeToCar" fx:id="transportTypeSelectorCar" text="Car" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" GridPane.vgrow="ALWAYS"/>
+                                <Label onMouseClicked="#changeTransportTypeToFeet" fx:id="transportTypeSelectorFeet" text="Feet" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" GridPane.vgrow="ALWAYS"/>
+                                <Label onMouseClicked="#changeTransportTypeToBike" fx:id="transportTypeSelectorBike" text="Bike" alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" GridPane.vgrow="ALWAYS"/>
+                                </GridPane>
+                        </VBox>
+                        <VBox minWidth="200" HBox.hgrow="ALWAYS">
+                            <TextArea fx:id="descriptionEdit" wrapText="true" promptText="tour description..."/>
+                        </VBox>
+                    </HBox>
+                </ScrollPane>
+            </HBox>
+        </center>
+        <bottom> <!--Buttons are at the bottom of the BorderPane-->
+            <HBox styleClass="tourInfoButtonBar" spacing="10" alignment="CENTER_RIGHT" minHeight="50">
+                <Button onAction="#onCancelEdit" text="Cancel"/>
+                <Button onAction="#onSaveTour" styleClass="greenButton">
+                    <graphic>
+                        <HBox alignment="CENTER">
+                            <Label styleClass="buttonTextBig">Save</Label>
+                            <Label styleClass="buttonTextSmall">tour</Label>
                         </HBox>
-                    </center>
-                    <bottom> <!--Buttons are at the bottom of the BorderPane-->
-                        <HBox styleClass="tourInfoButtonBar" spacing="10" alignment="CENTER_RIGHT" minHeight="50">
-                            <Button onAction="#onCancelEdit" text="Cancel"/>
-                            <Button onAction="#onSaveTour" styleClass="greenButton">
-                                <graphic>
-                                    <HBox alignment="CENTER">
-                                        <Label styleClass="buttonTextBig">Save</Label>
-                                        <Label styleClass="buttonTextSmall">tour</Label>
-                                    </HBox>
-                                </graphic>
-                            </Button>
-                        </HBox>
-                    </bottom>
-                </BorderPane>
-            </VBox>
-        </StackPane>
-    </VBox>
-</VBox>
+                    </graphic>
+                </Button>
+            </HBox>
+        </bottom>
+    </BorderPane>
+</StackPane>

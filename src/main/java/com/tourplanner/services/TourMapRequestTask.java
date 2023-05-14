@@ -1,10 +1,7 @@
 package com.tourplanner.services;
 
 import com.tourplanner.models.Tour;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
-
-import java.time.Duration;
 import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 
@@ -25,16 +22,9 @@ public class TourMapRequestTask extends Task<Void> {
     }
 
     @Override
-    protected Void call() throws Exception {
+    protected Void call() {
         try {
             semaphore.acquire(); //wait for any previous api requests to complete
-
-            //write to tourObject with Platform.runLater because Properties need to be updated on the JavaFX Application Thread
-            Platform.runLater(() -> {
-                tour.setDistance(-1); //set distance and duration to -1 to indicate that the request is in progress
-                tour.setDuration(Duration.ofSeconds(-1));
-            });
-
             tourMapService.calculateRoute(tour); //make api request
             callback.accept(tour); //update tour in db using the supplied callback function
         } catch (InterruptedException e) {

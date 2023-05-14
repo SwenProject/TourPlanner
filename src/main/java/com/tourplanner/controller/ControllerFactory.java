@@ -26,6 +26,8 @@ public class ControllerFactory {
             return new TourListController(tourLogic);
         } else if (controllerClass == TourLogsController.class){
             return new TourLogsController(tourLogic);
+        } else if (controllerClass == TourDetailsController.class) {
+            return new TourDetailsController(tourLogic);
         }
         throw new IllegalArgumentException("ControllerFactory was not able to create a controller for the class: " + controllerClass.getName() + "!");
     }

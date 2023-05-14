@@ -1,18 +1,4 @@
-/*-----------STYLING OF OUTER BOX, SHADOW AND SCROLL-PANE-----------*/
-
-.tour-info-container {
-    -fx-background-color: transparent;
-    -fx-padding: 4px 6px 6px 4px;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-}
-
-.tour-info-main-box {
-    -fx-background-color: #F2CC8F; /* main background color of tour-info */
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
-}
+/*-----------STYLING OF BUTTON BAR-----------*/
 
 .tourInfoButtonBar {
     -fx-background-color: #FFE0AF;
@@ -139,6 +125,10 @@
     -fx-background-color: #81B29A;
     -fx-text-fill: rgb(255, 255, 255);
     -fx-cursor: hand;
+}
+
+.greenButton .label {
+    -fx-text-fill: white;
 }
 
 /*-----------MAKE BACKGROUNDS TRANSPARENT-----------*/
@@ -336,25 +326,6 @@
 
 .rating-star-container .active-rating-star {
     -fx-background-color: #E07A5F !important;
-}
-
-/*-----------ICON WHEN THERE IS NO TOUR SELECTED-----------*/
-
-.no-tour-info-icon {
-    -fx-opacity: 0.3;
-    -fx-shape: "M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z";
-    -fx-background-color: #3D405B;
-    -fx-max-height: 100px;
-    -fx-max-width: 100px;
-    -fx-min-height: 100px;
-    -fx-min-width: 100px;
-}
-
-.no-tour-info-text {
-    -fx-font-family: "JetBrains Mono NL Bold";
-    -fx-text-fill: rgba(61, 64, 91, 0.3);
-    -fx-font-size: 25px;
-    -fx-padding: 10px 0 0 0;
 }
 
 /*-----------ICON WHEN THERE IS NO DESCRIPTION-----------*/

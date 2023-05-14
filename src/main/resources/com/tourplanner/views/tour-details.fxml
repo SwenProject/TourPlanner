@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<StackPane
+        xmlns="http://javafx.com/javafx/17.0.2-ea"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.tourplanner.controller.TourDetailsController"
+        stylesheets="@../css/tour-details.css"
+        styleClass="tour-details-container">
+
+    <VBox maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" styleClass="tour-details-main-box">
+
+        <!--Label for when there is no tour selected-->
+        <VBox fx:id="noTourSelectedContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
+            <Region styleClass="no-tour-info-icon" />
+            <!--<Label styleClass="no-tour-info-text" text="select a tour" />-->
+        </VBox>
+
+        <StackPane fx:id="tourDetails" visible="false" managed="false" VBox.vgrow="ALWAYS">
+            <fx:include fx:id="tourInfoFile" source="tour-info.fxml"/>
+            <fx:include fx:id="tourLogsFile" source="tour-logs.fxml"/>
+        </StackPane>
+    </VBox>
+
+</StackPane>

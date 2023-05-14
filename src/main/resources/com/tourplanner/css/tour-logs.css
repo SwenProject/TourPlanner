@@ -6,7 +6,7 @@
 }
 
 .tour-logs-main-box {
-    -fx-background-color: #F2CC8F; /* main background color of tour-info */
+    -fx-background-color: #F2CC8F; /* main background color of tour-logs */
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
@@ -70,13 +70,13 @@
     -fx-background-color: transparent !important;
 }
 
-.tour-infos .scroll-bar:vertical {
+.tour-logs .scroll-bar:vertical {
     /*padding for the vertical scroll bar*/
     -fx-padding: 3px 0 3px 5px;
     -fx-background-color: transparent;
 }
 
-.tour-infos .scroll-bar:horizontal {
+.tour-logs .scroll-bar:horizontal {
     /*padding for the horizontal scroll bar*/
     -fx-padding: 3px 5px 3px 10px;
     -fx-background-color: transparent;
@@ -96,7 +96,7 @@
 .tour-logs-tab-bar {
     -fx-background-color: rgba(61, 64, 91);
     -fx-border-radius: 10 10 0 0;
-    -fx-background-insets: 0 0 0 20px;
+    -fx-background-insets: 0 20px 0 0;
     -fx-background-radius: 10 10 0 0;
     -fx-min-height: 50px;
     -fx-max-height: 50px;
@@ -106,26 +106,26 @@
     -fx-font-size: 20px;
     -fx-font-family: "JetBrains Mono NL Bold";
     -fx-padding: 0 0 0 0;
+    -fx-text-fill: #ffffff;
 }
 
 .tour-logs-tab-label {
     -fx-font-size: 20px;
     -fx-font-family: "JetBrains Mono NL Bold";
-    -fx-text-fill: #ffffff;
     -fx-padding: 0 0 0 0;
 
 }
 
 .tour-name-tab-box {
-    -fx-background-color: #F2CC8F;
-    -fx-border-radius: 10 10 0 0;
-    -fx-background-radius: 10 10 0 0;
     -fx-min-height: 50px;
     -fx-max-height: 50px;
     -fx-padding: 0 20px 0 20px;
 }
 
 .tour-logs-tab-box {
+    -fx-background-color: #F2CC8F;
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
     -fx-min-height: 50px;
     -fx-max-height: 50px;
     -fx-padding: 0 20px 0 0;

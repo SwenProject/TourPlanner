@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<SplitPane fx:id="mainContainer" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tourplanner.controller.MainController" styleClass="mainContainer">
-
-    <stylesheets>
-        <URL value="@../css/main-view.css" />
-    </stylesheets>
+<SplitPane
+        fx:id="mainContainer"
+        xmlns="http://javafx.com/javafx/17.0.2-ea"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.tourplanner.controller.MainController"
+        stylesheets="@../css/main-view.css"
+        styleClass="mainContainer">
 
     <VBox fx:id="leftContainer" minWidth="350" prefWidth="400" styleClass="leftMainContainer" >
-        <fx:include fx:id="newTripButtonFile" source="new-import-export.fxml"/>
-        <fx:include fx:id="searchBoxFile" source="search-box.fxml"/>
-        <fx:include fx:id="tripListFile" source="tour-list.fxml"/>
+        <fx:include source="new-import-export.fxml"/>
+        <fx:include source="search-box.fxml"/>
+        <fx:include source="tour-list.fxml"/>
     </VBox>
 
     <SplitPane fx:id="rightContainer" orientation="VERTICAL" styleClass="rightMainContainer" minWidth="500" prefWidth="600">
-        <fx:include fx:id="mapFile" source="map.fxml" minHeight="250"/>
-        <StackPane>
-            <fx:include fx:id="tourInfoFile" source="tour-info.fxml" minHeight="170"/>
-            <fx:include fx:id="tourLogsFile" visible="false" managed="false" source="tour-logs.fxml" minHeight="120"/>
-        </StackPane>
+        <fx:include source="map.fxml" minHeight="250"/>
+        <fx:include source="tour-details.fxml" minHeight="170"/>
     </SplitPane>
 
 </SplitPane>

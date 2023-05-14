@@ -2,11 +2,8 @@ package com.tourplanner.logic;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Iterator;
 
 
 import java.nio.file.Files;
@@ -30,11 +27,16 @@ public class TourMapServiceMapQuest implements ITourMapService {
             if (tour.getPathToMapImage() != null && !tour.getPathToMapImage().equals("error")) {
                 Files.delete(Paths.get(tour.getPathToMapImage()));
             }
-        //set path to null
-            tour.setPathToMapImage(null);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //write to tourObject with Platform.runLater because Properties need to be updated on the JavaFX Application Thread
+        Platform.runLater(() -> {
+            tour.setDistance(-1); //set distance and duration to -1 to indicate that the request is in progress
+            tour.setDuration(Duration.ofSeconds(-1));
+            tour.setPathToMapImage("loading");
+        });
 
         try {
 
@@ -141,7 +143,7 @@ public class TourMapServiceMapQuest implements ITourMapService {
             }
 
             // Define the file path and name
-            String fileName = String.valueOf(randomNumberGenerator()) + ".jpeg";
+            String fileName = randomNumberGenerator() + ".jpeg";
             Path filePath = directory.resolve(fileName);
 
             // Store the image file
