@@ -29,8 +29,8 @@ public class TourListController {
         tourList.setItems(tourLogic.getSearchedToursList());
         tourList.setCellFactory(new Callback<ListView<Tour>, ListCell<Tour>>() {
             @Override
-            public TourListCell<Tour> call(ListView<Tour> listView) {
-                return new TourListCell<>();
+            public TourListCell call(ListView<Tour> listView) {
+                return new TourListCell();
             }
         });
 

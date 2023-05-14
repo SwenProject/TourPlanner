@@ -1,9 +1,10 @@
 package com.tourplanner.controller;
 
+import com.tourplanner.models.Tour;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.VBox;
 
-public class TourListCell<Tour> extends ListCell<Tour> {
+public class TourListCell extends ListCell<Tour> {
 
     private final TourListCellController tourListCellController = new TourListCellController();
     private final VBox tourListCell = tourListCellController.getTourListCell();
@@ -26,7 +27,7 @@ public class TourListCell<Tour> extends ListCell<Tour> {
         if (empty || tour == null) {
             setGraphic(null);
         } else {
-            tourListCellController.updateData((com.tourplanner.models.Tour) tour);
+            tourListCellController.updateData(tour);
             setGraphic(tourListCell);
         }
     }

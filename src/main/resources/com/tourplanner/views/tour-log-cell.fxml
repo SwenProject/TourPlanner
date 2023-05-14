@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            maxWidth="Infinity"
+            prefHeight="200"
+            VBox.vgrow="ALWAYS"
+            alignment="CENTER"
+            styleClass="list-log-container"
+>
+
+    <Label>This is a tour log cell!</Label>
+    <Label>Tour Log comment:</Label>
+    <Label fx:id="logComment"/>
+</VBox>

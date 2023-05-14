@@ -25,13 +25,8 @@
 
         <!--VIEW MODE-->
         <BorderPane VBox.vgrow="ALWAYS">
-            <!--Tour info is displayed at the top of the BorderPane-->
             <center>
-                <HBox styleClass="view-mode-border-pane-center">
-                    <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS">
-
-                    </ScrollPane>
-                </HBox>
+                <ListView fx:id="tourLogsList" styleClass="tourLogsListView" VBox.vgrow="ALWAYS" />
             </center>
             <bottom> <!--Buttons are at the bottom of the BorderPane-->
                 <HBox styleClass="tourLogsButtonBar" spacing="10" alignment="CENTER_RIGHT" minHeight="50">
