@@ -199,9 +199,25 @@ public class TourInfoController {
 
     public void onSaveTour() {
 
-        //save tour to database
-        //this also recalculates the distance, duration, rating and map image
-        tourLogic.saveSelectedTour();
+        //if tour was a new tour, always save it
+        if(tourLogic.getSelectedTourProperty().get().getId() == 0) {
+            tourLogic.saveSelectedTour();
+            editMode.set(false);
+            return;
+        }
+
+        //else check if any of the fields relevant for the route calculation have changed
+        //this includes startingPoint, destinationPoint and transportType
+        if(!tourLogic.getSelectedTourProperty().get().getStartingPointProperty().get().equals(previousStartingPoint) ||
+                !tourLogic.getSelectedTourProperty().get().getDestinationPointProperty().get().equals(previousDestinationPoint) ||
+                tourLogic.getSelectedTourProperty().get().getTransportTypeProperty().get() != previousTransportType) {
+
+            //if they have changed, use saveSelectedTour to recalculate the route
+            tourLogic.saveSelectedTour();
+        } else {
+            //if they haven't changed, just update the tour
+            tourLogic.updateSelectedTourWithoutRecalculating();
+        }
 
         //disable edit mode
         editMode.set(false);

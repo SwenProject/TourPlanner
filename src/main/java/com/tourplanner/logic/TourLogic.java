@@ -67,6 +67,9 @@ public class TourLogic {
 
         //TODO:
         // - rating calculation
+        // - child friendliness calculation
+        // - popularity calculation
+
 
         //create new task for api request (to run async)
         TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(selectedTourProperty.get(), tourMapService, tourMapRequestLock); //create new task
@@ -84,8 +87,39 @@ public class TourLogic {
         }
 
         Thread thread = new Thread(tourMapRequestTask);
-        thread.setDaemon(true); //so that app can close even if api request is still running
+        thread.setDaemon(true); //abort request if ui is closed
         thread.start();
+    }
+
+    public void updateSelectedTourWithoutRecalculating(){
+
+        //TODO:
+        // - rating calculation
+        // - child friendliness calculation
+        // - popularity calculation
+
+        tourRepository.update(selectedTourProperty.get());
+
+    }
+
+    public void addTour(Tour tour){
+
+        //TODO:
+        // - rating calculation
+        // - child friendliness calculation
+        // - popularity calculation
+
+        //create new task for api request (to run async)
+        TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(selectedTourProperty.get(), tourMapService, tourMapRequestLock); //create new task
+
+        //set callback of task to db save function
+        tourMapRequestTask.setCallback(tourRepository::save);
+
+        Thread thread = new Thread(tourMapRequestTask);
+        thread.setDaemon(true); //abort request if ui is closed
+        thread.start();
+
+        this.getAllToursList().add(tour);
     }
 
     public void deleteSelectedTour(){

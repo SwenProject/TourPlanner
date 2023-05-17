@@ -104,6 +104,13 @@ public class TourMapServiceMapQuest implements ITourMapService {
 
         } catch (Exception e) {
             e.printStackTrace();
+            Platform.runLater(() -> {
+                // -2 so that frontend can display error message
+                tour.setDistance(-2);
+                tour.setDuration(Duration.ofSeconds(-2));
+                // "error" because if null frontend displays loading spinner
+                tour.setPathToMapImage("error");
+            });
         }
     }
 
