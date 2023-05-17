@@ -26,7 +26,11 @@
         <!--VIEW MODE-->
         <BorderPane VBox.vgrow="ALWAYS">
             <center>
-                <ListView fx:id="tourLogsList" styleClass="tourLogsListView" VBox.vgrow="ALWAYS" />
+                <ListView fx:id="tourLogsList" visible="false" managed="false" styleClass="tourLogsListView" VBox.vgrow="ALWAYS" />
+                <VBox fx:id="noLogsContainer" minHeight="300" minWidth="700" VBox.vgrow="ALWAYS" alignment="CENTER">
+                    <Region styleClass="no-logs-icon"/>
+                    <Label styleClass="no-logs-text" text="no tour logs" />
+                </VBox>
             </center>
             <bottom> <!--Buttons are at the bottom of the BorderPane-->
                 <HBox styleClass="tourLogsButtonBar" spacing="10" alignment="CENTER_RIGHT" minHeight="50">

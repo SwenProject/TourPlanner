@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 import java.util.List;
@@ -23,7 +24,8 @@ public class TourLogsController {
     //----TAB BAR FXML ELEMENTS----
     public Label tourName;
 
-    //----TOUR LOGS LIST----
+    //----FXML ELEMENTS----
+    public VBox noLogsContainer;
     public ListView<TourLog> tourLogsList;
 
     //----PROPERTIES FOR BINDING----
