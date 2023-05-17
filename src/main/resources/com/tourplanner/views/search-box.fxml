@@ -8,7 +8,7 @@
 
     <HBox alignment="CENTER_LEFT" maxWidth="Infinity" spacing="5" styleClass="SearchBar">
         <Region styleClass="searchIcon" />
-        <TextField onKeyTyped="#onSearch" fx:id="searchTextField" promptText="Search by tour name..." styleClass="searchBoxTextField" HBox.hgrow="ALWAYS" />
+        <TextField fx:id="searchTextField" promptText="Search by tour name..." styleClass="searchBoxTextField" HBox.hgrow="ALWAYS" />
         <Region visible="false" fx:id="clearSearchButton" onMouseClicked="#onClearSearch" styleClass="clearSearchButton" />
     </HBox>
 

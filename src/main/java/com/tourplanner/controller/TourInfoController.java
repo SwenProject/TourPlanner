@@ -54,6 +54,13 @@ public class TourInfoController {
     public Label transportTypeSelectorFeet;
     public Label transportTypeSelectorBike;
 
+    //----FIELDS FOR SAVING PREVIOUS VALUES FOR EDIT MODE CANCEL----
+    private String previousTourName;
+    private String previousStartingPoint;
+    private String previousDestinationPoint;
+    private String previousDescription;
+    private TransportType previousTransportType;
+
     //----PROPERTIES FOR BINDING----
     private final ObjectProperty<TransportType> currentTransportType = new SimpleObjectProperty<>();
     private final IntegerProperty currentRating = new SimpleIntegerProperty();
@@ -180,6 +187,13 @@ public class TourInfoController {
     }
 
     public void onEditTour() {
+
+        previousTourName = tourName.getText();
+        previousStartingPoint = startingPoint.getText();
+        previousDestinationPoint = destinationPoint.getText();
+        previousDescription = description.getText();
+        previousTransportType = currentTransportType.get();
+
         editMode.set(true);
     }
 
@@ -202,8 +216,12 @@ public class TourInfoController {
             return;
         }
 
-        //reload tour from database to get old values
-        tourLogic.reloadSelectedTourFromDB();
+        //reset fields to their previous values
+        tourName.textProperty().set(previousTourName);
+        startingPoint.textProperty().set(previousStartingPoint);
+        destinationPoint.textProperty().set(previousDestinationPoint);
+        description.textProperty().set(previousDescription);
+        currentTransportType.set(previousTransportType);
 
         //disable edit mode
         editMode.set(false);

@@ -4,18 +4,12 @@ import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class SearchBoxController {
     private final TourLogic tourLogic;
@@ -38,7 +32,7 @@ public class SearchBoxController {
     public void initialize(){
 
         //when allTours list changes, redo search
-        tourLogic.getAllToursList().addListener(((ListChangeListener<Tour>) c -> onSearch(null)));
+        tourLogic.getAllToursList().addListener(((ListChangeListener<Tour>) c -> onSearch()));
 
         //only show clear search button if search field is not empty
         clearSearchButton.visibleProperty().bind(Bindings.isNotEmpty(searchTextField.textProperty())); //Bind clear search button to search text field
@@ -57,9 +51,12 @@ public class SearchBoxController {
         //set default values for sliders
         searchMinDistanceSlider.setValue(searchMinDistanceSlider.getMin());
         searchMaxDistanceSlider.setValue(searchMaxDistanceSlider.getMax());
+
+        //call onSearch when search text field changes
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> onSearch());
     }
 
-    public void onSearch(KeyEvent actionEvent) {
+    public void onSearch() {
         //reset predicate to redo search in filteredList
         tourLogic.getSearchedToursList().setPredicate(this::matchesSearch);
     }
@@ -78,26 +75,26 @@ public class SearchBoxController {
         return false;
     }
 
-    public void toggleAdvancedSearch(ActionEvent actionEvent) {
+    public void toggleAdvancedSearch() {
         advancedSearchContainer.setVisible(!advancedSearchContainer.isVisible());
         advancedSearchContainer.setManaged(!advancedSearchContainer.isManaged());
         advancedSearchButton.setText(advancedSearchContainer.isVisible() ? "Hide Advanced Search" : "Show Advanced Search");
 
         //reset advanced search fields on hide
         if(!advancedSearchContainer.isVisible()){
-            onClearAdvancedSearch(actionEvent);
+            onClearAdvancedSearch();
         }
 
     }
 
-    public void onClearSearch(MouseEvent actionEvent) {
-        searchTextField.clear();
+    public void onClearSearch() {
+        searchTextField.textProperty().setValue("");
     }
 
-    public void onClearAdvancedSearch(ActionEvent actionEvent) {
-        searchStartLocationField.clear();
-        searchEndLocationField.clear();
-        searchMaxDistanceSlider.setValue(searchMaxDistanceSlider.getMax());
-        searchMinDistanceSlider.setValue(searchMinDistanceSlider.getMin());
+    public void onClearAdvancedSearch() {
+        searchStartLocationField.textProperty().setValue("");
+        searchEndLocationField.textProperty().setValue("");
+        searchMaxDistanceSlider.valueProperty().setValue(searchMaxDistanceSlider.getMax());
+        searchMinDistanceSlider.valueProperty().setValue(searchMinDistanceSlider.getMin());
     }
 }

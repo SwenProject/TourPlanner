@@ -8,12 +8,11 @@
     -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
 }
 
-/*remove default styling of listview and add padding*/
+/*-----------PADDING FOR LIST AND LIST-CELL-----------*/
 
 .list-view {
     -fx-background-color: transparent;
     -fx-padding: 0 5px 0 0;
-
 }
 
 .list-cell {
@@ -25,8 +24,11 @@
     -fx-padding: 20px 15px 20px 20px !important;
 }
 
+/*-----------STYLING OF LIST CELL OUTER CONTAINER-----------*/
+
 /*style un-selected list cell*/
 .list-cell .list-cell-container {
+    -fx-padding: 10px 15px 10px 15px;
     -fx-background-color: #F4F1DE;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
@@ -37,21 +39,13 @@
 .list-cell:filled:selected .list-cell-container {
     /*-fx-background-color: #F9DCA3;*/
     -fx-border-width: 3px;
-    -fx-border-radius: 10;
     -fx-border-color: rgb(61, 64, 91);
-    -fx-background-radius: 10;
     -fx-border-insets: -3px;
     /*-fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);*/
     -fx-effect: null;
 }
 
-.list-cell .label {
-    -fx-text-fill: blue !important;
-}
-
-.list-cell:filled:selected .label {
-    -fx-text-fill: green !important;
-}
+/*-----------NO TOURS ICON AND TEXT-----------*/
 
 .no-tours-icon {
     -fx-opacity: 0.3;
@@ -68,4 +62,116 @@
     -fx-text-fill: rgba(61, 64, 91, 0.3);
     -fx-font-size: 25px;
     -fx-padding: 10px 0 0 0;
+}
+
+/*-----------STYLING OF LIST CELL CONTENT-----------*/
+
+.list-cell .label {
+    -fx-text-fill: #3D405B;
+}
+
+.list-cell:filled:selected .label {
+    -fx-text-fill: #3D405B;
+}
+
+.tourNameLabel {
+    -fx-font-size: 24px;
+    -fx-font-family: "JetBrains Mono NL Bold";
+    -fx-padding: 0 0 0 0;
+}
+
+.tourDistanceLabel {
+    -fx-font-size: 22px;
+    -fx-text-fill: #E07A5F !important;
+    -fx-font-family: "JetBrains Mono NL Regular";
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:selected .tourDistanceLabel {
+    -fx-text-fill: #E07A5F !important;
+}
+
+.tourFromToContainer {
+    -fx-padding: 5px 0 0 0;
+}
+
+.tourFromLabel {
+    -fx-font-size: 20px;
+    -fx-font-family: "JetBrains Mono NL Regular";
+    -fx-padding: 0 10px 0 0;
+}
+
+.tourToLabel {
+    -fx-font-size: 20px;
+    -fx-font-family: "JetBrains Mono NL Regular";
+    -fx-padding: 0 0 0 10px;
+}
+
+/*-----------TRANSPORT TYPE ICONS AND CONTAINER-----------*/
+
+.transportTypeBikeIcon {
+    -fx-background-image: url("../images/bike.png");
+    -fx-background-size: 80px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-opacity: 0.7;
+}
+
+.transportTypeCarIcon {
+    -fx-background-image: url("../images/car.png");
+    -fx-background-size: 115px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-opacity: 0.7;
+}
+
+.transportTypeFeetIcon {
+    -fx-background-image: url("../images/footsteps.png");
+    -fx-background-size: 115px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-opacity: 0.7;
+}
+
+.transportTypeIconContainer {
+    -fx-padding: 5px 0 0 0;
+    -fx-border-width: 1px;
+    -fx-max-width: 120px;
+    -fx-min-width: 120px;
+    -fx-min-height: 60px;
+    -fx-max-height: 60px;
+}
+
+/*-----------RATING STAR ICON, LABEL AND CONTAINER-----------*/
+
+.arrowIcon {
+    /*-fx-shape: "M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z";*/
+    /*-fx-shape: "M36.7071 8.70711C37.0976 8.31658 37.0976 7.68342 36.7071 7.29289L30.3431 0.928932C29.9526 0.538408 29.3195 0.538408 28.9289 0.928932C28.5384 1.31946 28.5384 1.95262 28.9289 2.34315L34.5858 8L28.9289 13.6569C28.5384 14.0474 28.5384 14.6805 28.9289 15.0711C29.3195 15.4616 29.9526 15.4616 30.3431 15.0711L36.7071 8.70711ZM-2.01597e-09 9L36 9L36 7L2.01597e-09 7L-2.01597e-09 9Z";*/
+    -fx-shape: "M37.0607 13.0607C37.6464 12.4749 37.6464 11.5251 37.0607 10.9393L27.5147 1.3934C26.9289 0.807612 25.9792 0.807612 25.3934 1.3934C24.8076 1.97918 24.8076 2.92893 25.3934 3.51472L33.8787 12L25.3934 20.4853C24.8076 21.0711 24.8076 22.0208 25.3934 22.6066C25.9792 23.1924 26.9289 23.1924 27.5147 22.6066L37.0607 13.0607ZM-3.02396e-09 13.5L36 13.5L36 10.5L3.02396e-09 10.5L-3.02396e-09 13.5Z";
+    -fx-max-height: 13px;
+    -fx-max-width: 21px;
+    -fx-min-height: 13px;
+    -fx-min-width: 21px;
+    -fx-background-color: #3D405B;
+}
+
+.tourRatingLabel {
+    -fx-font-size: 25px;
+    -fx-font-family: "JetBrains Mono NL Regular";
+    -fx-text-fill: #E07A5F !important;
+    -fx-padding: 25px 32px 0 0;
+}
+
+.ratingStarIcon {
+    -fx-shape: "M44.1958 3.70821C45.3932 0.0229626 50.6068 0.0229588 51.8042 3.7082L59.2257 26.5491C59.7612 28.1972 61.297 29.3131 63.0299 29.3131H87.0463C90.9212 29.3131 92.5323 34.2715 89.3975 36.5491L69.9678 50.6656C68.5658 51.6842 67.9792 53.4897 68.5147 55.1378L75.9362 77.9787C77.1336 81.664 72.9157 84.7285 69.7808 82.4509L50.3511 68.3344C48.9492 67.3158 47.0508 67.3158 45.6489 68.3344L26.2192 82.4509C23.0843 84.7285 18.8664 81.664 20.0638 77.9787L27.4853 55.1378C28.0208 53.4897 27.4342 51.6842 26.0322 50.6656L6.60254 36.5492C3.46769 34.2715 5.07879 29.3131 8.95368 29.3131H32.9701C34.703 29.3131 36.2388 28.1972 36.7743 26.5491L44.1958 3.70821Z";
+    -fx-max-height: 80px;
+    -fx-max-width: 80px;
+    -fx-min-height: 80px;
+    -fx-min-width: 80px;
+    -fx-background-color: #F2CC8F;
+    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.3), 3, 0, 3, 3);
+}
+
+.ratingStarContainer {
+    -fx-padding: 5px 0 0 0;
 }

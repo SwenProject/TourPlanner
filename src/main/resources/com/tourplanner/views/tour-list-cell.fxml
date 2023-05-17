@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
+<HBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            maxWidth="Infinity"
-            prefHeight="200"
             VBox.vgrow="ALWAYS"
             alignment="CENTER"
             styleClass="list-cell-container"
 >
 
-    <Label>This is a tour cell!</Label>
-    <Label>The name of this tour is:</Label>
-    <Label fx:id="tourNameLabel"/>
-</VBox>
+    <VBox HBox.hgrow="ALWAYS">
+        <Label fx:id="tourNameLabel" styleClass="tourNameLabel"/>
+        <HBox alignment="CENTER_LEFT" styleClass="tourFromToContainer">
+            <Label fx:id="tourFromLabel" styleClass="tourFromLabel"/>
+            <Region styleClass="arrowIcon"/>
+            <Label fx:id="tourToLabel" styleClass="tourToLabel"/>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" styleClass="transportTypeIconContainer">
+            <Region fx:id="transportTypeCarIcon" visible="false" managed="false" styleClass="transportTypeCarIcon" HBox.hgrow="ALWAYS"/>
+            <Region fx:id="transportTypeFeetIcon" visible="false" managed="false" styleClass="transportTypeFeetIcon" HBox.hgrow="ALWAYS"/>
+            <Region fx:id="transportTypeBikeIcon" visible="false" managed="false" styleClass="transportTypeBikeIcon" HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </VBox>
+
+    <VBox HBox.hgrow="ALWAYS" minWidth="90" alignment="TOP_RIGHT">
+        <Label fx:id="tourDistanceLabel" styleClass="tourDistanceLabel"/>
+        <StackPane alignment="TOP_RIGHT" styleClass="ratingStarContainer">
+            <Region styleClass="ratingStarIcon"/>
+            <Label fx:id="tourRatingLabel" styleClass="tourRatingLabel"/>
+        </StackPane>
+    </VBox>
+
+</HBox>

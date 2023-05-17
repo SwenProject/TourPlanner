@@ -2,12 +2,12 @@ package com.tourplanner.controller;
 
 import com.tourplanner.models.Tour;
 import javafx.scene.control.ListCell;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 
 public class TourListCell extends ListCell<Tour> {
 
     private final TourListCellController tourListCellController = new TourListCellController();
-    private final VBox tourListCell = tourListCellController.getTourListCell();
+    private final HBox tourListCell = tourListCellController.getTourListCell();
 
     public TourListCell() {
         super();
@@ -18,6 +18,8 @@ public class TourListCell extends ListCell<Tour> {
                 this.getStyleClass().remove("first-list-cell");
             }
         });
+
+        setPrefWidth(0); //prevents horizontal scrollbar in listview
     }
 
     @Override
