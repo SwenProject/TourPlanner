@@ -84,7 +84,7 @@
     -fx-font-size: 22px;
     -fx-text-fill: #E07A5F !important;
     -fx-font-family: "JetBrains Mono NL Regular";
-    -fx-padding: 0 0 0 0;
+    -fx-padding: 0 0 0 10px;
 }
 
 .list-cell:filled:selected .tourDistanceLabel {

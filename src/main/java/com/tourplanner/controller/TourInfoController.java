@@ -124,8 +124,8 @@ public class TourInfoController {
         noDescriptionContainer.visibleProperty().bind(description.textProperty().isEmpty());
         noDescriptionContainer.managedProperty().bind(description.textProperty().isEmpty());
 
-        //bind editTourButton to imageIsLoading property (disables button while route calculation is in progress)
-        editTourButton.disableProperty().bind(imageIsLoading);
+        //bind editTourButton to durationIsLoading and imageIsLoading property (disables button while route calculation is in progress)
+        editTourButton.disableProperty().bind(imageIsLoading.or(durationIsLoading));
     }
 
     public void switchTabs() {

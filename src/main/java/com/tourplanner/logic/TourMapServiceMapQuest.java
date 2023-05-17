@@ -33,8 +33,7 @@ public class TourMapServiceMapQuest implements ITourMapService {
 
         //write to tourObject with Platform.runLater because Properties need to be updated on the JavaFX Application Thread
         Platform.runLater(() -> {
-            tour.setDistance(-1); //set distance and duration to -1 to indicate that the request is in progress
-            tour.setDuration(Duration.ofSeconds(-1));
+            // we set the duration and distance to -1 earlier so that the loading spinner appears immediately
             tour.setPathToMapImage("loading");
         });
 
