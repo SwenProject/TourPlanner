@@ -1,16 +1,45 @@
-.tour-logs-container {
+
+/*-----------PADDING FOR LIST AND LIST-CELL-----------*/
+
+.list-view {
     -fx-background-color: transparent;
-    -fx-padding: 4px 6px 6px 4px;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
+    -fx-padding: 0 5px 0 0;
 }
 
-.tour-logs-main-box {
-    -fx-background-color: #F2CC8F; /* main background color of tour-logs */
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 0 15px 20px 20px;
+}
+
+.first-log-cell {
+    -fx-padding: 20px 15px 20px 20px !important;
+}
+
+/*-----------STYLING OF LIST CELL OUTER CONTAINER-----------*/
+
+/*style un-selected list cell (you can't select log entries)*/
+.list-cell .log-cell-container {
+    -fx-padding: 10px 15px 10px 15px;
+    -fx-background-color: #F4F1DE;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
 }
+
+/*-----------STYLING OF LIST CELL CONTENT-----------*/
+
+.list-cell .label {
+    -fx-text-fill: #3D405B;
+}
+
+.list-cell:filled:selected .label {
+    -fx-text-fill: #3D405B;
+}
+
+
+
+
+/*-----------STYLING OF BUTTON BAR-----------*/
 
 .tourLogsButtonBar {
     -fx-background-color: #FFE0AF;
@@ -56,42 +85,7 @@
    -fx-text-fill: white;
 }
 
-.scroll-pane {
-    -fx-background-color: transparent;
-}
-
-.scroll-pane > .viewport {
-    -fx-background-color: transparent;
-}
-
-/*-----------SCROLL-BAR STYLING-----------*/
-
-.scroll-bar .track {
-    -fx-background-color: transparent !important;
-}
-
-.tour-logs .scroll-bar:vertical {
-    /*padding for the vertical scroll bar*/
-    -fx-padding: 3px 0 3px 5px;
-    -fx-background-color: transparent;
-}
-
-.tour-logs .scroll-bar:horizontal {
-    /*padding for the horizontal scroll bar*/
-    -fx-padding: 3px 5px 3px 10px;
-    -fx-background-color: transparent;
-}
-
-.text-area .scroll-bar:vertical {
-    /*padding for the vertical scroll bar in text-area*/
-    -fx-padding: 0 5px 0 0;
-    -fx-background-color: transparent;
-}
-
-.text-area .scroll-bar:horizontal .thumb,
-.text-area .scroll-bar:vertical .thumb {
-    -fx-background-color: rgba(224, 122, 95, 0.5);
-}
+/*-----------STYLING OF TAB BAR-----------*/
 
 .tour-logs-tab-bar {
     -fx-background-color: rgba(61, 64, 91);

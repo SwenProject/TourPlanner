@@ -6,13 +6,37 @@
 <VBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             maxWidth="Infinity"
-            prefHeight="200"
             VBox.vgrow="ALWAYS"
-            alignment="CENTER"
-            styleClass="list-log-container"
+            alignment="TOP_LEFT"
+            styleClass="log-cell-container"
 >
 
     <Label>This is a tour log cell!</Label>
-    <Label>Tour Log comment:</Label>
-    <Label fx:id="logComment"/>
+    <HBox>
+        <Label text="Date: "/>
+        <Label fx:id="logDate"/>
+    </HBox>
+    <HBox>
+        <Label text="Time: "/>
+        <Label fx:id="logTime"/>
+    </HBox>
+    <HBox>
+        <Label text="Comment: "/>
+        <Label fx:id="logComment"/>
+    </HBox>
+    <HBox>
+        <Label text="Difficulty: "/>
+        <Label fx:id="logDifficulty"/>
+    </HBox>
+    <HBox>
+        <Label text="Rating: "/>
+        <Label fx:id="logRating"/>
+    </HBox>
+    <HBox>
+        <Label text="Total time: "/>
+        <Label fx:id="logTotalTime"/>
+    </HBox>
+
+    <Button fx:id="editButton">Edit</Button>
+    <Button fx:id="deleteButton">Delete</Button>
 </VBox>

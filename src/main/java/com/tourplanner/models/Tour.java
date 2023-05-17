@@ -4,10 +4,8 @@ import javax.persistence.*;
 
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,7 +26,10 @@ public class Tour {
     private final IntegerProperty ratingProperty = new SimpleIntegerProperty();
     private final ObjectProperty<TransportType> transportTypeProperty = new SimpleObjectProperty<>();
     private final StringProperty pathToMapImageProperty = new SimpleStringProperty();
-    private ObjectProperty<List<TourLog>> tourLogsProperty = new SimpleObjectProperty<>();
+    private ListProperty<TourLog> tourLogsProperty = new SimpleListProperty<>();
+
+    // ------- Field for actual list (hibernates needs this as a reference) -------
+    private List<TourLog> tourLogs;
 
     // ------- Getter for Tour Properties -------
     // annotation @Transient means that this property is not mapped to the database
@@ -84,7 +85,7 @@ public class Tour {
     }
 
     @Transient
-    public ObjectProperty<List<TourLog>> getTourLogsProperty() {
+    public ListProperty<TourLog> getTourLogsProperty() {
         return tourLogsProperty;
     }
 
@@ -175,10 +176,12 @@ public class Tour {
     )
     @JoinColumn(name = "fk_tour_id") //Foreign key in child table
     public List<TourLog> getTourLogs() {
-        return this.tourLogsProperty.get();
+        return this.tourLogs;
     }
+
     public void setTourLogs(List<TourLog> tourLogs) {
-        this.tourLogsProperty.set(tourLogs);
+        this.tourLogs = tourLogs;
+        this.tourLogsProperty.set(FXCollections.observableList(tourLogs));
     }
 
     // ------- Default constructor for ORM -------

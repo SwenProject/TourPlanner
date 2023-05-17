@@ -134,6 +134,8 @@ public class TourInfoController {
 
     private void loadTour(Tour oldTour, Tour newTour){
 
+        if(editMode.get()) onCancelEdit(); //if we are in edit mode, cancel edit
+
         //if the old tour is not null, unbind all old properties
         //we don't need to unbind the unidirectional bindings, because they are automatically unbound when a new property is bound
         if(oldTour != null) {

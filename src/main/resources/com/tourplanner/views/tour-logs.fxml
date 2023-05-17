@@ -13,7 +13,10 @@
       styleClass="tour-logs"
 >
 
-    <VBox VBox.vgrow="ALWAYS">
+    <!--VIEW MODE-->
+    <VBox fx:id="viewModeContainer" VBox.vgrow="ALWAYS">
+
+        <!--TAB BAR-->
         <HBox styleClass="tour-logs-tab-bar" prefWidth="Infinity">
             <HBox onMouseClicked="#onSwitchTabs" styleClass="tour-name-tab-box" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
                 <Label styleClass="tour-name-tab-label" fx:id="tourName"/>
@@ -23,27 +26,61 @@
             </HBox>
         </HBox>
 
-        <!--VIEW MODE-->
-        <BorderPane VBox.vgrow="ALWAYS">
-            <center>
-                <ListView fx:id="tourLogsList" visible="false" managed="false" styleClass="tourLogsListView" VBox.vgrow="ALWAYS" />
-                <VBox fx:id="noLogsContainer" minHeight="300" minWidth="700" VBox.vgrow="ALWAYS" alignment="CENTER">
-                    <Region styleClass="no-logs-icon"/>
-                    <Label styleClass="no-logs-text" text="no tour logs" />
-                </VBox>
-            </center>
-            <bottom> <!--Buttons are at the bottom of the BorderPane-->
-                <HBox styleClass="tourLogsButtonBar" spacing="10" alignment="CENTER_RIGHT" minHeight="50">
-                    <Button styleClass="greenButton">
-                        <graphic>
-                            <HBox alignment="CENTER">
-                                <Label styleClass="buttonTextBig">Add</Label>
-                                <Label styleClass="buttonTextSmall">new log</Label>
-                            </HBox>
-                        </graphic>
-                    </Button>
-                </HBox>
-            </bottom>
-        </BorderPane>
+        <!--NO TOUR LOGS ICON AND TEXT-->
+        <VBox fx:id="noLogsContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
+            <Region styleClass="no-logs-icon"/>
+            <Label styleClass="no-logs-text" text="no tour logs" />
+        </VBox>
+
+        <!--LIST OF TOUR LOGS-->
+        <ListView fx:id="tourLogsList" styleClass="tourLogsListView" VBox.vgrow="ALWAYS" />
+
+        <!--BUTTON BAR-->
+        <HBox styleClass="tourLogsButtonBar" spacing="10" alignment="CENTER_RIGHT" minHeight="50">
+            <Button onAction="#onAddLog" styleClass="greenButton">
+                <graphic>
+                    <HBox alignment="CENTER">
+                        <Label styleClass="buttonTextBig">Add</Label>
+                        <Label styleClass="buttonTextSmall">log</Label>
+                    </HBox>
+                </graphic>
+            </Button>
+        </HBox>
+    </VBox>
+
+    <!--EDIT MODE-->
+    <VBox fx:id="editModeContainer" visible="false" managed="false" VBox.vgrow="ALWAYS">
+        <VBox VBox.vgrow="ALWAYS">
+            <Label>Edit the log:</Label>
+            <HBox>
+                <Label text="Comment: "/>
+                <TextField fx:id="logCommentEdit"/>
+            </HBox>
+            <HBox>
+                <Label text="Difficulty: "/>
+                <TextField fx:id="logDifficultyEdit"/>
+            </HBox>
+            <HBox>
+                <Label text="Rating: "/>
+                <TextField fx:id="logRatingEdit"/>
+            </HBox>
+            <HBox>
+                <Label text="Total time: "/>
+                <TextField fx:id="logTotalTimeEdit"/>
+            </HBox>
+        </VBox>
+
+        <!--BUTTON BAR-->
+        <HBox styleClass="tourLogsButtonBar" spacing="10" alignment="CENTER_RIGHT" minHeight="50">
+            <Button onAction="#onCancelEdit" text="Cancel"/>
+            <Button onAction="#onSaveEdit" styleClass="greenButton">
+                <graphic>
+                    <HBox alignment="CENTER">
+                        <Label styleClass="buttonTextBig">Save</Label>
+                        <Label styleClass="buttonTextSmall">log</Label>
+                    </HBox>
+                </graphic>
+            </Button>
+        </HBox>
     </VBox>
 </StackPane>
