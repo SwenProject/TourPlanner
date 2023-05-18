@@ -37,8 +37,6 @@
 }
 
 
-
-
 /*-----------STYLING OF BUTTON BAR-----------*/
 
 .tourLogsButtonBar {
@@ -144,3 +142,64 @@
     -fx-padding: 10px 0 0 0;
 }
 
+/*-----------STYLING OF RATING STARS IN LOG CELLS-----------*/
+
+.rating-star-container {
+    -fx-padding: 0 10px 0 10px;
+}
+
+.rating-star {
+    -fx-shape: "M19.6468 4.01722C20.5449 1.25329 24.4551 1.25329 25.3532 4.01722L26.825 8.54712C27.4944 10.6072 29.4142 12.002 31.5803 12.002H36.3433C39.2495 12.002 40.4578 15.7209 38.1067 17.4291L34.2533 20.2287C32.5009 21.5019 31.7676 23.7588 32.437 25.8189L33.9088 30.3488C34.8069 33.1127 31.6434 35.4111 29.2923 33.7029L25.4389 30.9033C23.6865 29.63 21.3135 29.63 19.5611 30.9033L15.7077 33.7029C13.3566 35.4111 10.1931 33.1127 11.0912 30.3488L12.563 25.8189C13.2324 23.7588 12.4991 21.5019 10.7467 20.2287L6.89332 17.4291C4.54218 15.7209 5.75051 12.002 8.65668 12.002H13.4197C15.5858 12.002 17.5056 10.6072 18.175 8.54712L19.6468 4.01722Z";
+    /*-fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.2), 3, 0, 3, 3);*/
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-max-height: 31px;
+    -fx-max-width: 32px;
+    -fx-min-height: 31px;
+    -fx-min-width: 32px;
+}
+
+.rating-star-container .active-rating-star {
+    -fx-background-color: #3D405B !important;
+}
+
+/*-----------STYLING OF RATING STARS IN EDIT MODE-----------*/
+
+.rating-star-edit-container {
+    -fx-padding: 0 10px 0 10px;
+}
+
+.rating-star-edit {
+    -fx-shape: "M19.6468 4.01722C20.5449 1.25329 24.4551 1.25329 25.3532 4.01722L26.825 8.54712C27.4944 10.6072 29.4142 12.002 31.5803 12.002H36.3433C39.2495 12.002 40.4578 15.7209 38.1067 17.4291L34.2533 20.2287C32.5009 21.5019 31.7676 23.7588 32.437 25.8189L33.9088 30.3488C34.8069 33.1127 31.6434 35.4111 29.2923 33.7029L25.4389 30.9033C23.6865 29.63 21.3135 29.63 19.5611 30.9033L15.7077 33.7029C13.3566 35.4111 10.1931 33.1127 11.0912 30.3488L12.563 25.8189C13.2324 23.7588 12.4991 21.5019 10.7467 20.2287L6.89332 17.4291C4.54218 15.7209 5.75051 12.002 8.65668 12.002H13.4197C15.5858 12.002 17.5056 10.6072 18.175 8.54712L19.6468 4.01722Z";
+    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.2), 3, 0, 3, 3);
+    -fx-background-color: #F2CC8F;
+    -fx-border-color: #B1563F;
+    -fx-border-width: 2px;
+    -fx-max-height: 31px;
+    -fx-max-width: 32px;
+    -fx-min-height: 31px;
+    -fx-min-width: 32px;
+    -fx-cursor: hand;
+}
+
+.rating-star-edit-container .active-rating-star-edit {
+    -fx-background-color: #B1563F !important;
+}
+
+/*-----------EDIT MODE DIFFICULTY SELECTOR-----------*/
+
+.edit-difficulty-grid-pane {
+    -fx-min-height: 40px;
+    -fx-min-width: 320px;
+    -fx-max-width: 320px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #F4F1DE;
+    -fx-cursor: hand;
+}
+
+.edit-difficulty-grid-pane .selectedDifficulty {
+    -fx-background-color: #3D405B;
+    -fx-text-fill: #F4F1DE !important;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}

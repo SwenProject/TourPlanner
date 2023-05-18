@@ -58,15 +58,42 @@
             </HBox>
             <HBox>
                 <Label text="Difficulty: "/>
-                <TextField fx:id="logDifficultyEdit"/>
+                <GridPane styleClass="edit-difficulty-grid-pane">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25" />
+                    </columnConstraints>
+
+                    <Label onMouseClicked="#changeDifficultyToEasy" fx:id="difficultySelectorEasy" text="Easy" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" GridPane.vgrow="ALWAYS"/>
+                    <Label onMouseClicked="#changeDifficultyToMedium" fx:id="difficultySelectorMedium" text="Medium" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" GridPane.vgrow="ALWAYS"/>
+                    <Label onMouseClicked="#changeDifficultyToHard" fx:id="difficultySelectorHard" text="Hard" alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" GridPane.vgrow="ALWAYS"/>
+                    <Label onMouseClicked="#changeDifficultyToExpert" fx:id="difficultySelectorExpert" text="Expert" alignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" GridPane.vgrow="ALWAYS"/>
+                </GridPane>
             </HBox>
             <HBox>
                 <Label text="Rating: "/>
-                <TextField fx:id="logRatingEdit"/>
+                <HBox VBox.vgrow="ALWAYS" maxWidth="Infinity" alignment="CENTER" styleClass="rating-star-edit-container">
+                    <HBox HBox.hgrow="ALWAYS" minWidth="200">
+                        <Region fx:id="ratingStar1" onMouseClicked="#onSetRatingEdit1" styleClass="rating-star-edit"/>
+                        <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                        <Region fx:id="ratingStar2" onMouseClicked="#onSetRatingEdit2" styleClass="rating-star-edit"/>
+                        <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                        <Region fx:id="ratingStar3" onMouseClicked="#onSetRatingEdit3" styleClass="rating-star-edit"/>
+                        <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                        <Region fx:id="ratingStar4" onMouseClicked="#onSetRatingEdit4" styleClass="rating-star-edit"/>
+                        <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                        <Region fx:id="ratingStar5" onMouseClicked="#onSetRatingEdit5" styleClass="rating-star-edit"/>
+                    </HBox>
+                </HBox>
             </HBox>
             <HBox>
-                <Label text="Total time: "/>
-                <TextField fx:id="logTotalTimeEdit"/>
+                <Label text="Total time:"/>
+                <TextField fx:id="logTotalTimeEditHours"/>
+                <Label text="h "/>
+                <TextField fx:id="logTotalTimeEditMinutes"/>
+                <Label text="min"/>
             </HBox>
         </VBox>
 

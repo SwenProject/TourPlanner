@@ -120,7 +120,7 @@
                                 <Label onMouseClicked="#changeTransportTypeToCar" fx:id="transportTypeSelectorCar" text="Car" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" GridPane.vgrow="ALWAYS"/>
                                 <Label onMouseClicked="#changeTransportTypeToFeet" fx:id="transportTypeSelectorFeet" text="Feet" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" GridPane.vgrow="ALWAYS"/>
                                 <Label onMouseClicked="#changeTransportTypeToBike" fx:id="transportTypeSelectorBike" text="Bike" alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" GridPane.vgrow="ALWAYS"/>
-                                </GridPane>
+                            </GridPane>
                         </VBox>
                         <VBox minWidth="200" HBox.hgrow="ALWAYS">
                             <TextArea fx:id="descriptionEdit" wrapText="true" promptText="tour description..."/>

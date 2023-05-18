@@ -3,10 +3,13 @@ package com.tourplanner.controller;
 import com.tourplanner.TourPlannerApp;
 import com.tourplanner.models.TourLog;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -25,8 +28,17 @@ public class TourLogCellController {
     public Label logComment;
     @FXML
     public Label logDifficulty;
+    public IntegerProperty logRating = new SimpleIntegerProperty();
     @FXML
-    public Label logRating;
+    public Region ratingStar1;
+    @FXML
+    public Region ratingStar2;
+    @FXML
+    public Region ratingStar3;
+    @FXML
+    public Region ratingStar4;
+    @FXML
+    public Region ratingStar5;
     @FXML
     public Label logTotalTime;
     @FXML
@@ -60,6 +72,9 @@ public class TourLogCellController {
         //bind onAction functions to buttons (can't be done in fxml here because controller is not set in fxml)
         editButton.setOnAction(event -> onEdit());
         deleteButton.setOnAction(event -> onDelete());
+
+        //bind rating stars to rating property
+        logRating.addListener((observable, oldValue, newValue) -> onRatingChanged(newValue.intValue()));
 
     }
 
@@ -108,7 +123,7 @@ public class TourLogCellController {
                 };
             }
         }, tourLog.getDifficultyProperty()));
-        logRating.textProperty().bind(tourLog.getRatingProperty().asString());
+        logRating.bind(tourLog.getRatingProperty());
         logTotalTime.textProperty().bind(Bindings.createStringBinding(() -> {
             if (tourLog.getTotalTimeProperty().get() == null){ //if no total time is set for log entry, something went wrong
                 return "???";
@@ -133,5 +148,20 @@ public class TourLogCellController {
 
     public void onDelete(){
         deleteTourLog.run();
+    }
+
+    private void onRatingChanged(int newRating) {
+        ratingStar1.getStyleClass().remove("active-rating-star");
+        ratingStar2.getStyleClass().remove("active-rating-star");
+        ratingStar3.getStyleClass().remove("active-rating-star");
+        ratingStar4.getStyleClass().remove("active-rating-star");
+        ratingStar5.getStyleClass().remove("active-rating-star");
+
+        if(newRating >= 1) ratingStar1.getStyleClass().add("active-rating-star");
+        if(newRating >= 2) ratingStar2.getStyleClass().add("active-rating-star");
+        if(newRating >= 3) ratingStar3.getStyleClass().add("active-rating-star");
+        if(newRating >= 4) ratingStar4.getStyleClass().add("active-rating-star");
+        if(newRating >= 5) ratingStar5.getStyleClass().add("active-rating-star");
+
     }
 }

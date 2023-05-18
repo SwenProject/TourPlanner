@@ -30,7 +30,19 @@
     </HBox>
     <HBox>
         <Label text="Rating: "/>
-        <Label fx:id="logRating"/>
+        <HBox VBox.vgrow="ALWAYS" maxWidth="Infinity" alignment="CENTER" styleClass="rating-star-container">
+            <HBox HBox.hgrow="ALWAYS" minWidth="200">
+                <Region fx:id="ratingStar1" styleClass="rating-star"/>
+                <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                <Region fx:id="ratingStar2" styleClass="rating-star"/>
+                <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                <Region fx:id="ratingStar3" styleClass="rating-star"/>
+                <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                <Region fx:id="ratingStar4" styleClass="rating-star"/>
+                <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                <Region fx:id="ratingStar5" styleClass="rating-star"/>
+            </HBox>
+        </HBox>
     </HBox>
     <HBox>
         <Label text="Total time: "/>

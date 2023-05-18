@@ -8,6 +8,7 @@ import javafx.beans.property.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import java.time.Duration;
@@ -32,14 +33,26 @@ public class TourLogsController {
     //----EDIT MODE----
     public VBox editModeContainer;
     public TextField logCommentEdit;
-    public TextField logDifficultyEdit;
-    public TextField logRatingEdit;
-    public TextField logTotalTimeEdit;
+    public ObjectProperty<Difficulty> logDifficultyEdit = new SimpleObjectProperty<>();
+    public Label difficultySelectorEasy;
+    public Label difficultySelectorMedium;
+    public Label difficultySelectorHard;
+    public Label difficultySelectorExpert;
+    public IntegerProperty logRatingEdit = new SimpleIntegerProperty();
+    public Region ratingStar1;
+    public Region ratingStar2;
+    public Region ratingStar3;
+    public Region ratingStar4;
+    public Region ratingStar5;
+    public TextField logTotalTimeEditHours;
+    public TextField logTotalTimeEditMinutes;
     public final ObjectProperty<TourLog> tourLogInEdit = new SimpleObjectProperty<>();
 
 
     //----PROPERTIES FOR BINDING----
     private final ListProperty<TourLog> currentTourLogs = new SimpleListProperty<>();
+
+
     public TourLogsController(TourLogic tourLogic) {
         this.tourLogic = tourLogic;
     }
@@ -76,6 +89,13 @@ public class TourLogsController {
                 tourLogInEdit.set(null);
             }
         });
+
+        //bind edit difficulty to logDifficultyEdit property
+        logDifficultyEdit.addListener((observable, oldValue, newValue) -> onEditDifficultyChanged(newValue));
+
+        //bind edit rating stars to logRatingEdit property
+        logRatingEdit.addListener((observable, oldValue, newValue) -> onEditRatingChanged(newValue.intValue()));
+
     }
 
     private void loadTour(Tour oldTour, Tour newTour){
@@ -110,9 +130,10 @@ public class TourLogsController {
         System.out.println("start edit mode on tour log " + tourLog.getComment());
         tourLogInEdit.set(tourLog);
         logCommentEdit.setText(tourLog.getComment());
-        logDifficultyEdit.setText(String.valueOf(tourLog.getDifficulty().ordinal()));
-        logRatingEdit.setText(String.valueOf(tourLog.getRating()));
-        logTotalTimeEdit.setText(String.valueOf(tourLog.getTotalTime()));
+        logDifficultyEdit.set(tourLog.getDifficulty());
+        logRatingEdit.set(tourLog.getRating());
+        logTotalTimeEditHours.setText(String.valueOf(tourLog.getTotalTime().getSeconds() / 3600));
+        logTotalTimeEditMinutes.setText(String.valueOf((tourLog.getTotalTime().getSeconds() % 3600) / 60));
         editMode.set(true);
     }
 
@@ -125,9 +146,9 @@ public class TourLogsController {
         if(tourLogInEdit.get() == null) { //tour log is new
             TourLog tourLog = new TourLog();
             tourLog.setComment(logCommentEdit.getText());
-            tourLog.setDifficulty(Difficulty.values()[Integer.parseInt(logDifficultyEdit.getText())]);
-            tourLog.setRating(Integer.parseInt(logRatingEdit.getText()));
-            tourLog.setTotalTime(Duration.parse(logTotalTimeEdit.getText()));
+            tourLog.setDifficulty(logDifficultyEdit.get());
+            tourLog.setRating(logRatingEdit.get());
+            tourLog.setTotalTime(Duration.ofHours(Integer.parseInt(logTotalTimeEditHours.getText())).plusMinutes(Integer.parseInt(logTotalTimeEditMinutes.getText())));
             tourLog.setDate(new Date());
             currentTourLogs.add(tourLog);
             tourLogic.updateSelectedTourWithoutRecalculating();
@@ -137,9 +158,9 @@ public class TourLogsController {
 
         TourLog tourLog = tourLogInEdit.get();
         tourLog.setComment(logCommentEdit.getText());
-        tourLog.setDifficulty(Difficulty.values()[Integer.parseInt(logDifficultyEdit.getText())]);
-        tourLog.setRating(Integer.parseInt(logRatingEdit.getText()));
-        tourLog.setTotalTime(Duration.parse(logTotalTimeEdit.getText()));
+        tourLog.setDifficulty(logDifficultyEdit.get());
+        tourLog.setRating(logRatingEdit.get());
+        tourLog.setTotalTime(Duration.ofHours(Integer.parseInt(logTotalTimeEditHours.getText())).plusMinutes(Integer.parseInt(logTotalTimeEditMinutes.getText())));
         editMode.set(false);
         tourLogic.updateSelectedTourWithoutRecalculating();
     }
@@ -148,9 +169,70 @@ public class TourLogsController {
         System.out.println("created new tour log");
         tourLogInEdit.set(null);
         logCommentEdit.setText("");
-        logDifficultyEdit.setText("0");
-        logRatingEdit.setText("0");
-        logTotalTimeEdit.setText("PT10M0S");
+        logDifficultyEdit.set(Difficulty.MEDIUM);
+        logRatingEdit.set(1);
+        logTotalTimeEditHours.setText("0");
+        logTotalTimeEditMinutes.setText("0");
         editMode.set(true);
     }
+
+    private void onEditRatingChanged(int newRating) {
+        ratingStar1.getStyleClass().remove("active-rating-star-edit");
+        ratingStar2.getStyleClass().remove("active-rating-star-edit");
+        ratingStar3.getStyleClass().remove("active-rating-star-edit");
+        ratingStar4.getStyleClass().remove("active-rating-star-edit");
+        ratingStar5.getStyleClass().remove("active-rating-star-edit");
+
+        if(newRating >= 1) ratingStar1.getStyleClass().add("active-rating-star-edit");
+        if(newRating >= 2) ratingStar2.getStyleClass().add("active-rating-star-edit");
+        if(newRating >= 3) ratingStar3.getStyleClass().add("active-rating-star-edit");
+        if(newRating >= 4) ratingStar4.getStyleClass().add("active-rating-star-edit");
+        if(newRating >= 5) ratingStar5.getStyleClass().add("active-rating-star-edit");
+
+    }
+
+    public void onSetRatingEdit1() {
+        logRatingEdit.set(1);
+    }
+    public void onSetRatingEdit2() {
+        logRatingEdit.set(2);
+    }
+    public void onSetRatingEdit3() {
+        logRatingEdit.set(3);
+    }
+    public void onSetRatingEdit4() {
+        logRatingEdit.set(4);
+    }
+    public void onSetRatingEdit5() {
+        logRatingEdit.set(5);
+    }
+
+    private void onEditDifficultyChanged(Difficulty newDifficulty) {
+        difficultySelectorEasy.getStyleClass().clear();
+        difficultySelectorMedium.getStyleClass().clear();
+        difficultySelectorHard.getStyleClass().clear();
+        difficultySelectorExpert.getStyleClass().clear();
+
+        switch (newDifficulty) {
+            case EASY -> difficultySelectorEasy.getStyleClass().add("selectedDifficulty");
+            case MEDIUM -> difficultySelectorMedium.getStyleClass().add("selectedDifficulty");
+            case HARD -> difficultySelectorHard.getStyleClass().add("selectedDifficulty");
+            case EXPERT -> difficultySelectorExpert.getStyleClass().add("selectedDifficulty");
+        }
+    }
+
+    public void changeDifficultyToEasy() {
+        logDifficultyEdit.set(Difficulty.EASY);
+    }
+    public void changeDifficultyToMedium() {
+        logDifficultyEdit.set(Difficulty.MEDIUM);
+    }
+    public void changeDifficultyToHard() {
+        logDifficultyEdit.set(Difficulty.HARD);
+    }
+    public void changeDifficultyToExpert() {
+        logDifficultyEdit.set(Difficulty.EXPERT);
+    }
+
+
 }
