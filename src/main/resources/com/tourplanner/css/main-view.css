@@ -128,6 +128,12 @@
     -fx-padding: 0.0 0.15em;
 }
 
+.scroll-bar:horizontal .increment-arrow,
+.scroll-bar:horizontal .decrement-arrow{
+    -fx-shape: " ";
+    -fx-padding: 0.0 0.15em;
+}
+
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
     -fx-background-color: rgba(224, 122, 95, 0.80);
@@ -150,11 +156,13 @@
     -fx-background-color: transparent;
 }
 
-.scroll-bar:vertical {
+.scroll-bar:vertical,
+.scroll-bar:horizontal {
     -fx-background-color: transparent;
 }
 
-.scroll-bar:vertical .track-background {
+.scroll-bar:vertical .track-background,
+.scroll-bar:horizontal .track-background {
     visibility: hidden;
 }
 

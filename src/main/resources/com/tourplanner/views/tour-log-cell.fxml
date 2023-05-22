@@ -3,52 +3,57 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Text?>
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            maxWidth="Infinity"
-            VBox.vgrow="ALWAYS"
-            alignment="TOP_LEFT"
-            styleClass="log-cell-container"
+      xmlns:fx="http://javafx.com/fxml"
+      maxWidth="Infinity"
+      VBox.vgrow="ALWAYS"
+      alignment="TOP_LEFT"
+      styleClass="log-cell-container"
 >
 
-    <Label>This is a tour log cell!</Label>
-    <HBox>
-        <Label text="Date: "/>
-        <Label fx:id="logDate"/>
-    </HBox>
-    <HBox>
-        <Label text="Time: "/>
-        <Label fx:id="logTime"/>
+<!--    <Label>This is a tour log cell!</Label>-->
+    <HBox spacing="10" HBox.hgrow="ALWAYS">
+        <HBox styleClass="logDate" alignment="CENTER_LEFT">
+<!--            <Label text="Date: "/>-->
+            <Label fx:id="logDate"/>
+        </HBox>
+        <HBox styleClass="logTime" alignment="CENTER_LEFT">
+<!--            <Label text="Time: "/>-->
+            <Label fx:id="logTime" />
+        </HBox>
+        <HBox styleClass="rating" alignment="CENTER" HBox.hgrow="ALWAYS">
+<!--            <Label text="Rating: "/>-->
+            <HBox VBox.vgrow="ALWAYS" maxWidth="Infinity" styleClass="rating-star-container">
+                <HBox HBox.hgrow="ALWAYS" minWidth="200">
+                    <Region fx:id="ratingStar1" styleClass="rating-star"/>
+                    <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                    <Region fx:id="ratingStar2" styleClass="rating-star"/>
+                    <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                    <Region fx:id="ratingStar3" styleClass="rating-star"/>
+                    <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                    <Region fx:id="ratingStar4" styleClass="rating-star"/>
+                    <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
+                    <Region fx:id="ratingStar5" styleClass="rating-star"/>
+                </HBox>
+            </HBox>
+        </HBox>
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="editButton" styleClass="editButton">Edit</Button>
+            <Button fx:id="deleteButton" styleClass="deleteButton">Delete</Button>
+        </HBox>
     </HBox>
     <HBox>
         <Label text="Comment: "/>
         <Label fx:id="logComment"/>
     </HBox>
-    <HBox>
-        <Label text="Difficulty: "/>
-        <Label fx:id="logDifficulty"/>
-    </HBox>
-    <HBox>
-        <Label text="Rating: "/>
-        <HBox VBox.vgrow="ALWAYS" maxWidth="Infinity" alignment="CENTER" styleClass="rating-star-container">
-            <HBox HBox.hgrow="ALWAYS" minWidth="200">
-                <Region fx:id="ratingStar1" styleClass="rating-star"/>
-                <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
-                <Region fx:id="ratingStar2" styleClass="rating-star"/>
-                <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
-                <Region fx:id="ratingStar3" styleClass="rating-star"/>
-                <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
-                <Region fx:id="ratingStar4" styleClass="rating-star"/>
-                <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
-                <Region fx:id="ratingStar5" styleClass="rating-star"/>
-            </HBox>
+    <HBox alignment="CENTER_RIGHT">
+        <HBox>
+            <Label text="Difficulty: "/>
+            <Label fx:id="logDifficulty"/>
+            <Label text=" / "/>
+            <Label text="Total time: "/>
+            <Label fx:id="logTotalTime"/>
         </HBox>
     </HBox>
-    <HBox>
-        <Label text="Total time: "/>
-        <Label fx:id="logTotalTime"/>
-    </HBox>
-
-    <Button fx:id="editButton">Edit</Button>
-    <Button fx:id="deleteButton">Delete</Button>
 </VBox>

@@ -7,6 +7,7 @@ import com.tourplanner.models.TourLog;
 import javafx.beans.property.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -32,7 +33,7 @@ public class TourLogsController {
 
     //----EDIT MODE----
     public VBox editModeContainer;
-    public TextField logCommentEdit;
+    public TextArea logCommentEdit;
     public ObjectProperty<Difficulty> logDifficultyEdit = new SimpleObjectProperty<>();
     public Label difficultySelectorEasy;
     public Label difficultySelectorMedium;

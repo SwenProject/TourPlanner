@@ -31,7 +31,7 @@
 
 .viewModeRight .text-area {
     -fx-background-color: #F9DCA3;
-    -fx-min-height: 260px;
+    -fx-min-height: 220px;
     -fx-border-radius: 5px;
     -fx-border-color: rgb(61, 64, 91);
 }
@@ -263,7 +263,7 @@
     -fx-background-size: 60px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-opacity: 0.7;
+    /*-fx-opacity: 0.7;*/
 }
 
 .transportTypeCarIcon {
@@ -271,7 +271,7 @@
     -fx-background-size: 90px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-opacity: 0.7;
+    /*-fx-opacity: 0.7;*/
 }
 
 .transportTypeFeetIcon {
@@ -279,7 +279,7 @@
     -fx-background-size: 90px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-opacity: 0.7;
+    /*-fx-opacity: 0.7;*/
 }
 
 .transportTypeIconContainer {
@@ -369,7 +369,6 @@
     -fx-font-family: "JetBrains Mono NL Bold";
     -fx-text-fill: #ffffff;
     -fx-padding: 0 0 0 0;
-
 }
 
 .tour-name-tab-box {
@@ -385,5 +384,4 @@
     -fx-min-height: 50px;
     -fx-max-height: 50px;
     -fx-padding: 0 20px 0 0;
-
 }

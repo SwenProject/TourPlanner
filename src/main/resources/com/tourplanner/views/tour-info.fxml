@@ -21,7 +21,7 @@
                     <Label styleClass="tour-name-tab-label" fx:id="tourName"/>
                 </HBox>
                 <HBox onMouseClicked="#switchTabs" styleClass="tour-logs-tab-box" alignment="CENTER_RIGHT" minWidth="200">
-                    <Label styleClass="tour-logs-tab-label" text="Tour logs" />
+                    <Label styleClass="tour-logs-tab-label" text="Tour logs"/>
                 </HBox>
             </HBox>
         </top>
@@ -79,7 +79,7 @@
                         </VBox>
                         <VBox styleClass="viewModeRight" HBox.hgrow="ALWAYS" minWidth="200">
                                 <StackPane>
-                                    <TextArea  fx:id="description" wrapText="true" editable="false"/>
+                                    <TextArea fx:id="description" wrapText="true" editable="false"/>
                                     <VBox fx:id="noDescriptionContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
                                         <Region styleClass="no-description-icon" />  <!--after textarea so that it is in front-->
                                         <Label styleClass="no-description-text" text="no description" />
