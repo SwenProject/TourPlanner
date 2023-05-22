@@ -6,6 +6,7 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,7 +30,7 @@ public class Tour {
     private ListProperty<TourLog> tourLogsProperty = new SimpleListProperty<>();
 
     // ------- Field for actual list (hibernates needs this as a reference) -------
-    private List<TourLog> tourLogs;
+    private List<TourLog> tourLogs = new ArrayList<>();
 
     // ------- Getter for Tour Properties -------
     // annotation @Transient means that this property is not mapped to the database
@@ -182,6 +183,21 @@ public class Tour {
     public void setTourLogs(List<TourLog> tourLogs) {
         this.tourLogs = tourLogs;
         this.tourLogsProperty.set(FXCollections.observableList(tourLogs));
+    }
+
+    // ------- New Tour Boolean -------
+
+    @Transient
+    private boolean isNew = false;
+
+    @Transient
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
+    }
+
+    @Transient
+    public boolean isNew() {
+        return this.isNew;
     }
 
     // ------- Default constructor for ORM -------

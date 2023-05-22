@@ -67,7 +67,7 @@ public class SearchBoxController {
         String[] searchedWords = searchTextField.getText().split(" ");
 
         for (String word : searchedWords){
-            if(tour.getName().toLowerCase().replace(" ", "").contains(word.toLowerCase())){
+            if(tour.getName() == null || tour.getName().toLowerCase().replace(" ", "").contains(word.toLowerCase())){
                 return true;
             }
         }

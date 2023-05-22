@@ -1,16 +1,22 @@
 package com.tourplanner.controller;
 
+import com.tourplanner.TourPlannerApp;
 import com.tourplanner.enums.TransportType;
 import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.StageStyle;
+
 import java.time.Duration;
+import java.util.Objects;
 
 public class TourInfoController {
 
@@ -134,7 +140,13 @@ public class TourInfoController {
 
     private void loadTour(Tour oldTour, Tour newTour){
 
-        if(editMode.get()) onCancelEdit(); //if we are in edit mode, cancel edit
+        if(newTour != null && newTour.isNew()){
+            editMode.set(true); // if the new tour is a new tour, switch to edit mode
+        } else if (oldTour != null && oldTour.isNew()){
+            editMode.set(false); //if the old tour was a new tour, switch back to view mode
+        } else if (editMode.get()){
+            onCancelEdit(); //if we are still in edit mode when new tour is loaded, cancel edit
+        }
 
         //if the old tour is not null, unbind all old properties
         //we don't need to unbind the unidirectional bindings, because they are automatically unbound when a new property is bound
@@ -149,9 +161,6 @@ public class TourInfoController {
 
         //if no tour was selected, hide tour info and show noTourSelectedText
         if(newTour == null) return; //if no new tour was selected, we are done
-
-        //if the selected tour is new, automatically switch to edit mode
-        editMode.set(newTour.getId() == 0);
 
         //bind fields to currently selected tour
         tourName.textProperty().bindBidirectional(newTour.getNameProperty());
@@ -202,7 +211,7 @@ public class TourInfoController {
     public void onSaveTour() {
 
         //if tour was a new tour, always save it
-        if(tourLogic.getSelectedTourProperty().get().getId() == 0) {
+        if(tourLogic.getSelectedTourProperty().get().isNew()) {
             tourLogic.saveSelectedTour();
             editMode.set(false);
             return;
@@ -227,9 +236,12 @@ public class TourInfoController {
 
     public void onCancelEdit() {
 
+        //disable edit mode
+        editMode.set(false);
+
         //if tour was a new tour, cancelling deletes it
         //this sets the selected tour to null, which will hide the tour info
-        if(tourLogic.getSelectedTourProperty().get().getId() == 0) {
+        if(tourLogic.getSelectedTourProperty().get().isNew()) {
             tourLogic.deleteSelectedTour();
             return;
         }
@@ -240,9 +252,6 @@ public class TourInfoController {
         destinationPoint.textProperty().set(previousDestinationPoint);
         description.textProperty().set(previousDescription);
         currentTransportType.set(previousTransportType);
-
-        //disable edit mode
-        editMode.set(false);
     }
 
     private void onTransportTypeChanged(TransportType newTransportType){
@@ -270,7 +279,51 @@ public class TourInfoController {
     }
 
     public void onDeleteTour() {
-        tourLogic.deleteSelectedTour();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Delete Tour");
+        alert.setHeaderText("Are you sure you want to delete this tour?");
+        alert.initStyle(StageStyle.TRANSPARENT);
+
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType buttonTypeDelete = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+
+        alert.getButtonTypes().setAll(buttonTypeDelete, buttonTypeCancel);
+
+        //add css file to alert
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(Objects.requireNonNull(TourPlannerApp.class.getResource("css/confirm-tour-delete.css")).toExternalForm());
+        dialogPane.getStyleClass().add("deleteAlertBox");
+
+        //replace alert image with custom image
+        Image image = new Image(Objects.requireNonNull(TourPlannerApp.class.getResourceAsStream("images/delete_tour.png")));
+        ImageView imageView = new ImageView(image);
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(70);
+        alert.setGraphic(imageView);
+
+        //set styleClass of deleteButton so that it can be styled differently than the cancel button
+        Button yesButton = (Button) alert.getDialogPane().lookupButton(buttonTypeDelete);
+        yesButton.getStyleClass().add("deleteButton");
+
+        //set background of scene to transparent so that the alert box can have rounded corners
+        Scene scene = dialogPane.getScene();
+        scene.setFill(Color.TRANSPARENT);
+
+        //ensure that the alert box always appears in front of the main window on the same screen
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(viewModeBorderPane.getScene().getWindow());
+
+        // show alert box and wait for response
+        alert.showAndWait().ifPresent(response -> {
+            if (response == buttonTypeDelete) {
+                tourLogic.deleteSelectedTour();
+            } else if (response == buttonTypeCancel) {
+                //do nothing
+                //maybe log that the user cancelled deleting the tour
+            }
+        });
+
     }
 
     private void onRatingChanged(int newRating) {

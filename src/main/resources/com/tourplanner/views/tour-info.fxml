@@ -107,9 +107,9 @@
                 <ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="Infinity" HBox.hgrow="ALWAYS">
                     <HBox HBox.hgrow="ALWAYS" styleClass="edit-mode-tour-info-hbox">
                         <VBox styleClass="editModeLeft" HBox.hgrow="ALWAYS" maxWidth="500" minWidth="400">
-                            <TextField fx:id="tourNameEdit" promptText="name your tour..." maxWidth="Infinity"/>
-                            <TextField fx:id="startingPointEdit" promptText="choose starting point..."/>
-                            <TextField fx:id="destinationPointEdit" promptText="choose destination..."/>
+                            <TextField onAction="#onSaveTour" fx:id="tourNameEdit" promptText="name your tour..." maxWidth="Infinity"/>
+                            <TextField onAction="#onSaveTour" fx:id="startingPointEdit" promptText="choose starting point..."/>
+                            <TextField onAction="#onSaveTour" fx:id="destinationPointEdit" promptText="choose destination..."/>
                             <GridPane styleClass="edit-transport-type-grid-pane">
                                 <columnConstraints>
                                     <ColumnConstraints percentWidth="33.3"/>

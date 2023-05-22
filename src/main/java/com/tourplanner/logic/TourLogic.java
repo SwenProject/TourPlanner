@@ -60,6 +60,9 @@ public class TourLogic {
         //set default selected Transport Type
         newTour.setTransportType(TransportType.CAR);
 
+        //mark tour as new
+        newTour.setIsNew(true);
+
         selectedTourProperty.set(newTour);
     }
 
@@ -70,12 +73,11 @@ public class TourLogic {
         // - child friendliness calculation
         // - popularity calculation
 
-
         //create new task for api request (to run async)
         TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(selectedTourProperty.get(), tourMapService, tourMapRequestLock); //create new task
 
-        if(selectedTourProperty.get().getId() == 0) { //tour is new and has no id
-
+        if(selectedTourProperty.get().isNew()) {
+            selectedTourProperty.get().setIsNew(false); //tour is not new anymore
             //set callback of task to db save function
             tourMapRequestTask.setCallback(tourRepository::save);
 
@@ -126,7 +128,7 @@ public class TourLogic {
 
         //TODO delete map image from file system
 
-        if(selectedTourProperty.get().getId() == 0) { //tour is new and has no id
+        if(selectedTourProperty.get().isNew()) { //tour is new and has no id
             selectedTourProperty.set(null);
             //no need to delete the new tour from db or all tours list because it was never saved (has no id)
             return;

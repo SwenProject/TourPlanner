@@ -2,10 +2,8 @@ package com.tourplanner.controller;
 
 import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 
 public class TourListController {
     private final TourLogic tourLogic;
@@ -27,12 +25,7 @@ public class TourListController {
         noToursContainer.managedProperty().bind(tourLogic.getSearchedToursListProperty().emptyProperty());
 
         tourList.setItems(tourLogic.getSearchedToursList());
-        tourList.setCellFactory(new Callback<ListView<Tour>, ListCell<Tour>>() {
-            @Override
-            public TourListCell call(ListView<Tour> listView) {
-                return new TourListCell();
-            }
-        });
+        tourList.setCellFactory(listView -> new TourListCell());
 
         //change selectedTour when new tour is selected in list
         tourList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -44,6 +37,7 @@ public class TourListController {
         //change selected tour in list when selectedTour changes
         tourLogic.getSelectedTourProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != tourList.getSelectionModel().getSelectedItem()){
+                tourList.getSelectionModel().clearSelection();
                 tourList.getSelectionModel().select(newValue);
             }
 
