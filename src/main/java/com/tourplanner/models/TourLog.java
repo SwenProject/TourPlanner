@@ -89,6 +89,7 @@ public class TourLog {
         this.totalTimeProperty.set(totalTime);
     }
 
+    @Column(columnDefinition = "TEXT")
     public String getComment() {
         return commentProperty.get();
     }

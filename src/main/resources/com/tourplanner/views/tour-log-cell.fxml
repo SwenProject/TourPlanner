@@ -3,27 +3,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.text.Text?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       maxWidth="Infinity"
       VBox.vgrow="ALWAYS"
-      alignment="TOP_LEFT"
       styleClass="log-cell-container"
 >
 
-<!--    <Label>This is a tour log cell!</Label>-->
-    <HBox spacing="10" HBox.hgrow="ALWAYS">
+    <HBox spacing="10" HBox.hgrow="ALWAYS" styleClass="log-cell-top-hbox">
         <HBox styleClass="logDate" alignment="CENTER_LEFT">
-<!--            <Label text="Date: "/>-->
             <Label fx:id="logDate"/>
         </HBox>
         <HBox styleClass="logTime" alignment="CENTER_LEFT">
-<!--            <Label text="Time: "/>-->
             <Label fx:id="logTime" />
         </HBox>
         <HBox styleClass="rating" alignment="CENTER" HBox.hgrow="ALWAYS">
-<!--            <Label text="Rating: "/>-->
             <HBox VBox.vgrow="ALWAYS" maxWidth="Infinity" styleClass="rating-star-container">
                 <HBox HBox.hgrow="ALWAYS" minWidth="200">
                     <Region fx:id="ratingStar1" styleClass="rating-star"/>
@@ -44,10 +38,9 @@
         </HBox>
     </HBox>
     <HBox>
-        <Label text="Comment: "/>
-        <Label fx:id="logComment"/>
+        <Label wrapText="true" fx:id="logComment"/>
     </HBox>
-    <HBox alignment="CENTER_RIGHT">
+    <HBox alignment="CENTER_RIGHT" styleClass="log-cell-bottom-hbox">
         <HBox>
             <Label text="Difficulty: "/>
             <Label fx:id="logDifficulty"/>

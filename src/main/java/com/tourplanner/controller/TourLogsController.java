@@ -1,19 +1,24 @@
 package com.tourplanner.controller;
 
+import com.tourplanner.TourPlannerApp;
 import com.tourplanner.enums.Difficulty;
 import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
 import com.tourplanner.models.TourLog;
 import javafx.beans.property.*;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.StageStyle;
 
 import java.time.Duration;
 import java.util.Date;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class TourLogsController {
@@ -48,6 +53,7 @@ public class TourLogsController {
     public TextField logTotalTimeEditHours;
     public TextField logTotalTimeEditMinutes;
     public final ObjectProperty<TourLog> tourLogInEdit = new SimpleObjectProperty<>();
+    public Button editModeSaveButton;
 
 
     //----PROPERTIES FOR BINDING----
@@ -97,6 +103,9 @@ public class TourLogsController {
         //bind edit rating stars to logRatingEdit property
         logRatingEdit.addListener((observable, oldValue, newValue) -> onEditRatingChanged(newValue.intValue()));
 
+        //disable editModeSaveButton if logTotalTimeEditHours or logTotalTimeEditMinutes is empty
+        editModeSaveButton.disableProperty().bind(logTotalTimeEditHours.textProperty().isEmpty().or(logTotalTimeEditMinutes.textProperty().isEmpty()));
+
     }
 
     private void loadTour(Tour oldTour, Tour newTour){
@@ -122,13 +131,54 @@ public class TourLogsController {
     }
 
     public void deleteTourLog(TourLog tourLog) {
-        System.out.println("delete tour log " + tourLog.getComment());
-        currentTourLogs.remove(tourLog);
-        tourLogic.updateSelectedTourWithoutRecalculating();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Delete Log");
+        alert.setHeaderText("Are you sure you want to delete this log entry?");
+        alert.initStyle(StageStyle.TRANSPARENT);
+
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType buttonTypeDelete = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+
+        alert.getButtonTypes().setAll(buttonTypeDelete, buttonTypeCancel);
+
+        //add css file to alert
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(Objects.requireNonNull(TourPlannerApp.class.getResource("css/confirm-tour-delete.css")).toExternalForm());
+        dialogPane.getStyleClass().add("deleteAlertBox");
+
+        //replace alert image with custom image
+        Image image = new Image(Objects.requireNonNull(TourPlannerApp.class.getResourceAsStream("images/delete_log.png")));
+        ImageView imageView = new ImageView(image);
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(70);
+        alert.setGraphic(imageView);
+
+        //set styleClass of deleteButton so that it can be styled differently than the cancel button
+        Button yesButton = (Button) alert.getDialogPane().lookupButton(buttonTypeDelete);
+        yesButton.getStyleClass().add("deleteButton");
+
+        //set background of scene to transparent so that the alert box can have rounded corners
+        Scene scene = dialogPane.getScene();
+        scene.setFill(Color.TRANSPARENT);
+
+        //ensure that the alert box always appears in front of the main window on the same screen
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(viewModeContainer.getScene().getWindow());
+
+        // show alert box and wait for response
+        alert.showAndWait().ifPresent(response -> {
+            if (response == buttonTypeDelete) {
+                currentTourLogs.remove(tourLog);
+                tourLogic.updateSelectedTourWithoutRecalculating();
+            } else if (response == buttonTypeCancel) {
+                //do nothing
+                //maybe log that the user cancelled deleting the log
+            }
+        });
     }
 
     public void startEditMode(TourLog tourLog) {
-        System.out.println("start edit mode on tour log " + tourLog.getComment());
         tourLogInEdit.set(tourLog);
         logCommentEdit.setText(tourLog.getComment());
         logDifficultyEdit.set(tourLog.getDifficulty());
@@ -167,13 +217,12 @@ public class TourLogsController {
     }
 
     public void onAddLog() {
-        System.out.println("created new tour log");
         tourLogInEdit.set(null);
         logCommentEdit.setText("");
         logDifficultyEdit.set(Difficulty.MEDIUM);
         logRatingEdit.set(1);
-        logTotalTimeEditHours.setText("0");
-        logTotalTimeEditMinutes.setText("0");
+        logTotalTimeEditHours.clear();
+        logTotalTimeEditMinutes.clear();
         editMode.set(true);
     }
 

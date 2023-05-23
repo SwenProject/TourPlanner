@@ -128,13 +128,13 @@
     -fx-background-color: transparent !important;
 }
 
-.tour-infos .scroll-bar:vertical {
+.edit-mode-container .scroll-bar:vertical {
     /*padding for the vertical scroll bar*/
-    -fx-padding: 3px 0 3px 5px;
+    -fx-padding: 3px 4px 3px 5px;
     -fx-background-color: transparent;
 }
 
-.tour-infos .scroll-bar:horizontal {
+.edit-mode-container .scroll-bar:horizontal {
     /*padding for the horizontal scroll bar*/
     -fx-padding: 3px 5px 3px 10px;
     -fx-background-color: transparent;
@@ -173,7 +173,7 @@
 /*-----------STYLING OF RATING STARS IN LOG CELLS-----------*/
 
 .rating-star-container {
-    -fx-padding: 0 10px 0 10px;
+    -fx-padding: 0 10px 2px 10px;
 }
 
 .rating-star {
@@ -254,8 +254,9 @@
     -fx-text-fill: rgb(61, 64, 91);
 }
 
-.durationInput > .text-field:selected {
+.durationInput > .text-field:focused {
     -fx-border-width: 3px;
+    -fx-border-radius: 5;
     -fx-border-color: rgb(61, 64, 91);
     -fx-border-insets: -3px;
     -fx-effect: null;
@@ -266,16 +267,18 @@
     -fx-min-height: 230px;
     -fx-min-width: 800px;
     -fx-background-color: #F4F1DE;
-    -fx-highlight-fill: none;     /*blue active color gone*/
+    -fx-highlight-fill: #B1563F;     /*blue active color gone*/
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-prompt-text-fill: rgba(224, 122, 95, 0.50);
     -fx-text-fill: rgb(61, 64, 91);
     -fx-border-color: #F4F1DE;
+    -fx-padding: 5px;
 }
 
 .text-area:focused {
     -fx-border-width: 3px;
+    -fx-padding: 6px;
     -fx-border-color: rgb(61, 64, 91);
     -fx-border-insets: -3px;
     -fx-effect: null;
@@ -335,4 +338,12 @@
     -fx-max-width: 21px;
     -fx-min-height: 25px;
     -fx-min-width: 21px;
+}
+
+.log-cell-top-hbox {
+    -fx-padding: 0 0 10px 0;
+}
+
+.log-cell-bottom-hbox {
+    -fx-padding: 10px 0 0 0;
 }
