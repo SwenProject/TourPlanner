@@ -59,6 +59,7 @@ public class TourInfoController {
     public Label transportTypeSelectorCar;
     public Label transportTypeSelectorFeet;
     public Label transportTypeSelectorBike;
+    public Button saveTourButton;
 
     //----FIELDS FOR SAVING PREVIOUS VALUES FOR EDIT MODE CANCEL----
     private String previousTourName;
@@ -132,6 +133,9 @@ public class TourInfoController {
 
         //bind editTourButton to durationIsLoading and imageIsLoading property (disables button while route calculation is in progress)
         editTourButton.disableProperty().bind(imageIsLoading.or(durationIsLoading));
+
+        //bind saveTourButton to empty property of tourNameEdit, startingPointEdit and destinationPointEdit
+        saveTourButton.disableProperty().bind(tourNameEdit.textProperty().isEmpty().or(startingPointEdit.textProperty().isEmpty()).or(destinationPointEdit.textProperty().isEmpty()));
     }
 
     public void switchTabs() {
@@ -209,6 +213,9 @@ public class TourInfoController {
     }
 
     public void onSaveTour() {
+
+        //check if saveTourButton is disabled (so that the user can't save a tour by pressing enter while the button is disabled)
+        if(saveTourButton.isDisabled()) return;
 
         //if tour was a new tour, always save it
         if(tourLogic.getSelectedTourProperty().get().isNew()) {

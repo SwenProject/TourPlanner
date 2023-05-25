@@ -28,6 +28,8 @@ public class Tour {
     private final ObjectProperty<TransportType> transportTypeProperty = new SimpleObjectProperty<>();
     private final StringProperty pathToMapImageProperty = new SimpleStringProperty();
     private ListProperty<TourLog> tourLogsProperty = new SimpleListProperty<>();
+    private final IntegerProperty childFriendlinessScoreProperty = new SimpleIntegerProperty();
+    private final IntegerProperty popularityScoreProperty = new SimpleIntegerProperty();
 
     // ------- Field for actual list (hibernates needs this as a reference) -------
     private List<TourLog> tourLogs = new ArrayList<>();
@@ -88,6 +90,16 @@ public class Tour {
     @Transient
     public ListProperty<TourLog> getTourLogsProperty() {
         return tourLogsProperty;
+    }
+
+    @Transient
+    public IntegerProperty getChildFriendlinessScoreProperty() {
+        return childFriendlinessScoreProperty;
+    }
+
+    @Transient
+    public IntegerProperty getPopularityScoreProperty() {
+        return popularityScoreProperty;
     }
 
     // ------- Getter and Setter for actual data so that the Tour can be saved to db -------
@@ -185,7 +197,25 @@ public class Tour {
         this.tourLogsProperty.set(FXCollections.observableList(tourLogs));
     }
 
-    // ------- New Tour Boolean -------
+    @Column(name = "child_friendliness_score")
+    public int getChildFriendlinessScore() {
+        return childFriendlinessScoreProperty.get();
+    }
+
+    public void setChildFriendlinessScore(int childFriendlinessScore) {
+        this.childFriendlinessScoreProperty.set(childFriendlinessScore);
+    }
+
+    @Column(name = "popularity_score")
+    public int getPopularityScore() {
+        return popularityScoreProperty.get();
+    }
+
+    public void setPopularityScore(int popularityScore) {
+        this.popularityScoreProperty.set(popularityScore);
+    }
+
+    // ------- New Tour Boolean (not saved to db and only used to mark tours that were not yet saved to db)-------
 
     @Transient
     private boolean isNew = false;
