@@ -11,13 +11,14 @@
        fx:controller="com.tourplanner.controller.NewImportExportController"
        stylesheets="@../css/new-import-export.css"
        maxWidth="Infinity"
+       hgap="10"
 >
 
     <!--Define that each button should take up 1/3 of the space-->
     <columnConstraints>
-    <ColumnConstraints percentWidth="33.3"/>
-    <ColumnConstraints percentWidth="33.3"/>
-    <ColumnConstraints percentWidth="33.4"/>
+    <ColumnConstraints percentWidth="33.3" halignment="LEFT"/>
+    <ColumnConstraints percentWidth="33.3" halignment="CENTER"/>
+    <ColumnConstraints percentWidth="33.4" halignment="RIGHT"/>
     </columnConstraints>
 
     <!--New Tour Button-->

@@ -3,7 +3,24 @@
 }
 
 .newTourButton {
+    /*-fx-min-width: 50px;*/
+    /*-fx-max-width: 150px;*/
     -fx-background-color: #81b29a;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-min-height: 40px;
+    -fx-font-size: 20px;
+    -fx-text-fill: #ffffff;
+    /*-fx-effect: innershadow(gaussian, rgba(61, 64, 91, 0.34), -5, 3, 0, -3);*/
+    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.34), 3, 0, 3, 3);
+    -fx-cursor: hand;
+}
+
+.exportButton,
+.importButton {
+    /*-fx-min-width: 50px;*/
+    /*-fx-max-width: 150px;*/
+    -fx-background-color: #e49278;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-min-height: 40px;
