@@ -144,7 +144,7 @@ public class TourLogsController {
 
         //add css file to alert
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(Objects.requireNonNull(TourPlannerApp.class.getResource("css/confirm-tour-delete.css")).toExternalForm());
+        dialogPane.getStylesheets().add(Objects.requireNonNull(TourPlannerApp.class.getResource("css/alert-dialog.css")).toExternalForm());
         dialogPane.getStyleClass().add("deleteAlertBox");
 
         //replace alert image with custom image
