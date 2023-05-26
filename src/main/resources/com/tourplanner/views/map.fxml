@@ -24,9 +24,15 @@
 
     <VBox maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" alignment="CENTER" styleClass="map-main-box">
 
-            <ScrollPane styleClass="map-image-scroll-pane" fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-hbar-policy: never; -fx-vbar-policy: never;">
-                <ImageView fx:id="mapImage" preserveRatio="true" pickOnBounds="true"/>
+        <StackPane fx:id="mapImageContainer" pickOnBounds="false" alignment="BOTTOM_RIGHT">
+            <ScrollPane styleClass="map-image-scroll-pane" fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                    <ImageView fx:id="mapImage" preserveRatio="true" pickOnBounds="true"/>
             </ScrollPane>
+            <VBox styleClass="mapZoomButtonsContainer" spacing="10">
+                <Button onAction="#onIncreaseZoom" styleClass="increaseZoom"/>
+                <Button onAction="#onDecreaseZoom" styleClass="decreaseZoom"/>
+            </VBox>
+        </StackPane>
 
         <VBox fx:id="noMapContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
             <Region styleClass="no-map-icon" />

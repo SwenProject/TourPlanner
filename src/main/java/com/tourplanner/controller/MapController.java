@@ -9,6 +9,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
@@ -35,8 +36,8 @@ public class MapController {
         //bind visibility of noMapContainer and mapImage to currentPathToImage property
         noMapContainer.visibleProperty().bind(currentPathToImage.isNull());
         noMapContainer.managedProperty().bind(currentPathToImage.isNull());
-        mapImage.visibleProperty().bind(currentPathToImage.isNotNull().and(currentPathToImage.isNotEqualTo("loading").and(currentPathToImage.isNotEqualTo("error"))));
-        mapImage.managedProperty().bind(currentPathToImage.isNotNull().and(currentPathToImage.isNotEqualTo("loading").and(currentPathToImage.isNotEqualTo("error"))));
+        mapImageContainer.visibleProperty().bind(currentPathToImage.isNotNull().and(currentPathToImage.isNotEqualTo("loading").and(currentPathToImage.isNotEqualTo("error"))).and(imageLoadingProgress.isEqualTo(1)));
+        mapImageContainer.managedProperty().bind(currentPathToImage.isNotNull().and(currentPathToImage.isNotEqualTo("loading").and(currentPathToImage.isNotEqualTo("error"))).and(imageLoadingProgress.isEqualTo(1)));
         mapErrorContainer.visibleProperty().bind(currentPathToImage.isEqualTo("error"));
         mapErrorContainer.managedProperty().bind(currentPathToImage.isEqualTo("error"));
         loadingSpinner.visibleProperty().bind(currentPathToImage.isEqualTo("loading"));
@@ -48,27 +49,9 @@ public class MapController {
         //bind loadImage to currentPathToImage property
         currentPathToImage.addListener((observable, oldValue, newValue) -> loadImage(newValue));
 
-        if(mapContainer.getHeight() > mapContainer.getWidth()) {
-            mapImage.fitWidthProperty().unbind();
-            mapImage.setFitWidth(3840);
-            mapImage.fitHeightProperty().bind(mapContainer.heightProperty());
-        }else{
-            mapImage.fitHeightProperty().unbind();
-            mapImage.setFitHeight(3840);
-            mapImage.fitWidthProperty().bind(mapContainer.widthProperty().subtract(42));
-        }
+        resizeImage();
 
-        mapContainer.widthProperty().addListener((observable, oldValue, newValue) -> {
-            if(mapContainer.getHeight() > mapContainer.getWidth()) {
-                mapImage.fitWidthProperty().unbind();
-                mapImage.setFitWidth(3840);
-                mapImage.fitHeightProperty().bind(mapContainer.heightProperty());
-            }else{
-                mapImage.fitHeightProperty().unbind();
-                mapImage.setFitHeight(3840);
-                mapImage.fitWidthProperty().bind(mapContainer.widthProperty().subtract(42));
-            }
-        });
+        mapContainer.widthProperty().addListener((observable, oldValue, newValue) -> resizeImage());
 
         mapContainer.heightProperty().addListener((observable, oldValue, newValue) -> {
             if(mapContainer.getHeight() > mapContainer.getWidth()) {
@@ -94,6 +77,28 @@ public class MapController {
         currentPathToImage.bind(tour.getPathToMapImageProperty());
     }
 
+    private void resizeImage(){
+
+//        if(zoomFactor.get() > 1){
+//            mapImage.fitWidthProperty().unbind();
+//            mapImage.fitHeightProperty().unbind();
+//            mapImage.setFitWidth(-1);
+//            mapImage.setFitHeight(-1);
+//            return;
+//        }
+
+
+        if(mapContainer.getHeight() > mapContainer.getWidth()) {
+            mapImage.fitWidthProperty().unbind();
+            mapImage.setFitWidth(-1);
+            mapImage.fitHeightProperty().bind(mapContainer.heightProperty().multiply(zoomFactor.get()));
+        }else{
+            mapImage.fitHeightProperty().unbind();
+            mapImage.setFitHeight(-1);
+            mapImage.fitWidthProperty().bind(mapContainer.widthProperty().subtract(50).multiply(zoomFactor.get()));
+        }
+    }
+
 
     private void loadImage(String pathToImage){
         if(pathToImage == null || pathToImage.isEmpty() || pathToImage.equals("error") || pathToImage.equals("loading")){
@@ -111,7 +116,19 @@ public class MapController {
 
         Image image = new Image(file.toURI().toString(), true); //true to load image in separate thread
 
+        imageLoadingProgress.bind(image.progressProperty());
+
         mapImage.setImage(image);
+    }
+
+    public void onIncreaseZoom(){
+        zoomFactor.set(zoomFactor.get() * 1.4);
+    }
+
+    public void onDecreaseZoom(){
+        if(zoomFactor.get() > 1){
+            zoomFactor.set(zoomFactor.get() / 1.4);
+        }
     }
 
 }
