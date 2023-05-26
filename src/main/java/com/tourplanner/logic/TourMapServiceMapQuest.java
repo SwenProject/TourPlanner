@@ -72,10 +72,13 @@ public class TourMapServiceMapQuest implements ITourMapService {
             // Save route to access nested objects and values
             JSONObject route = jsonResponse.getJSONObject("route");
 
+            float distance = route.getFloat("distance");
+            Duration duration = Duration.ofSeconds(route.getInt("time"));
+
             //write to tourObject with Platform.runLater because Properties need to be updated on the JavaFX Application Thread
             Platform.runLater(() -> {
-                tour.setDistance(route.getFloat("distance"));
-                tour.setDuration(Duration.ofSeconds(route.getInt("time")));
+                tour.setDistance(distance);
+                tour.setDuration(duration);
             });
 
             // Retrieve sessionId and boundingBox for StaticMap request

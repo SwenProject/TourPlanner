@@ -5,24 +5,39 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.shape.Rectangle?>
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.tourplanner.controller.MapController"
-            stylesheets="@../css/map.css"
-            maxWidth="Infinity"
-            maxHeight="Infinity"
-            VBox.vgrow="ALWAYS"
-            alignment="CENTER"
-            styleClass="map-container"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.tourplanner.controller.MapController"
+      fx:id="mapContainer"
+      stylesheets="@../css/map.css"
+      maxWidth="Infinity"
+      maxHeight="Infinity"
+      minWidth="450"
+      VBox.vgrow="ALWAYS"
+      alignment="CENTER"
+      styleClass="map-container"
 >
 
     <VBox maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" alignment="CENTER" styleClass="map-main-box">
-        <!--TODO: image zum databinden mit mapcontroller -> immer wenn selectedTour sich ändert entweder Karte laden oder wenn NUll dann Text Displayen -->
+
+            <ScrollPane styleClass="map-image-scroll-pane" fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-hbar-policy: never; -fx-vbar-policy: never;">
+                <ImageView fx:id="mapImage" preserveRatio="true" pickOnBounds="true"/>
+            </ScrollPane>
 
         <VBox fx:id="noMapContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
             <Region styleClass="no-map-icon" />
-<!--            <Label styleClass="no-map-text" text="select a tour" />-->
         </VBox>
+
+        <VBox fx:id="mapErrorContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
+            <ImageView opacity="0.4" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../images/tour_map_error.png" backgroundLoading="true"/>
+            </ImageView>
+        </VBox>
+
+        <ProgressIndicator fx:id="loadingSpinner" minWidth="100" maxWidth="100" minHeight="100" maxHeight="100"/>
     </VBox>
 </VBox>

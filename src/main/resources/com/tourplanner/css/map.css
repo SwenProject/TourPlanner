@@ -26,3 +26,22 @@
     -fx-font-size: 25px;
     -fx-padding: 10px 0 0 0;
 }
+
+.progress-indicator:indeterminate .segment {
+    -fx-background-color: rgb(61, 64, 91);
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.map-image-scroll-pane {
+    -fx-border-radius: 10;
+    -fx-border-insets: 10;
+    -fx-border-width: 5px;
+    -fx-border-color: #669496;
+}
