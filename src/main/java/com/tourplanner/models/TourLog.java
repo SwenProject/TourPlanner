@@ -1,4 +1,5 @@
 package com.tourplanner.models;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tourplanner.enums.Difficulty;
 import javax.persistence.*;
 import java.time.Duration;
@@ -15,12 +16,17 @@ import lombok.Setter;
 public class TourLog {
 
     // ------- TourLog Properties -------
-
+    @JsonIgnore
     private final LongProperty idProperty = new SimpleLongProperty();
+    @JsonIgnore
     private final IntegerProperty ratingProperty = new SimpleIntegerProperty();
+    @JsonIgnore
     private final ObjectProperty<Difficulty> difficultyProperty = new SimpleObjectProperty<>();
+    @JsonIgnore
     private final ObjectProperty<Duration> totalTimeProperty = new SimpleObjectProperty<>();
+    @JsonIgnore
     private final StringProperty commentProperty = new SimpleStringProperty();
+    @JsonIgnore
     private final ObjectProperty<Date> dateProperty = new SimpleObjectProperty<>();
 
     // ------- Getter for TourLog Properties -------

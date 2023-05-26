@@ -112,7 +112,7 @@ public class TourLogic {
         // - popularity calculation
 
         //create new task for api request (to run async)
-        TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(selectedTourProperty.get(), tourMapService, tourMapRequestLock); //create new task
+        TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(tour, tourMapService, tourMapRequestLock); //create new task
 
         //set callback of task to db save function
         tourMapRequestTask.setCallback(tourRepository::save);

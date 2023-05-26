@@ -2,6 +2,7 @@ package com.tourplanner.controller;
 
 import com.tourplanner.TourPlannerApp;
 import com.tourplanner.logic.TourLogic;
+import com.tourplanner.services.IFileImportExportService;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -19,11 +20,13 @@ import java.util.Objects;
 public class NewImportExportController {
 
     private final TourLogic tourLogic;
+    private final IFileImportExportService fileImportExportService;
 
     public GridPane newImportExportContainer;
 
-    public NewImportExportController(TourLogic tourLogic) {
+    public NewImportExportController(TourLogic tourLogic, IFileImportExportService fileImportExportService) {
         this.tourLogic = tourLogic;
+        this.fileImportExportService = fileImportExportService;
     }
 
     public void initialize(){
@@ -35,6 +38,23 @@ public class NewImportExportController {
     }
 
     public void onImport(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+
+        // Set the initial directory (optional)
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+        // Set the extension filters (optional)
+        FileChooser.ExtensionFilter toursFileExtension = new FileChooser.ExtensionFilter("Tour Planner Multiple Tours File (*.tours)", "*.tours");
+        fileChooser.getExtensionFilters().addAll(toursFileExtension);
+
+        // Show the Save File dialog
+        File selectedFile = fileChooser.showOpenDialog(newImportExportContainer.getScene().getWindow());
+
+        // Check if a file was selected
+        if (selectedFile != null) {
+            String filePath = selectedFile.getAbsolutePath();
+            this.fileImportExportService.importTours(filePath);
+        }
     }
 
     public void onExport(ActionEvent actionEvent) {
@@ -103,10 +123,7 @@ public class NewImportExportController {
         // Check if a file was selected
         if (selectedFile != null) {
             String filePath = selectedFile.getAbsolutePath();
-
-            // Use the file path in your JavaFX code
-            // For example, you can display the path in a TextField
-            System.out.println("Filepath:" + filePath);
+            this.fileImportExportService.exportTours(filePath);
         }
     }
 

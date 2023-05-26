@@ -1,4 +1,8 @@
 package com.tourplanner.models;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tourplanner.enums.TransportType;
 import javax.persistence.*;
 
@@ -16,22 +20,35 @@ import java.util.List;
 public class Tour {
 
     // ------- Tour Properties -------
-
+    @JsonIgnore
     private final LongProperty idProperty = new SimpleLongProperty();
+    @JsonIgnore
     private final StringProperty nameProperty = new SimpleStringProperty();
+    @JsonIgnore
     private final StringProperty startingPointProperty = new SimpleStringProperty();
+    @JsonIgnore
     private final StringProperty destinationPointProperty = new SimpleStringProperty();
+    @JsonIgnore
     private final StringProperty descriptionProperty = new SimpleStringProperty();
+    @JsonIgnore
     private final DoubleProperty distanceProperty = new SimpleDoubleProperty();
+    @JsonIgnore
     private final ObjectProperty<Duration> durationProperty = new SimpleObjectProperty<>();
+    @JsonIgnore
     private final IntegerProperty ratingProperty = new SimpleIntegerProperty();
+    @JsonIgnore
     private final ObjectProperty<TransportType> transportTypeProperty = new SimpleObjectProperty<>();
+    @JsonIgnore
     private final StringProperty pathToMapImageProperty = new SimpleStringProperty();
+    @JsonIgnore
     private ListProperty<TourLog> tourLogsProperty = new SimpleListProperty<>();
+    @JsonIgnore
     private final IntegerProperty childFriendlinessScoreProperty = new SimpleIntegerProperty();
+    @JsonIgnore
     private final IntegerProperty popularityScoreProperty = new SimpleIntegerProperty();
 
     // ------- Field for actual list (hibernates needs this as a reference) -------
+    @JsonIgnore
     private List<TourLog> tourLogs = new ArrayList<>();
 
     // ------- Getter for Tour Properties -------
@@ -106,6 +123,7 @@ public class Tour {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     public Long getId() {
         return this.idProperty.get();
     }
@@ -144,6 +162,7 @@ public class Tour {
         this.descriptionProperty.set(description);
     }
 
+    @JsonIgnore
     public double getDistance() {
         return distanceProperty.get();
     }
@@ -151,6 +170,7 @@ public class Tour {
         this.distanceProperty.set(distance);
     }
 
+    @JsonIgnore
     public Duration getDuration() {
         return durationProperty.get();
     }
@@ -158,6 +178,7 @@ public class Tour {
         this.durationProperty.set(duration);
     }
 
+    @JsonIgnore
     public int getRating() {
         return ratingProperty.get();
     }
@@ -175,6 +196,7 @@ public class Tour {
     }
 
     @Column(name = "path_to_map_image")
+    @JsonIgnore
     public String getPathToMapImage() {
         return pathToMapImageProperty.get();
     }
@@ -188,6 +210,7 @@ public class Tour {
             fetch = FetchType.EAGER //Children are fetched with parent
     )
     @JoinColumn(name = "fk_tour_id") //Foreign key in child table
+    @JsonGetter("tourLogs")
     public List<TourLog> getTourLogs() {
         return this.tourLogs;
     }
@@ -198,6 +221,7 @@ public class Tour {
     }
 
     @Column(name = "child_friendliness_score")
+    @JsonIgnore
     public int getChildFriendlinessScore() {
         return childFriendlinessScoreProperty.get();
     }
@@ -207,6 +231,7 @@ public class Tour {
     }
 
     @Column(name = "popularity_score")
+    @JsonIgnore
     public int getPopularityScore() {
         return popularityScoreProperty.get();
     }
@@ -218,6 +243,7 @@ public class Tour {
     // ------- New Tour Boolean (not saved to db and only used to mark tours that were not yet saved to db)-------
 
     @Transient
+    @JsonIgnore
     private boolean isNew = false;
 
     @Transient
@@ -226,6 +252,7 @@ public class Tour {
     }
 
     @Transient
+    @JsonIgnore
     public boolean isNew() {
         return this.isNew;
     }

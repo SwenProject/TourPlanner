@@ -107,10 +107,6 @@ public class MapController {
 
         File file = path.toFile();
 
-        System.out.println("File exists: " + file.exists());
-        System.out.println("File path: " + file.getAbsolutePath());
-        System.out.println("File uri: " + file.toURI());
-
         Image image = new Image(file.toURI().toString(), true); //true to load image in separate thread
 
         imageLoadingProgress.bind(image.progressProperty());

@@ -6,6 +6,7 @@ module TourPlanner {
     requires java.sql;
     requires org.hibernate.orm.core;
     requires org.json;
+    requires com.fasterxml.jackson.databind;
 
 
     opens com.tourplanner to javafx.fxml;
