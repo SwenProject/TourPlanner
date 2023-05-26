@@ -3,6 +3,8 @@ package com.tourplanner.controller;
 import com.tourplanner.TourPlannerApp;
 import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.ProgressIndicator;
@@ -26,6 +28,9 @@ public class MapController {
     public VBox mapErrorContainer;
     public ProgressIndicator loadingSpinner;
     public VBox mapContainer;
+    public final DoubleProperty zoomFactor = new SimpleDoubleProperty(1);
+    public StackPane mapImageContainer;
+    public final DoubleProperty imageLoadingProgress = new SimpleDoubleProperty(0);
 
     public MapController(TourLogic tourLogic) {
         this.tourLogic = tourLogic;
@@ -53,17 +58,9 @@ public class MapController {
 
         mapContainer.widthProperty().addListener((observable, oldValue, newValue) -> resizeImage());
 
-        mapContainer.heightProperty().addListener((observable, oldValue, newValue) -> {
-            if(mapContainer.getHeight() > mapContainer.getWidth()) {
-                mapImage.fitWidthProperty().unbind();
-                mapImage.setFitWidth(-1);
-                mapImage.fitHeightProperty().bind(mapContainer.heightProperty());
-            }else{
-                mapImage.fitHeightProperty().unbind();
-                mapImage.setFitHeight(-1);
-                mapImage.fitWidthProperty().bind(mapContainer.widthProperty().subtract(42));
-            }
-        });
+        mapContainer.heightProperty().addListener((observable, oldValue, newValue) -> resizeImage());
+
+        zoomFactor.addListener((observable, oldValue, newValue) -> resizeImage());
     }
 
     public void loadTour(Tour tour){
