@@ -4,6 +4,7 @@ import com.tourplanner.enums.TransportType;
 import com.tourplanner.models.Tour;
 import com.tourplanner.repositories.TourRepository;
 import com.tourplanner.services.ITourMapService;
+import com.tourplanner.services.RatingCalculationService;
 import com.tourplanner.services.TourMapRequestTask;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -21,6 +22,7 @@ public class TourLogic {
     private final ListProperty<Tour> searchedToursListProperty = new SimpleListProperty<>(searchedTours);
     private final ObjectProperty<Tour> selectedTourProperty = new SimpleObjectProperty<>();
     private final IntegerProperty currentTabProperty = new SimpleIntegerProperty(0);
+    private final RatingCalculationService ratingCalculationService = new RatingCalculationService();
 
     public TourLogic(TourRepository tourRepository, ITourMapService tourMapService) {
         this.tourRepository = tourRepository;
@@ -69,9 +71,10 @@ public class TourLogic {
     public void saveSelectedTour(){
 
         //TODO:
-        // - rating calculation
         // - child friendliness calculation
         // - popularity calculation
+
+        this.ratingCalculationService.calculateRating(selectedTourProperty.get());
 
         //create new task for api request (to run async)
         TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(selectedTourProperty.get(), tourMapService, tourMapRequestLock); //create new task
@@ -96,9 +99,10 @@ public class TourLogic {
     public void updateSelectedTourWithoutRecalculating(){
 
         //TODO:
-        // - rating calculation
         // - child friendliness calculation
         // - popularity calculation
+
+        this.ratingCalculationService.calculateRating(selectedTourProperty.get());
 
         tourRepository.update(selectedTourProperty.get());
 
@@ -107,9 +111,10 @@ public class TourLogic {
     public void addTour(Tour tour){
 
         //TODO:
-        // - rating calculation
         // - child friendliness calculation
         // - popularity calculation
+
+        this.ratingCalculationService.calculateRating(tour);
 
         //create new task for api request (to run async)
         TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(tour, tourMapService, tourMapRequestLock); //create new task
