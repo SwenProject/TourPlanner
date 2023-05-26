@@ -6,12 +6,27 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Button xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.tourplanner.controller.NewImportExportController"
-            stylesheets="@../css/new-import-export.css"
-            onAction="#onCreateNewTrip"
-            maxWidth="Infinity"
-            styleClass="newTourButton"
-            text="Create New Tour"
-/>
+<GridPane  xmlns="http://javafx.com/javafx"
+       xmlns:fx="http://javafx.com/fxml"
+       fx:controller="com.tourplanner.controller.NewImportExportController"
+       stylesheets="@../css/new-import-export.css"
+       maxWidth="Infinity"
+>
+
+    <!--Define that each button should take up 1/3 of the space-->
+    <columnConstraints>
+    <ColumnConstraints percentWidth="33.3"/>
+    <ColumnConstraints percentWidth="33.3"/>
+    <ColumnConstraints percentWidth="33.4"/>
+    </columnConstraints>
+
+    <!--New Tour Button-->
+    <Button onAction="#onCreateNewTour" styleClass="newTourButton" text="New Tour" GridPane.columnIndex="0" GridPane.rowIndex="0" maxWidth="Infinity"/>
+
+    <!--Import Button-->
+    <Button onAction="#onImport" styleClass="importButton" text="Import" GridPane.columnIndex="1" GridPane.rowIndex="0" maxWidth="Infinity"/>
+
+    <!--Export Button-->
+    <Button onAction="#onExport" styleClass="exportButton" text="Export" GridPane.columnIndex="2" GridPane.rowIndex="0" maxWidth="Infinity"/>
+
+</GridPane>

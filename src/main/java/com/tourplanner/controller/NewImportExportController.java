@@ -15,7 +15,13 @@ public class NewImportExportController {
     }
 
 
-    public void onCreateNewTrip(ActionEvent actionEvent) {
+    public void onCreateNewTour(ActionEvent actionEvent) {
         tourLogic.createNewTour();
+    }
+
+    public void onImport(ActionEvent actionEvent) {
+    }
+
+    public void onExport(ActionEvent actionEvent) {
     }
 }

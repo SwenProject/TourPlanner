@@ -27,10 +27,12 @@
         </HBox>
 
         <!--NO TOUR LOGS ICON AND TEXT-->
-        <VBox fx:id="noLogsContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
-            <Region styleClass="no-logs-icon"/>
-            <Label styleClass="no-logs-text" text="no tour logs" />
-        </VBox>
+        <ScrollPane  fx:id="noLogsContainer" fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+            <VBox VBox.vgrow="ALWAYS" alignment="CENTER">
+                    <Region styleClass="no-logs-icon"/>
+                    <Label styleClass="no-logs-text" text="no tour logs" />
+            </VBox>
+        </ScrollPane>
 
         <!--LIST OF TOUR LOGS-->
         <ListView fx:id="tourLogsList" styleClass="tourLogsListView" VBox.vgrow="ALWAYS" />

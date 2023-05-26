@@ -32,7 +32,7 @@ public class TourLogsController {
     public Label tourName;
 
     //----FXML ELEMENTS----
-    public VBox noLogsContainer;
+    public ScrollPane noLogsContainer;
     public ListView<TourLog> tourLogsList;
     public VBox viewModeContainer;
 
