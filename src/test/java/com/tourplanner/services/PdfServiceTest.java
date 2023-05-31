@@ -30,7 +30,7 @@ class PdfServiceTest{
         log1.setRating(5);
         log1.setTotalTime(Duration.ofHours(2));
         log1.setDifficulty(Difficulty.MEDIUM);
-        log1.setDate(new Date(2023, Calendar.AUGUST, 3, 22, 30, 18));
+        log1.setDate(new Date(2023-1900, Calendar.AUGUST, 3, 22, 30, 18));
         log1.setComment("Es war schrecklich!");
 
 
@@ -38,7 +38,7 @@ class PdfServiceTest{
         log2.setRating(4);
         log2.setTotalTime(Duration.ofHours(1));
         log2.setDifficulty(Difficulty.MEDIUM);
-        log2.setDate(new Date(2023, Calendar.AUGUST, 3, 22, 30, 18));
+        log2.setDate(new Date(2023-1900, Calendar.AUGUST, 3, 22, 30, 18));
         log2.setComment("Hab gehört es soll schrecklich sein aber eigentlich cool!");
 
 
@@ -50,10 +50,10 @@ class PdfServiceTest{
         log4.setRating(2);
         log4.setTotalTime(Duration.ofHours(4));
 
-        tour1.getTourLogs().add(log1);
-        tour1.getTourLogs().add(log2);
-        tour2.getTourLogs().add(log3);
-        tour2.getTourLogs().add(log4);
+       // tour1.getTourLogs().add(log1);
+       // tour1.getTourLogs().add(log2);
+       // tour2.getTourLogs().add(log3);
+        //tour2.getTourLogs().add(log4);
 
     }
 
@@ -66,7 +66,8 @@ class PdfServiceTest{
         tour1.setDescription("Eine super TourEine super Tour Eine super Tour Eine super Tour Eine super Tour Eine super Tour Eine super Tour Eine super Tour Eine super Tour");
         tour1.setDistance(300.);
         tour1.setPathToMapImage("./src/main/resources/com/tourplanner/map_images/422586223.jpeg");
-
+        //tour1.setPathToMapImage(null);
+        tour1.setDuration(Duration.ofHours(2));
         tour1.setTransportType(TransportType.CAR);
 
         tour2.setName("NichtsoSuperTour");
@@ -76,6 +77,8 @@ class PdfServiceTest{
         tour2.setDistance(200.);
         tour2.setTransportType(TransportType.FEET);
         tour2.setPathToMapImage("./src/main/resources/com/tourplanner/map_images/780295808.jpeg");
+        tour2.setDuration(Duration.ofHours(3));
+
 
 
         //act
@@ -92,6 +95,9 @@ class PdfServiceTest{
         tour1.setDescription("Eine super TourEine super Tour Eine super Tour Eine super Tour Eine super Tour Eine super Tour Eine super Tour Eine super Tour Eine super Tour");
         tour1.setDistance(300.);
         tour1.setPathToMapImage("./src/main/resources/com/tourplanner/map_images/422586223.jpeg");
+        tour1.setPathToMapImage(null);
+
+
 
         tour1.setTransportType(TransportType.CAR);
 
