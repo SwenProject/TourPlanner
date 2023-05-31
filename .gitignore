@@ -1,5 +1,6 @@
 src/main/resources/com/tourplanner/map_images
 config.properties
+logs/
 
 target/
 !.mvn/wrapper/maven-wrapper.jar

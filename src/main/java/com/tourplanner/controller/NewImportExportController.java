@@ -5,7 +5,6 @@ import com.tourplanner.logic.TourLogic;
 import com.tourplanner.services.ConfigurationService;
 import com.tourplanner.services.IFileImportExportService;
 import com.tourplanner.services.PdfService;
-import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,6 +14,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.Objects;
@@ -28,6 +29,8 @@ public class NewImportExportController {
 
     public GridPane newImportExportContainer;
 
+    private static final Logger logger = LogManager.getLogger(NewImportExportController.class);
+
     public NewImportExportController(TourLogic tourLogic, ConfigurationService config, IFileImportExportService fileImportExportService, PdfService pdfService) {
         this.tourLogic = tourLogic;
         this.config = config;
@@ -39,11 +42,14 @@ public class NewImportExportController {
     }
 
 
-    public void onCreateNewTour(ActionEvent actionEvent) {
+    public void onCreateNewTour() {
         tourLogic.createNewTour();
     }
 
-    public void onImport(ActionEvent actionEvent) {
+    public void onImport() {
+
+        logger.info("Importing tours from file. Opening file chooser.");
+
         FileChooser fileChooser = new FileChooser();
 
         // Set the initial directory (optional)
@@ -58,12 +64,16 @@ public class NewImportExportController {
 
         // Check if a file was selected
         if (selectedFile != null) {
+            logger.info("File selected. Importing tours from file.");
             String filePath = selectedFile.getAbsolutePath();
             this.fileImportExportService.importTours(filePath);
         }
     }
 
-    public void onExport(ActionEvent actionEvent) {
+    public void onExport() {
+
+        logger.info("Export tours dialog opened.");
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Export Tours");
         alert.setHeaderText("How do you want to export the tours?");
@@ -114,6 +124,9 @@ public class NewImportExportController {
     }
 
     public void exportToToursFile(){
+
+        logger.info("Exporting tours to file. Opening file chooser.");
+
         FileChooser fileChooser = new FileChooser();
 
         // Set the initial directory (optional)
@@ -128,12 +141,16 @@ public class NewImportExportController {
 
         // Check if a file was selected
         if (selectedFile != null) {
+            logger.info("File selected. Exporting tours to file.");
             String filePath = selectedFile.getAbsolutePath();
             this.fileImportExportService.exportTours(filePath);
         }
     }
 
     public void exportToursToPdf(){
+
+        logger.info("Exporting tours to pdf. Opening file chooser.");
+
         FileChooser fileChooser = new FileChooser();
 
         // Set the initial directory (optional)
@@ -148,6 +165,7 @@ public class NewImportExportController {
 
         // Check if a file was selected
         if (selectedFile != null) {
+            logger.info("File selected. Exporting tours to pdf.");
             String filePath = selectedFile.getAbsolutePath();
             this.pdfService.createPdfSummary(tourLogic.getAllToursList(), filePath);
         }

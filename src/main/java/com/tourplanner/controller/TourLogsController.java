@@ -15,6 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.Duration;
 import java.util.Date;
@@ -54,6 +56,8 @@ public class TourLogsController {
     public TextField logTotalTimeEditMinutes;
     public final ObjectProperty<TourLog> tourLogInEdit = new SimpleObjectProperty<>();
     public Button editModeSaveButton;
+
+    private static final Logger logger = LogManager.getLogger(TourLogsController.class);
 
 
     //----PROPERTIES FOR BINDING----
@@ -132,6 +136,8 @@ public class TourLogsController {
 
     public void deleteTourLog(TourLog tourLog) {
 
+        logger.info("Confirming delete tour log dialog opened");
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Delete Log");
         alert.setHeaderText("Are you sure you want to delete this log entry?");
@@ -169,9 +175,11 @@ public class TourLogsController {
         // show alert box and wait for response
         alert.showAndWait().ifPresent(response -> {
             if (response == buttonTypeDelete) {
+                logger.info("Deleting tour log");
                 currentTourLogs.remove(tourLog);
                 tourLogic.updateSelectedTourWithoutRecalculating();
             } else if (response == buttonTypeCancel) {
+                logger.info("Tour log deletion cancelled");
                 //do nothing
                 //maybe log that the user cancelled deleting the log
             }
@@ -179,6 +187,7 @@ public class TourLogsController {
     }
 
     public void startEditMode(TourLog tourLog) {
+        logger.info("Starting edit mode for tour log with id " + tourLog.getId());
         tourLogInEdit.set(tourLog);
         logCommentEdit.setText(tourLog.getComment());
         logDifficultyEdit.set(tourLog.getDifficulty());
@@ -193,6 +202,8 @@ public class TourLogsController {
     }
 
     public void onSaveEdit() {
+
+        logger.info("Saving tour log");
 
         if(tourLogInEdit.get() == null) { //tour log is new
             TourLog tourLog = new TourLog();
@@ -217,6 +228,7 @@ public class TourLogsController {
     }
 
     public void onAddLog() {
+        logger.info("Creating new tour log");
         tourLogInEdit.set(null);
         logCommentEdit.setText("");
         logDifficultyEdit.set(Difficulty.MEDIUM);

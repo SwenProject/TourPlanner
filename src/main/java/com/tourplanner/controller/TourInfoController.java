@@ -6,7 +6,6 @@ import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
-import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,6 +14,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.Duration;
 import java.util.Objects;
@@ -77,6 +78,8 @@ public class TourInfoController {
     private final BooleanProperty distanceIsLoading = new SimpleBooleanProperty(false);
     private final BooleanProperty durationIsLoading = new SimpleBooleanProperty(false);
     private final BooleanProperty imageIsLoading = new SimpleBooleanProperty(false);
+
+    private static final Logger logger = LogManager.getLogger(TourInfoController.class);
 
 
     public TourInfoController(TourLogic tourLogic) {
@@ -173,6 +176,8 @@ public class TourInfoController {
         //if no tour was selected, hide tour info and show noTourSelectedText
         if(newTour == null) return; //if no new tour was selected, we are done
 
+        logger.debug("Loading tour \"" + newTour.getName() + "\"");
+
         //bind fields to currently selected tour
         tourName.textProperty().bindBidirectional(newTour.getNameProperty());
         startingPoint.textProperty().bindBidirectional(newTour.getStartingPointProperty());
@@ -238,6 +243,8 @@ public class TourInfoController {
 
     public void onEditTour() {
 
+        logger.info("Editing tour \"" + tourLogic.getSelectedTourProperty().get().getName() + "\"");
+
         previousTourName = tourName.getText();
         previousStartingPoint = startingPoint.getText();
         previousDestinationPoint = destinationPoint.getText();
@@ -254,6 +261,7 @@ public class TourInfoController {
 
         //if tour was a new tour, always save it
         if(tourLogic.getSelectedTourProperty().get().isNew()) {
+            logger.info("Saving new tour: \"" + tourLogic.getSelectedTourProperty().get().getName() + "\"");
             tourLogic.saveSelectedTour();
             editMode.set(false);
             return;
@@ -263,11 +271,18 @@ public class TourInfoController {
         //this includes startingPoint, destinationPoint and transportType
         if(!tourLogic.getSelectedTourProperty().get().getStartingPointProperty().get().equals(previousStartingPoint) ||
                 !tourLogic.getSelectedTourProperty().get().getDestinationPointProperty().get().equals(previousDestinationPoint) ||
-                tourLogic.getSelectedTourProperty().get().getTransportTypeProperty().get() != previousTransportType) {
+                tourLogic.getSelectedTourProperty().get().getTransportTypeProperty().get() != previousTransportType ||
+                tourLogic.getSelectedTourProperty().get().getDistance() == -2 || //if distance is -2, there was an error
+                tourLogic.getSelectedTourProperty().get().getDistance() == -1 //if distance is -1, the route calculation was still in process when the app was closed
+        ) {
+
+            logger.info("Recalculating route and saving tour \"" + tourLogic.getSelectedTourProperty().get().getName() + "\"");
 
             //if they have changed, use saveSelectedTour to recalculate the route
             tourLogic.saveSelectedTour();
         } else {
+            logger.info("Saving tour \"" + tourLogic.getSelectedTourProperty().get().getName() + "\". Route has not changed.");
+
             //if they haven't changed, just update the tour
             tourLogic.updateSelectedTourWithoutRecalculating();
         }
@@ -284,9 +299,12 @@ public class TourInfoController {
         //if tour was a new tour, cancelling deletes it
         //this sets the selected tour to null, which will hide the tour info
         if(tourLogic.getSelectedTourProperty().get().isNew()) {
+            logger.info("Cancelling creation of new tour");
             tourLogic.deleteSelectedTour();
             return;
         }
+
+        logger.info("Cancelling edit of tour \"" + tourLogic.getSelectedTourProperty().get().getName() + "\"");
 
         //reset fields to their previous values
         tourName.textProperty().set(previousTourName);
@@ -321,6 +339,8 @@ public class TourInfoController {
     }
 
     public void onDeleteTour() {
+
+        logger.info("Showing delete confirmation dialog for \"" + tourLogic.getSelectedTourProperty().get().getName() + "\"");
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Delete Tour");
@@ -359,8 +379,10 @@ public class TourInfoController {
         // show alert box and wait for response
         alert.showAndWait().ifPresent(response -> {
             if (response == buttonTypeDelete) {
+                logger.info("Deleting tour \"" + tourLogic.getSelectedTourProperty().get().getName() + "\"");
                 tourLogic.deleteSelectedTour();
             } else if (response == buttonTypeCancel) {
+                logger.info("User cancelled deleting tour");
                 //do nothing
                 //maybe log that the user cancelled deleting the tour
             }

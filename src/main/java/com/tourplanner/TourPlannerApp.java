@@ -9,13 +9,21 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.config.Configurator;
 
 public class TourPlannerApp extends Application {
+
     @Override
     public void start(Stage stage) throws IOException {
 
+        // load config
         ConfigurationService config = new ConfigurationService("config.properties");
+        //check that all config values are set
         config.checkConfig();
+
+        // set log level for log4j
+        Configurator.setRootLevel(Level.toLevel(config.getStringConfig("log.logLevel")));
 
         FXMLLoader fxmlLoader = new FXMLLoader(TourPlannerApp.class.getResource("views/main-view.fxml"));
 

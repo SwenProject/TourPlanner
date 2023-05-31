@@ -1,6 +1,5 @@
 package com.tourplanner.controller;
 
-import com.tourplanner.TourPlannerApp;
 import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
 import javafx.beans.property.DoubleProperty;
@@ -10,12 +9,10 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -76,15 +73,6 @@ public class MapController {
 
     private void resizeImage(){
 
-//        if(zoomFactor.get() > 1){
-//            mapImage.fitWidthProperty().unbind();
-//            mapImage.fitHeightProperty().unbind();
-//            mapImage.setFitWidth(-1);
-//            mapImage.setFitHeight(-1);
-//            return;
-//        }
-
-
         if(mapContainer.getHeight() > mapContainer.getWidth()) {
             mapImage.fitWidthProperty().unbind();
             mapImage.setFitWidth(-1);
@@ -95,7 +83,6 @@ public class MapController {
             mapImage.fitWidthProperty().bind(mapContainer.widthProperty().subtract(50).multiply(zoomFactor.get()));
         }
     }
-
 
     private void loadImage(String pathToImage){
         if(pathToImage == null || pathToImage.isEmpty() || pathToImage.equals("error") || pathToImage.equals("loading")){

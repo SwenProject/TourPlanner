@@ -10,6 +10,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class SearchBoxController {
     private final TourLogic tourLogic;
@@ -24,6 +26,8 @@ public class SearchBoxController {
     public Slider searchMinDistanceSlider;
     public Label searchMaxDistanceLabel;
     public Label searchMinDistanceLabel;
+
+    private static final Logger logger = LogManager.getLogger(SearchBoxController.class);
 
     public SearchBoxController(TourLogic tourLogic) {
         this.tourLogic = tourLogic;
@@ -84,14 +88,15 @@ public class SearchBoxController {
         if(!advancedSearchContainer.isVisible()){
             onClearAdvancedSearch();
         }
-
     }
 
     public void onClearSearch() {
+        logger.debug("Cleared search");
         searchTextField.textProperty().setValue("");
     }
 
     public void onClearAdvancedSearch() {
+        logger.debug("Cleared advanced search");
         searchStartLocationField.textProperty().setValue("");
         searchEndLocationField.textProperty().setValue("");
         searchMaxDistanceSlider.valueProperty().setValue(searchMaxDistanceSlider.getMax());

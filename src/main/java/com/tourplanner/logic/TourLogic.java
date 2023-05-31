@@ -8,6 +8,8 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.Semaphore;
 
@@ -23,6 +25,9 @@ public class TourLogic {
     private final RatingCalculationService ratingCalculationService = new RatingCalculationService();
     private final PopularityCalculationService popularityCalculationService = new PopularityCalculationService();
     private final ChildFriendlinessCalculationService childFriendlinessCalculationService = new ChildFriendlinessCalculationService();
+
+    private static final Logger logger = LogManager.getLogger(TourLogic.class);
+
 
 
     public TourLogic(TourRepository tourRepository, ITourMapService tourMapService) {
@@ -57,6 +62,8 @@ public class TourLogic {
     }
 
     public void createNewTour(){
+
+        logger.info("Creating new tour");
 
         Tour newTour = new Tour();
 

@@ -10,6 +10,8 @@ module TourPlanner {
     requires io;
     requires layout;
     requires com.fasterxml.jackson.databind;
+    requires org.apache.logging.log4j;
+    requires org.apache.logging.log4j.core;
 
 
     opens com.tourplanner to javafx.fxml;

@@ -13,6 +13,8 @@ import java.util.Random;
 
 import com.tourplanner.services.ConfigurationService;
 import javafx.application.Platform;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,11 +25,15 @@ public class TourMapServiceMapQuest implements ITourMapService {
 
     private final ConfigurationService config;
 
+    private static final Logger logger = LogManager.getLogger(TourMapServiceMapQuest.class);
+
     public TourMapServiceMapQuest(ConfigurationService config) {
         this.config = config;
     }
 
     public void calculateRoute(Tour tour) {
+
+        logger.info("Calculating route for tour: \"" + tour.getName() + "\" with transport type \"" + tour.getTransportType() + "\" from \"" + tour.getStartingPoint() + "\" to \"" + tour.getDestinationPoint() + "\"");
 
         //delete old image from filesystem if valid path
         try {
@@ -92,18 +98,14 @@ public class TourMapServiceMapQuest implements ITourMapService {
             String sessionID = route.getString("sessionId");
             JSONObject boundingBox = route.getJSONObject("boundingBox");
 
-            //TEST//
-            // Print the value of the "formattedTime" key
-            System.out.println("sessionId: " + sessionID);
-            System.out.println("time: " + tour.getDuration().getSeconds());
-            System.out.println("boundingBox: " + boundingBox);
-            System.out.println("distance: " + tour.getDistance());
+            logger.info("Route calculation successful, downloading map image");
 
             //Make API Request and store Map jpeg to directory
             getMapImageFromAPI(tour, sessionID, boundingBox);
 
 
         } catch (JSONException e) {
+            logger.warn("Could not calculate route for tour \"" + tour.getName() + "\"");
             Platform.runLater(() -> {
                 // -2 so that frontend can display error message
                 tour.setDistance(-2);
@@ -138,18 +140,12 @@ public class TourMapServiceMapQuest implements ITourMapService {
                     + "&session=" + sessionId
                     + "&size=1920,1920@2x";
 
-            //TEST
-            System.out.println(url);
-
             // Send the HTTP GET request to the API endpoint
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("GET");
 
             // Get the input stream of the response
             InputStream inputStream = connection.getInputStream();
-
-            //TEST
-            //System.out.println(Arrays.toString(inputStream.readNBytes(100)));
 
             // Create the directory if it doesn't exist
             Path parentDirectory = Paths.get("./src/main/resources/com/tourplanner/");  // Relative path to go two directories up
@@ -177,7 +173,7 @@ public class TourMapServiceMapQuest implements ITourMapService {
                 tour.setPathToMapImage(filePath.toString());
             });
 
-            System.out.println("Image saved successfully!");
+            logger.info("Map image downloaded successfully");
 
         } catch (Exception e) {
             e.printStackTrace();
