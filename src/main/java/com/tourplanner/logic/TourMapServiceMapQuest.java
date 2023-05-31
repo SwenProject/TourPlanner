@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Random;
 
+import com.tourplanner.services.ConfigurationService;
 import javafx.application.Platform;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +20,12 @@ import com.tourplanner.models.Tour;
 import com.tourplanner.services.ITourMapService;
 
 public class TourMapServiceMapQuest implements ITourMapService {
+
+    private final ConfigurationService config;
+
+    public TourMapServiceMapQuest(ConfigurationService config) {
+        this.config = config;
+    }
 
     public void calculateRoute(Tour tour) {
 
@@ -39,8 +46,8 @@ public class TourMapServiceMapQuest implements ITourMapService {
 
         try {
 
-            String url = "https://www.mapquestapi.com/directions/v2/optimizedroute" +
-                    "?key=" + System.getenv("mapQuestAPIKey")
+            String url = config.getStringConfig("mapApi.routeCalculationEndpoint") +
+                    "?key=" + config.getStringConfig("mapApi.key")
                     + "&from=" + tour.getStartingPoint()
                     + "&to=" + tour.getDestinationPoint()
                     + "&unit=k" //kilometer
@@ -119,8 +126,8 @@ public class TourMapServiceMapQuest implements ITourMapService {
 
     void getMapImageFromAPI(Tour tour, String sessionId, JSONObject boundingBox){
         try {
-            String url = "https://www.mapquestapi.com/staticmap/v5/map"
-                    + "?key=" + System.getenv("mapQuestAPIKey")
+            String url = config.getStringConfig("mapApi.imageEndpoint")
+                    + "?key=" + config.getStringConfig("mapApi.key")
                     + "&boundingBox="
                     //upper left
                         + boundingBox.getJSONObject("ul").getDouble("lat") + ","

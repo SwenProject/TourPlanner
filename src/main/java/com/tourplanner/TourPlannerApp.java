@@ -1,6 +1,7 @@
 package com.tourplanner;
 
 import com.tourplanner.controller.ControllerFactory;
+import com.tourplanner.services.ConfigurationService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,14 +14,17 @@ public class TourPlannerApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
+        ConfigurationService config = new ConfigurationService("config.properties");
+        config.checkConfig();
+
         FXMLLoader fxmlLoader = new FXMLLoader(TourPlannerApp.class.getResource("views/main-view.fxml"));
 
-        ControllerFactory controllerFactory = new ControllerFactory();
+        ControllerFactory controllerFactory = new ControllerFactory(config);
         fxmlLoader.setControllerFactory(controllerFactory::create); //set ControllerFactory for fxmlLoader
 
         Scene scene = new Scene(fxmlLoader.load());
-//      Scene scene = new Scene(fxmlLoader.load(), 700, 700);
-        //scene.setFill(Color.TRANSPARENT);
+        // Scene scene = new Scene(fxmlLoader.load(), 700, 700);
+        // scene.setFill(Color.TRANSPARENT);
         // Scene scene = new Scene(fxmlLoader.load(), 700, 700);
 
         stage.initStyle(StageStyle.DECORATED);

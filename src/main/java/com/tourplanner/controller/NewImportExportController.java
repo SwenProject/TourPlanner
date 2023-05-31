@@ -2,6 +2,7 @@ package com.tourplanner.controller;
 
 import com.tourplanner.TourPlannerApp;
 import com.tourplanner.logic.TourLogic;
+import com.tourplanner.services.ConfigurationService;
 import com.tourplanner.services.IFileImportExportService;
 import com.tourplanner.services.PdfService;
 import javafx.event.ActionEvent;
@@ -21,13 +22,15 @@ import java.util.Objects;
 public class NewImportExportController {
 
     private final TourLogic tourLogic;
+    private final ConfigurationService config;
     private final IFileImportExportService fileImportExportService;
     private final PdfService pdfService;
 
     public GridPane newImportExportContainer;
 
-    public NewImportExportController(TourLogic tourLogic, IFileImportExportService fileImportExportService, PdfService pdfService) {
+    public NewImportExportController(TourLogic tourLogic, ConfigurationService config, IFileImportExportService fileImportExportService, PdfService pdfService) {
         this.tourLogic = tourLogic;
+        this.config = config;
         this.fileImportExportService = fileImportExportService;
         this.pdfService = pdfService;
     }
@@ -47,7 +50,7 @@ public class NewImportExportController {
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
         // Set the extension filters (optional)
-        FileChooser.ExtensionFilter toursFileExtension = new FileChooser.ExtensionFilter("Tour Planner Multiple Tours File (*.tours)", "*.tours");
+        FileChooser.ExtensionFilter toursFileExtension = new FileChooser.ExtensionFilter("Tour Planner Multiple Tours File (*." + config.getStringConfig("tourExport.fileExtension") + ")" , "*." + config.getStringConfig("tourExport.fileExtension"));
         fileChooser.getExtensionFilters().addAll(toursFileExtension);
 
         // Show the Save File dialog
@@ -117,7 +120,7 @@ public class NewImportExportController {
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
         // Set the extension filters (optional)
-        FileChooser.ExtensionFilter toursFileExtension = new FileChooser.ExtensionFilter("Tour Planner Multiple Tours File (*.tours)", "*.tours");
+        FileChooser.ExtensionFilter toursFileExtension = new FileChooser.ExtensionFilter("Tour Planner Multiple Tours File (*." + config.getStringConfig("tourExport.fileExtension") + ")" , "*." + config.getStringConfig("tourExport.fileExtension"));
         fileChooser.getExtensionFilters().addAll(toursFileExtension);
 
         // Show the Save File dialog

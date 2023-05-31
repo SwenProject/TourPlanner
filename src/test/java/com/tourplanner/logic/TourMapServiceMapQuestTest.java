@@ -1,19 +1,26 @@
 package com.tourplanner.logic;
 import com.tourplanner.models.Tour;
 
+import com.tourplanner.services.ConfigurationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TourMapServiceMapQuestTest {
     Tour tour;
-    TourMapServiceMapQuest tourMapServiceMapQuest = new TourMapServiceMapQuest();
+    TourMapServiceMapQuest tourMapServiceMapQuest;
 
     @BeforeEach
-    void setUp(){
-        tour = new Tour();
+    void setUp() throws IOException {
+        ConfigurationService config = new ConfigurationService("config.properties");
+        config.checkConfig();
 
+        tourMapServiceMapQuest = new TourMapServiceMapQuest(config);
+
+        tour = new Tour();
     }
     @Test
     void calculateRoute() {
