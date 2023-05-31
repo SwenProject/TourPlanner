@@ -123,27 +123,27 @@ public class PdfService {
                 table.setMarginTop(20);
                 //add the tour details to the table
                 //Starting Point
-                table.addCell(new Cell().add(new Paragraph("Start")).setBackgroundColor(ColorConstants.CYAN, 0.2f));
-                table.addCell(new Cell().add(new Paragraph(tour.getStartingPoint())).setBackgroundColor(ColorConstants.CYAN, 0.2f).setTextAlignment(TextAlignment.CENTER));
+                table.addCell(new Cell().add(new Paragraph("Start")).setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f).setBorder(Border.NO_BORDER));
+                table.addCell(new Cell().add(new Paragraph(tour.getStartingPoint())).setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f).setBorder(Border.NO_BORDER));
                 //Destination
-                table.addCell(new Cell().add(new Paragraph("Destination")).setBackgroundColor(ColorConstants.ORANGE, 0.2f));
-                table.addCell(new Cell().add(new Paragraph(tour.getDestinationPoint())).setBackgroundColor(ColorConstants.ORANGE, 0.2f).setTextAlignment(TextAlignment.CENTER));
+                table.addCell(new Cell().add(new Paragraph("Destination")).setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f).setBorder(Border.NO_BORDER));
+                table.addCell(new Cell().add(new Paragraph(tour.getDestinationPoint())).setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f).setBorder(Border.NO_BORDER));
                 //Distance
-                table.addCell(new Cell().add(new Paragraph("Distance")).setBackgroundColor(ColorConstants.CYAN, 0.2f));
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(tour.getDistance()))).setBackgroundColor(ColorConstants.CYAN, 0.2f).setTextAlignment(TextAlignment.CENTER));
+                table.addCell(new Cell().add(new Paragraph("Distance")).setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f).setBorder(Border.NO_BORDER));
+                table.addCell(new Cell().add(new Paragraph(String.valueOf(tour.getDistance()))).setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f).setBorder(Border.NO_BORDER));
                 //Duration
-                table.addCell(new Cell().add(new Paragraph("Duration")).setBackgroundColor(ColorConstants.ORANGE, 0.2f));
+                table.addCell(new Cell().add(new Paragraph("Duration")).setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f).setBorder(Border.NO_BORDER));
                 String duration = String.format("%d:%02d", averageDuration.getSeconds() / 3600, (averageDuration.getSeconds() % 3600) / 60);
-                table.addCell(new Cell().add(new Paragraph(duration)).setBackgroundColor(ColorConstants.ORANGE, 0.2f).setTextAlignment(TextAlignment.CENTER));
+                table.addCell(new Cell().add(new Paragraph(duration)).setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f).setBorder(Border.NO_BORDER));
                 //Transport Type
-                table.addCell(new Cell().add(new Paragraph("Transport Type")).setBackgroundColor(ColorConstants.CYAN, 0.2f));
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(tour.getTransportType()))).setBackgroundColor(ColorConstants.CYAN, 0.2f).setTextAlignment(TextAlignment.CENTER));
+                table.addCell(new Cell().add(new Paragraph("Transport Type")).setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f).setBorder(Border.NO_BORDER));
+                table.addCell(new Cell().add(new Paragraph(String.valueOf(tour.getTransportType()))).setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f).setBorder(Border.NO_BORDER));
                 //Description
-                table.addCell(new Cell().add(new Paragraph("Description")).setBackgroundColor(ColorConstants.ORANGE, 0.2f));
-                table.addCell(new Cell().add(new Paragraph(tour.getDescription())).setBackgroundColor(ColorConstants.ORANGE, 0.2f).setTextAlignment(TextAlignment.CENTER));
+                table.addCell(new Cell().add(new Paragraph("Description")).setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f).setBorder(Border.NO_BORDER));
+                table.addCell(new Cell().add(new Paragraph(tour.getDescription())).setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f).setBorder(Border.NO_BORDER));
                 //Rating (average)
-                table.addCell(new Cell().add(new Paragraph("Rating")).setBackgroundColor(ColorConstants.CYAN, 0.2f));
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(calculateAverageRating(tour.getTourLogs())))).setBackgroundColor(ColorConstants.CYAN, 0.2f).setTextAlignment(TextAlignment.CENTER));
+                table.addCell(new Cell().add(new Paragraph("Rating")).setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f).setBorder(Border.NO_BORDER));
+                table.addCell(new Cell().add(new Paragraph(String.valueOf(calculateAverageRating(tour.getTourLogs())))).setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f).setBorder(Border.NO_BORDER));
                 document.add(table);
 
                 //create a new page
