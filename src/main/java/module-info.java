@@ -6,6 +6,9 @@ module TourPlanner {
     requires java.sql;
     requires org.hibernate.orm.core;
     requires org.json;
+    requires kernel;
+    requires io;
+    requires layout;
     requires com.fasterxml.jackson.databind;
 
 
