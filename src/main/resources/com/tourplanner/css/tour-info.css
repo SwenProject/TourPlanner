@@ -4,7 +4,7 @@
     -fx-background-color: #FFE0AF;
     -fx-border-radius: 10px;
     -fx-background-radius: 0 0 10px 10px;
-    -fx-padding: 0 15 0 0;
+    -fx-padding: 0 15 0 15;
     -fx-text-fill: rgb(61, 64, 91);
 }
 
@@ -128,6 +128,16 @@
 }
 
 .greenButton .label {
+    -fx-text-fill: white;
+}
+
+.orangeButton {
+    -fx-background-color: #E49278;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-cursor: hand;
+}
+
+.orangeButton .label {
     -fx-text-fill: white;
 }
 

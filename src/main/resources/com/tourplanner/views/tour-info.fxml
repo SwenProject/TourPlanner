@@ -84,13 +84,13 @@
                             </HBox>
                         </VBox>
                         <VBox styleClass="viewModeRight" HBox.hgrow="ALWAYS" minWidth="200">
-                                <StackPane>
-                                    <TextArea fx:id="description" wrapText="true" editable="false"/>
-                                    <VBox fx:id="noDescriptionContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
-                                        <Region styleClass="no-description-icon" />  <!--after textarea so that it is in front-->
-                                        <Label styleClass="no-description-text" text="no description" />
-                                    </VBox>
-                                </StackPane>
+                            <StackPane>
+                                <TextArea fx:id="description" wrapText="true" editable="false"/>
+                                <VBox fx:id="noDescriptionContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
+                                    <Region styleClass="no-description-icon" />  <!--after textarea so that it is in front-->
+                                    <Label styleClass="no-description-text" text="no description" />
+                                </VBox>
+                            </StackPane>
                         </VBox>
                     </HBox>
                 </ScrollPane>
@@ -98,7 +98,16 @@
         </center>
         <!--Buttons are at the bottom of the BorderPane-->
         <bottom>
-            <HBox styleClass="tourInfoButtonBar" spacing="10" alignment="CENTER_RIGHT" minHeight="50">
+            <HBox styleClass="tourInfoButtonBar" spacing="10" minHeight="50" alignment="CENTER_RIGHT">
+                <Button styleClass="orangeButton">
+                    <graphic>
+                        <HBox alignment="CENTER">
+                            <Label styleClass="buttonTextBig">Export</Label>
+                            <Label styleClass="buttonTextSmall">to PDF</Label>
+                        </HBox>
+                    </graphic>
+                </Button>
+                <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
                 <Button text="Delete Tour" onAction="#onDeleteTour"/>
                 <Button fx:id="editTourButton" text="Edit Tour" onAction="#onEditTour" styleClass="greenButton"/>
             </HBox>
