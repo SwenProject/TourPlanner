@@ -33,17 +33,14 @@ public class PdfService {
     //set the custom font for the pdf
     String fontPath = "./src/main/resources/com/tourplanner/fonts/jetbrains_mono/JetBrainsMono-Regular.ttf";
 
-    PdfFont customFont;
+    public void createPdfSummary(List<Tour> tours, String path) {
 
-    {
+        PdfFont customFont = null;
         try {
             customFont = PdfFontFactory.createFont(fontPath, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void createPdfSummary(List<Tour> tours, String path) {
 
         try (PdfWriter writer = new PdfWriter(path)) {
 
@@ -132,9 +129,10 @@ public class PdfService {
                     Path pathToImage = Paths.get(tour.getPathToMapImage());
                     File imageFile = pathToImage.toFile();
                     document.add(new Image(ImageDataFactory.create(imageFile.toURI().toString())).setMaxHeight(500).setHorizontalAlignment(com.itextpdf.layout.properties.HorizontalAlignment.CENTER).setMarginTop(50));
+                    document.add(new AreaBreak());
 
                 }
-                document.add(new AreaBreak());
+                PdfFont font = PdfFontFactory.createFont(fontPath, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
 
                 Paragraph details = new Paragraph("Tour Details")
                         .setItalic()
@@ -161,6 +159,14 @@ public class PdfService {
     }
 
     private void addSummaryTitlePage(Document document, List<Tour> tours) {
+
+        PdfFont customFont = null;
+        try {
+            customFont = PdfFontFactory.createFont(fontPath, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         //add logo image
         try {
             document.add(new Image(ImageDataFactory.create("./src/main/resources/com/tourplanner/images/app_icon.png")).setMaxHeight(50).setHorizontalAlignment(com.itextpdf.layout.properties.HorizontalAlignment.CENTER).setMarginTop(10));
@@ -222,6 +228,14 @@ public class PdfService {
 
 
     public void createPdfSingleTour(Tour tour, String path) {
+
+        PdfFont customFont = null;
+        try {
+            customFont = PdfFontFactory.createFont(fontPath, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         //String fontPath
         String fontPath = "./src/main/resources/com/tourplanner/fonts/jetbrains_mono/JetBrainsMono-Regular.ttf";
 
