@@ -31,7 +31,7 @@
 
 .viewModeRight .text-area {
     -fx-background-color: #F9DCA3;
-    -fx-min-height: 220px;
+    -fx-min-height: 240px;
     -fx-border-radius: 5px;
     -fx-border-color: rgb(61, 64, 91);
 }

@@ -65,7 +65,7 @@
                                 </HBox>
                                 <Label fx:id="duration" HBox.hgrow="ALWAYS" styleClass="center-label"/>
                             </HBox>
-                            <HBox VBox.vgrow="ALWAYS" maxWidth="Infinity" alignment="CENTER" styleClass="rating-star-container">
+                            <HBox maxWidth="Infinity" alignment="CENTER" styleClass="rating-star-container">
                                 <HBox HBox.hgrow="ALWAYS" maxWidth="300">
                                     <Region fx:id="ratingStar1" styleClass="rating-star"/>
                                     <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
@@ -78,7 +78,7 @@
                                     <Region fx:id="ratingStar5" styleClass="rating-star"/>
                                 </HBox>
                             </HBox>
-                            <HBox spacing="10" alignment="CENTER" maxWidth="Infinity">
+                            <HBox spacing="10" alignment="TOP_CENTER" maxWidth="Infinity">
                                 <!--showing the childFriendlinessLabel-->
                                 <Label fx:id="childFriendlyLabel" styleClass="child-friendliness-label"/>
                             </HBox>
