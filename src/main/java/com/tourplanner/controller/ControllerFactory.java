@@ -6,6 +6,7 @@ import com.tourplanner.repositories.TourRepository;
 import com.tourplanner.services.FileImportExportService;
 import com.tourplanner.services.IFileImportExportService;
 import com.tourplanner.services.ITourMapService;
+import com.tourplanner.services.PdfService;
 
 public class ControllerFactory {
 
@@ -13,6 +14,7 @@ public class ControllerFactory {
     private final ITourMapService tourMapService = new TourMapServiceMapQuest();
     private final TourLogic tourLogic = new TourLogic(tourRepository, tourMapService);
     private final IFileImportExportService fileImportExportService = new FileImportExportService(tourLogic);
+    private final PdfService pdfService = new PdfService();
 
     public Object create(Class<?> controllerClass){
         if(controllerClass == MainController.class){
@@ -20,7 +22,7 @@ public class ControllerFactory {
         } else if (controllerClass == MapController.class){
             return new MapController(tourLogic);
         } else if (controllerClass == NewImportExportController.class){
-            return new NewImportExportController(tourLogic, fileImportExportService);
+            return new NewImportExportController(tourLogic, fileImportExportService, pdfService);
         } else if (controllerClass == SearchBoxController.class){
             return new SearchBoxController(tourLogic);
         } else if (controllerClass == TourInfoController.class){

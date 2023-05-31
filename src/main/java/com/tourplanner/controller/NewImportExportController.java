@@ -3,6 +3,7 @@ package com.tourplanner.controller;
 import com.tourplanner.TourPlannerApp;
 import com.tourplanner.logic.TourLogic;
 import com.tourplanner.services.IFileImportExportService;
+import com.tourplanner.services.PdfService;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,12 +22,14 @@ public class NewImportExportController {
 
     private final TourLogic tourLogic;
     private final IFileImportExportService fileImportExportService;
+    private final PdfService pdfService;
 
     public GridPane newImportExportContainer;
 
-    public NewImportExportController(TourLogic tourLogic, IFileImportExportService fileImportExportService) {
+    public NewImportExportController(TourLogic tourLogic, IFileImportExportService fileImportExportService, PdfService pdfService) {
         this.tourLogic = tourLogic;
         this.fileImportExportService = fileImportExportService;
+        this.pdfService = pdfService;
     }
 
     public void initialize(){
@@ -128,6 +131,22 @@ public class NewImportExportController {
     }
 
     public void exportToursToPdf(){
-        //TODO: Integrate pdf generation service
+        FileChooser fileChooser = new FileChooser();
+
+        // Set the initial directory (optional)
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+        // Set the extension filters (optional)
+        FileChooser.ExtensionFilter pdfFileExtension = new FileChooser.ExtensionFilter("Pdf File (*.pdf)", "*.pdf");
+        fileChooser.getExtensionFilters().addAll(pdfFileExtension);
+
+        // Show the Save File dialog
+        File selectedFile = fileChooser.showSaveDialog(newImportExportContainer.getScene().getWindow());
+
+        // Check if a file was selected
+        if (selectedFile != null) {
+            String filePath = selectedFile.getAbsolutePath();
+            this.pdfService.createPdfSummary(tourLogic.getAllToursList(), filePath);
+        }
     }
 }

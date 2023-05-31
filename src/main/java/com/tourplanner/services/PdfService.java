@@ -47,7 +47,7 @@ public class PdfService {
         }
     }
 
-    public void createPdfSummary(ArrayList<Tour> tours, String path){
+    public void createPdfSummary(List<Tour> tours, String path){
 
         try(PdfWriter writer = new PdfWriter(path)) {
 
