@@ -4,6 +4,7 @@ import com.tourplanner.TourPlannerApp;
 import com.tourplanner.enums.TransportType;
 import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
+import com.tourplanner.services.PdfService;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.scene.Scene;
@@ -12,17 +13,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.Objects;
 
 public class TourInfoController {
 
     private final TourLogic tourLogic; //shared TourLogic instance (contains selectedTour property)
+    private final PdfService pdfService;
     private final BooleanProperty editMode = new SimpleBooleanProperty(false); //for switching between view and edit mode
 
     public BorderPane viewModeBorderPane; //container for view mode
@@ -82,8 +86,9 @@ public class TourInfoController {
     private static final Logger logger = LogManager.getLogger(TourInfoController.class);
 
 
-    public TourInfoController(TourLogic tourLogic) {
+    public TourInfoController(TourLogic tourLogic, PdfService pdfService) {
         this.tourLogic = tourLogic;
+        this.pdfService = pdfService;
     }
 
     public void initialize(){
@@ -403,5 +408,28 @@ public class TourInfoController {
         if(newRating >= 4) ratingStar4.getStyleClass().add("active-rating-star");
         if(newRating >= 5) ratingStar5.getStyleClass().add("active-rating-star");
 
+    }
+
+    public void onExportToPdf() {
+        logger.info("Exporting tour to pdf. Opening file chooser.");
+
+        FileChooser fileChooser = new FileChooser();
+
+        // Set the initial directory (optional)
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+        // Set the extension filters (optional)
+        FileChooser.ExtensionFilter pdfFileExtension = new FileChooser.ExtensionFilter("Pdf File (*.pdf)", "*.pdf");
+        fileChooser.getExtensionFilters().addAll(pdfFileExtension);
+
+        // Show the Save File dialog
+        File selectedFile = fileChooser.showSaveDialog(viewModeBorderPane.getScene().getWindow());
+
+        // Check if a file was selected
+        if (selectedFile != null) {
+            logger.info("File selected. Exporting tours to pdf.");
+            String filePath = selectedFile.getAbsolutePath();
+            this.pdfService.createPdfSingleTour(tourLogic.getSelectedTourProperty().get(), filePath);
+        }
     }
 }

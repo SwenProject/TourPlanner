@@ -33,7 +33,7 @@ public class ControllerFactory {
         } else if (controllerClass == SearchBoxController.class){
             return new SearchBoxController(tourLogic);
         } else if (controllerClass == TourInfoController.class){
-            return new TourInfoController(tourLogic);
+            return new TourInfoController(tourLogic, pdfService);
         } else if (controllerClass == TourListController.class){
             return new TourListController(tourLogic);
         } else if (controllerClass == TourLogsController.class){

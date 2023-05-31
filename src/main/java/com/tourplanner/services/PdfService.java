@@ -347,7 +347,7 @@ public class PdfService {
                 p.add(new Text("Total Time:\n")
                         .setFontSize(10)
                         .setItalic());
-                p.add(new Text(log.getTotalTime().toString()));
+                p.add(new Text(totalTimeToString(log.getTotalTime())));
                 p.add(new Text("\n"));
 
                 p.add(new Text("Difficulty:\n").setFontSize(10).setItalic());
@@ -475,6 +475,18 @@ public class PdfService {
             return "Error";
         } else {
             return String.format("%d:%02d", duration.getSeconds() / 3600, (duration.getSeconds() % 3600) / 60);
+        }
+    }
+
+    private String totalTimeToString(Duration duration) {
+        if (duration == null){ //if no total time is set for log entry, something went wrong
+            return "...";
+        } else { //otherwise format total time
+            long totalTime = duration.getSeconds();
+            long hours = totalTime / 3600;
+            long minutes = (totalTime % 3600) / 60;
+
+            return hours + "h " + minutes + "min";
         }
     }
 }

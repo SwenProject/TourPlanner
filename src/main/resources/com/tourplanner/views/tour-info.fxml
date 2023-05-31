@@ -99,7 +99,7 @@
         <!--Buttons are at the bottom of the BorderPane-->
         <bottom>
             <HBox styleClass="tourInfoButtonBar" spacing="10" minHeight="50" alignment="CENTER_RIGHT">
-                <Button styleClass="orangeButton">
+                <Button onAction="#onExportToPdf" styleClass="orangeButton">
                     <graphic>
                         <HBox alignment="CENTER">
                             <Label styleClass="buttonTextBig">Export</Label>
