@@ -4,6 +4,7 @@ import com.tourplanner.enums.TransportType;
 import com.tourplanner.models.Tour;
 import com.tourplanner.repositories.TourRepository;
 import com.tourplanner.services.ITourMapService;
+import com.tourplanner.services.PopularityCalculationService;
 import com.tourplanner.services.RatingCalculationService;
 import com.tourplanner.services.TourMapRequestTask;
 import javafx.beans.property.*;
@@ -23,6 +24,7 @@ public class TourLogic {
     private final ObjectProperty<Tour> selectedTourProperty = new SimpleObjectProperty<>();
     private final IntegerProperty currentTabProperty = new SimpleIntegerProperty(0);
     private final RatingCalculationService ratingCalculationService = new RatingCalculationService();
+    private final PopularityCalculationService popularityCalculationService = new PopularityCalculationService();
 
     public TourLogic(TourRepository tourRepository, ITourMapService tourMapService) {
         this.tourRepository = tourRepository;
@@ -75,6 +77,7 @@ public class TourLogic {
         // - popularity calculation
 
         this.ratingCalculationService.calculateRating(selectedTourProperty.get());
+        this.popularityCalculationService.calculatePopularity(selectedTourProperty.get());
 
         //create new task for api request (to run async)
         TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(selectedTourProperty.get(), tourMapService, tourMapRequestLock); //create new task
@@ -103,6 +106,7 @@ public class TourLogic {
         // - popularity calculation
 
         this.ratingCalculationService.calculateRating(selectedTourProperty.get());
+        this.popularityCalculationService.calculatePopularity(selectedTourProperty.get());
 
         tourRepository.update(selectedTourProperty.get());
 
@@ -115,6 +119,7 @@ public class TourLogic {
         // - popularity calculation
 
         this.ratingCalculationService.calculateRating(tour);
+        this.popularityCalculationService.calculatePopularity(tour);
 
         //create new task for api request (to run async)
         TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(tour, tourMapService, tourMapRequestLock); //create new task

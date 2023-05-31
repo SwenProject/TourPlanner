@@ -362,6 +362,12 @@
     -fx-font-size: 20px;
     -fx-font-family: "JetBrains Mono NL Bold";
     -fx-padding: 0 0 0 0;
+    -fx-text-fill: #3D405B;
+}
+
+.tour-popularity-label {
+    -fx-padding: 6px 0 0 0;
+    -fx-text-fill: #E07A5F;
 }
 
 .tour-logs-tab-label {

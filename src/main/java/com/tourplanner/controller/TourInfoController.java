@@ -6,6 +6,7 @@ import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -28,6 +29,7 @@ public class TourInfoController {
 
     //----TAB BAR FXML ELEMENTS----
     public Label tourName;
+    public Label tourPopularityLabel;
 
 
     //----VIEW MODE FXML ELEMENTS----
@@ -195,6 +197,24 @@ public class TourInfoController {
                         return String.format("%d:%02d", newTour.getDurationProperty().get().getSeconds() / 3600, (newTour.getDurationProperty().get().getSeconds() % 3600) / 60);
                     }
                 }, newTour.getDurationProperty()));
+
+        tourPopularityLabel.textProperty().bind(Bindings.createStringBinding(() -> {
+            if (newTour.getPopularityScoreProperty().get() == 0){
+                return "(no tour logs yet)";
+            } else if (newTour.getPopularityScoreProperty().get() == 1){
+                return "(not popular)";
+            } else if (newTour.getPopularityScoreProperty().get() == 2){
+                return "(somewhat popular)";
+            } else if (newTour .getPopularityScoreProperty().get() == 3){
+                return "(popular)";
+            } else if (newTour.getPopularityScoreProperty().get() == 4){
+                return "(very popular)";
+            } else if (newTour.getPopularityScoreProperty().get() == 5){
+                return "(extremely popular)";
+            } else {
+                return "(error!)";
+            }
+        }, newTour.getPopularityScoreProperty()));
 
         distanceIsLoading.bind(newTour.getDistanceProperty().isEqualTo(-1));
         durationIsLoading.bind(newTour.getDurationProperty().isEqualTo(Duration.ofSeconds(-1)));

@@ -17,8 +17,10 @@
         <!--Border Pane top-->
         <top>
             <HBox styleClass="tour-info-tab-bar" prefWidth="Infinity">
-                <HBox styleClass="tour-name-tab-box" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
+                <HBox styleClass="tour-name-tab-box" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT" spacing="10">
                     <Label styleClass="tour-name-tab-label" fx:id="tourName"/>
+                    <!--showing the tourPopularityLabel-->
+                    <Label styleClass="tour-popularity-label" fx:id="tourPopularityLabel"/>
                 </HBox>
                 <HBox onMouseClicked="#switchTabs" styleClass="tour-logs-tab-box" alignment="CENTER_RIGHT" minWidth="200">
                     <Label styleClass="tour-logs-tab-label" text="Tour logs"/>
