@@ -78,6 +78,10 @@
                                     <Region fx:id="ratingStar5" styleClass="rating-star"/>
                                 </HBox>
                             </HBox>
+                            <HBox spacing="10" alignment="CENTER" maxWidth="Infinity">
+                                <!--showing the childFriendlinessLabel-->
+                                <Label fx:id="childFriendlyLabel" styleClass="child-friendliness-label"/>
+                            </HBox>
                         </VBox>
                         <VBox styleClass="viewModeRight" HBox.hgrow="ALWAYS" minWidth="200">
                                 <StackPane>

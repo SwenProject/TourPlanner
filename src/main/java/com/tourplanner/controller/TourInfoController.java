@@ -51,6 +51,7 @@ public class TourInfoController {
     public Region ratingStar3;
     public Region ratingStar4;
     public Region ratingStar5;
+    public Label childFriendlyLabel;
     public Button editTourButton;
 
     //----EDIT MODE FXML ELEMENTS----
@@ -136,6 +137,10 @@ public class TourInfoController {
         //bind editTourButton to durationIsLoading and imageIsLoading property (disables button while route calculation is in progress)
         editTourButton.disableProperty().bind(imageIsLoading.or(durationIsLoading));
 
+        //bind childFriendlyLabel to imageIsLoading property (disables label while the tour calculation is in progress)
+        childFriendlyLabel.visibleProperty().bind(imageIsLoading.not());
+        childFriendlyLabel.managedProperty().bind(imageIsLoading.not());
+
         //bind saveTourButton to empty property of tourNameEdit, startingPointEdit and destinationPointEdit
         saveTourButton.disableProperty().bind(tourNameEdit.textProperty().isEmpty().or(startingPointEdit.textProperty().isEmpty()).or(destinationPointEdit.textProperty().isEmpty()));
     }
@@ -219,6 +224,16 @@ public class TourInfoController {
         distanceIsLoading.bind(newTour.getDistanceProperty().isEqualTo(-1));
         durationIsLoading.bind(newTour.getDurationProperty().isEqualTo(Duration.ofSeconds(-1)));
         imageIsLoading.bind(newTour.getPathToMapImageProperty().isEqualTo("loading"));
+        childFriendlyLabel.textProperty().bind(Bindings.createStringBinding(() -> {
+            if (newTour.getChildFriendlinessScoreProperty().get() == 0){
+                return "child-friendly: no";
+            } else if (newTour.getChildFriendlinessScoreProperty().get() == 1){
+                return "child-friendly: yes";
+            } else {
+                return "child-friendly: error";
+            }
+        }, newTour.getChildFriendlinessScoreProperty()));
+
     }
 
     public void onEditTour() {

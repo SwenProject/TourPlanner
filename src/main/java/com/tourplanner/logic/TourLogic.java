@@ -3,10 +3,7 @@ package com.tourplanner.logic;
 import com.tourplanner.enums.TransportType;
 import com.tourplanner.models.Tour;
 import com.tourplanner.repositories.TourRepository;
-import com.tourplanner.services.ITourMapService;
-import com.tourplanner.services.PopularityCalculationService;
-import com.tourplanner.services.RatingCalculationService;
-import com.tourplanner.services.TourMapRequestTask;
+import com.tourplanner.services.*;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +22,8 @@ public class TourLogic {
     private final IntegerProperty currentTabProperty = new SimpleIntegerProperty(0);
     private final RatingCalculationService ratingCalculationService = new RatingCalculationService();
     private final PopularityCalculationService popularityCalculationService = new PopularityCalculationService();
+    private final ChildFriendlinessCalculationService childFriendlinessCalculationService = new ChildFriendlinessCalculationService();
+
 
     public TourLogic(TourRepository tourRepository, ITourMapService tourMapService) {
         this.tourRepository = tourRepository;
@@ -72,10 +71,6 @@ public class TourLogic {
 
     public void saveSelectedTour(){
 
-        //TODO:
-        // - child friendliness calculation
-        // - popularity calculation
-
         this.ratingCalculationService.calculateRating(selectedTourProperty.get());
         this.popularityCalculationService.calculatePopularity(selectedTourProperty.get());
 
@@ -101,12 +96,10 @@ public class TourLogic {
 
     public void updateSelectedTourWithoutRecalculating(){
 
-        //TODO:
-        // - child friendliness calculation
-        // - popularity calculation
-
         this.ratingCalculationService.calculateRating(selectedTourProperty.get());
         this.popularityCalculationService.calculatePopularity(selectedTourProperty.get());
+        this.childFriendlinessCalculationService.calculateChildFriendliness(selectedTourProperty.get());
+
 
         tourRepository.update(selectedTourProperty.get());
 
@@ -114,12 +107,9 @@ public class TourLogic {
 
     public void addTour(Tour tour){
 
-        //TODO:
-        // - child friendliness calculation
-        // - popularity calculation
-
         this.ratingCalculationService.calculateRating(tour);
         this.popularityCalculationService.calculatePopularity(tour);
+
 
         //create new task for api request (to run async)
         TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(tour, tourMapService, tourMapRequestLock); //create new task

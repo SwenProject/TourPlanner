@@ -13,6 +13,8 @@ public class TourMapRequestTask extends Task<Void> {
     private Consumer<Tour> callback;
     private final ITourMapService tourMapService;
     private final Semaphore semaphore;
+    private final ChildFriendlinessCalculationService childFriendlinessCalculationService = new ChildFriendlinessCalculationService();
+
 
     public TourMapRequestTask(Tour tour, ITourMapService tourMapService, Semaphore semaphore) {
         this.tour = tour;
@@ -36,6 +38,11 @@ public class TourMapRequestTask extends Task<Void> {
 
             semaphore.acquire(); //wait for any previous api requests to complete
             tourMapService.calculateRoute(tour); //make api request
+
+            Platform.runLater(() -> {
+                childFriendlinessCalculationService.calculateChildFriendliness(tour); //calculate child friendliness
+            });
+
             callback.accept(tour); //update tour in db using the supplied callback function
         } catch (InterruptedException e) {
             e.printStackTrace();

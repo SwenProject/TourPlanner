@@ -328,6 +328,12 @@
     -fx-background-color: #E07A5F !important;
 }
 
+/*-----------CHILD FRIENDLINESS STYLING AND CONTAINER-----------*/
+
+.child-friendliness-label {
+    -fx-text-fill: #E07A5F;
+}
+
 /*-----------ICON WHEN THERE IS NO DESCRIPTION-----------*/
 
 .no-description-icon {
