@@ -11,6 +11,7 @@ import javafx.collections.transformation.FilteredList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.util.concurrent.Semaphore;
 
 public class TourLogic {
@@ -133,7 +134,7 @@ public class TourLogic {
 
     public void deleteSelectedTour(){
 
-        //TODO delete map image from file system
+        deleteFile(selectedTourProperty.get().getPathToMapImage());
 
         if(selectedTourProperty.get().isNew()) { //tour is new and has no id
             selectedTourProperty.set(null);
@@ -147,15 +148,33 @@ public class TourLogic {
         selectedTourProperty.set(null);
     }
 
-    //TODO: delete map image from file system
     //to delete specific tour e.g. in tour list edit mode
     public void deleteTour(Tour tour){
+
+        deleteFile(tour.getPathToMapImage());
+
         if(selectedTourProperty.get() == tour){
             selectedTourProperty.set(null);
         }
 
         tourRepository.delete(tour);
         allTours.remove(tour);
+    }
+
+    public static void deleteFile(String filePath) {
+        File file = new File(filePath);
+
+        if (file.exists()) {
+            boolean isDeleted = file.delete();
+
+            if (isDeleted) {
+                logger.info("Deleted tour image");
+            } else {
+                logger.error("Could not delete tour image");
+            }
+        } else {
+            logger.warn("Could not delete tour image because it does not exist");
+        }
     }
 
 }

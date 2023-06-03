@@ -37,7 +37,7 @@ public class TourMapServiceMapQuest implements ITourMapService {
 
         //delete old image from filesystem if valid path
         try {
-            if (tour.getPathToMapImage() != null && !tour.getPathToMapImage().equals("error")) {
+            if (tour.getPathToMapImage() != null && !tour.getPathToMapImage().equals("error") && !tour.getPathToMapImage().equals("loading")) {
                 Files.delete(Paths.get(tour.getPathToMapImage()));
             }
         } catch (IOException e) {
