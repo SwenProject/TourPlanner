@@ -44,7 +44,7 @@ Routes are calculated using the **MapQuest API** and persistence is managed with
 
 ## Setup
 1. Clone the repository
-2. rename `template_config.properties` to `config.properties`
+2. Rename `template_config.properties` to `config.properties`
 3. Get a [MapQuest API key](https://developer.mapquest.com/documentation/) and add it to `config.properties`
 4. Create a postgres database and add the connection information to `config.properties`
 (there is no need to create any tables as hibernate does this automatically at startup)
@@ -99,13 +99,13 @@ Logging:
 <img src="docs/advanced-search.png" width="500" alt="Advanced search">  
 
 *Tour in PDF report*  
-<img src="docs/pdf-tour.png" alt="Tour in PDF report"> 
+<img src="docs/pdf-tour.png" width="400" alt="Tour in PDF report"> 
 
 *Tour-details in PDF report*  
-<img src="docs/pdf-tour-details.png" alt="Tour-info in PDF report">  
+<img src="docs/pdf-tour-details.png" width="400" alt="Tour-info in PDF report">  
 
 *Tour-logs in PDF report*  
-<img src="docs/pdf-tour-logs.png" alt="Tour-logs in PDF report">
+<img src="docs/pdf-tour-logs.png" width="400" alt="Tour-logs in PDF report">
 
 ## Comments on design decisions and architecture
 ### User Interface (JavaFX)
