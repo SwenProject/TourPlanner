@@ -3,8 +3,9 @@ package com.tourplanner.logic;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -54,8 +55,8 @@ public class TourMapServiceMapQuest implements ITourMapService {
 
             String url = config.getStringConfig("mapApi.routeCalculationEndpoint") +
                     "?key=" + config.getStringConfig("mapApi.key")
-                    + "&from=" + tour.getStartingPoint()
-                    + "&to=" + tour.getDestinationPoint()
+                    + "&from=" + URLEncoder.encode(tour.getStartingPoint(), StandardCharsets.UTF_8)
+                    + "&to=" + URLEncoder.encode(tour.getDestinationPoint(), StandardCharsets.UTF_8)
                     + "&unit=k" //kilometer
                     + "&doReverseGeocode=false"
                     + "&outFormat=json";

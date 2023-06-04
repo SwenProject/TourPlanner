@@ -2,6 +2,7 @@ package com.tourplanner.services;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigurationService {
@@ -12,6 +13,12 @@ public class ConfigurationService {
         try (FileInputStream fis = new FileInputStream(filePath)) {
             properties.load(fis);
         }
+    }
+
+    //constructor with direct input stream for testing
+    public ConfigurationService(InputStream inputStream) throws IOException {
+        properties = new Properties();
+        properties.load(inputStream);
     }
 
     public void checkConfig(){

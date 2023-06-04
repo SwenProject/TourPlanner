@@ -7,7 +7,8 @@ import com.tourplanner.models.TourLog;
 public class ChildFriendlinessCalculationService {
 
 
-    private double calculateAverageDifficult(Tour tour){
+    private double calculateAverageDifficulty(Tour tour){
+
         double averageDifficulty = 0;
 
         //calculate the average difficulty of all tourlogs
@@ -17,7 +18,7 @@ public class ChildFriendlinessCalculationService {
         return averageDifficulty / tour.getTourLogs().size();
     }
 
-    public double calculateAverageTotalTime(Tour tour){
+    private double calculateAverageTotalTime(Tour tour){
         double averageTotalTime = 0;
 
         //calculate the average total time of all tourlogs
@@ -37,7 +38,9 @@ public class ChildFriendlinessCalculationService {
         //calculate the child friendliness of a tour by using the average difficulty and the average total time and the distance
         if (tour.getTransportType() == TransportType.CAR) { //when it is a car tour, it is child-friendly
             tour.setChildFriendlinessScore(1);
-        } else if (calculateAverageDifficult(tour) > 1) { // if the difficulty is higher than medium, the tour is not child-friendly
+        } else if (calculateAverageDifficulty(tour) > 1) { // if the difficulty is higher than medium, the tour is not child-friendly
+            tour.setChildFriendlinessScore(0);
+        } else if (calculateAverageTotalTime(tour) > 3) { // if the average total time is higher than 3 hours, the tour is not child-friendly
             tour.setChildFriendlinessScore(0);
         } else if (tour.getDistance() > 5 && tour.getTransportType() == TransportType.FEET) {
             tour.setChildFriendlinessScore(0); // if the distance is higher than 5km and the transport type is feet, the tour is not child-friendly
