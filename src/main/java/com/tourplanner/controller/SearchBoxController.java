@@ -81,7 +81,6 @@ public class SearchBoxController {
     }
 
     public boolean matchesSearch(Tour tour){
-        //TODO: implement actual search
 
         String[] searchedWords = searchTextField.getText().split(" ");
 

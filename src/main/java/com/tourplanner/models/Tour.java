@@ -1,10 +1,8 @@
 package com.tourplanner.models;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tourplanner.enums.TransportType;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;

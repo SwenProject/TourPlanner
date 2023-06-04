@@ -3,9 +3,9 @@ package com.tourplanner.repositories;
 import com.tourplanner.models.Tour;
 import com.tourplanner.services.ConfigurationService;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -17,10 +17,10 @@ public class TourRepository {
 
         // Load database credentials from config file
         Properties dbCredentials = new Properties();
-        dbCredentials.setProperty("javax.persistence.jdbc.driver", config.getStringConfig("db.driver"));
-        dbCredentials.setProperty("javax.persistence.jdbc.url", config.getStringConfig("db.url"));
-        dbCredentials.setProperty("javax.persistence.jdbc.user", config.getStringConfig("db.username"));
-        dbCredentials.setProperty("javax.persistence.jdbc.password", config.getStringConfig("db.password"));
+        dbCredentials.setProperty("jakarta.persistence.jdbc.driver", config.getStringConfig("db.driver"));
+        dbCredentials.setProperty("jakarta.persistence.jdbc.url", config.getStringConfig("db.url"));
+        dbCredentials.setProperty("jakarta.persistence.jdbc.user", config.getStringConfig("db.username"));
+        dbCredentials.setProperty("jakarta.persistence.jdbc.password", config.getStringConfig("db.password"));
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("tourPU", dbCredentials);
         entityManager = entityManagerFactory.createEntityManager();

@@ -1,7 +1,7 @@
 package com.tourplanner.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tourplanner.enums.Difficulty;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.Duration;
 import java.util.Date;
 import javafx.beans.property.*;

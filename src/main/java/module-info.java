@@ -1,7 +1,7 @@
 module TourPlanner {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.persistence;
+    requires jakarta.persistence;
     requires lombok;
     requires java.sql;
     requires org.hibernate.orm.core;
@@ -12,7 +12,6 @@ module TourPlanner {
     requires com.fasterxml.jackson.databind;
     requires org.apache.logging.log4j;
     requires org.apache.logging.log4j.core;
-
 
     opens com.tourplanner to javafx.fxml;
     exports com.tourplanner;
