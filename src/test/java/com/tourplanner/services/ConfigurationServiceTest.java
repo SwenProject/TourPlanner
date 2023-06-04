@@ -1,5 +1,6 @@
 package com.tourplanner.services;
 
+import com.tourplanner.services.interfaces.IConfigurationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -45,7 +46,7 @@ class ConfigurationServiceTest {
         InputStream inputStream = new ByteArrayInputStream(configFileData.getBytes());
 
         //Act
-        ConfigurationService configService = new ConfigurationService(inputStream);
+        IConfigurationService configService = new ConfigurationService(inputStream);
 
         //Assert
         assertThrows(IllegalArgumentException.class, configService::checkConfig);
@@ -73,7 +74,7 @@ class ConfigurationServiceTest {
         InputStream inputStream = new ByteArrayInputStream(configFileData.getBytes());
 
         //Act
-        ConfigurationService configService = new ConfigurationService(inputStream);
+        IConfigurationService configService = new ConfigurationService(inputStream);
 
         //Assert
         assertThrows(IllegalArgumentException.class, configService::checkConfig);
@@ -101,7 +102,7 @@ class ConfigurationServiceTest {
         InputStream inputStream = new ByteArrayInputStream(configFileData.getBytes());
 
         //Act
-        ConfigurationService configService = new ConfigurationService(inputStream);
+        IConfigurationService configService = new ConfigurationService(inputStream);
 
         //Assert
         assertThrows(IllegalArgumentException.class, configService::checkConfig);
@@ -128,7 +129,7 @@ class ConfigurationServiceTest {
         InputStream inputStream = new ByteArrayInputStream(configFileData.getBytes());
 
         //Act
-        ConfigurationService configService = new ConfigurationService(inputStream);
+        IConfigurationService configService = new ConfigurationService(inputStream);
 
         //Assert
         assertDoesNotThrow(configService::checkConfig);
@@ -155,7 +156,7 @@ class ConfigurationServiceTest {
         InputStream inputStream = new ByteArrayInputStream(configFileData.getBytes());
 
         //Act
-        ConfigurationService configService = new ConfigurationService(inputStream);
+        IConfigurationService configService = new ConfigurationService(inputStream);
 
         //Assert
         assertDoesNotThrow(configService::checkConfig);
@@ -183,7 +184,7 @@ class ConfigurationServiceTest {
         InputStream inputStream = new ByteArrayInputStream(configFileData.getBytes());
 
         //Act
-        ConfigurationService configService = new ConfigurationService(inputStream);
+        IConfigurationService configService = new ConfigurationService(inputStream);
 
         //Assert
         assertDoesNotThrow(configService::checkConfig);

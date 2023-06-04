@@ -3,6 +3,8 @@ import com.tourplanner.enums.TransportType;
 import com.tourplanner.models.Tour;
 
 import com.tourplanner.services.ConfigurationService;
+import com.tourplanner.services.TourMapServiceMapQuest;
+import com.tourplanner.services.interfaces.IConfigurationService;
 import javafx.application.Platform;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +25,7 @@ class TourMapServiceMapQuestTest {
         Platform.startup(() -> {}); //needed for JavaFX Platform.runLater() to work in unit tests
 
         //load endpoints and api key from config.properties
-        ConfigurationService config = new ConfigurationService("config.properties");
+        IConfigurationService config = new ConfigurationService("config.properties");
         config.checkConfig();
 
         tourMapServiceMapQuest = new TourMapServiceMapQuest(config);

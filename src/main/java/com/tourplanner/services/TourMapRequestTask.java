@@ -1,6 +1,7 @@
 package com.tourplanner.services;
 
 import com.tourplanner.models.Tour;
+import com.tourplanner.services.interfaces.ITourMapService;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 

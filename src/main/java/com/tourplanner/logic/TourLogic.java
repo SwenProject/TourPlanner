@@ -2,8 +2,9 @@ package com.tourplanner.logic;
 
 import com.tourplanner.enums.TransportType;
 import com.tourplanner.models.Tour;
-import com.tourplanner.repositories.TourRepository;
+import com.tourplanner.repositories.ITourRepository;
 import com.tourplanner.services.*;
+import com.tourplanner.services.interfaces.ITourMapService;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +16,7 @@ import java.io.File;
 import java.util.concurrent.Semaphore;
 
 public class TourLogic {
-    private final TourRepository tourRepository;
+    private final ITourRepository tourRepository;
     private final ITourMapService tourMapService;
     private final Semaphore tourMapRequestLock = new Semaphore(1); //semaphore to ensure that only one api request is made at a time
     private final ObservableList<Tour> allTours = FXCollections.observableArrayList();
@@ -31,11 +32,11 @@ public class TourLogic {
 
 
 
-    public TourLogic(TourRepository tourRepository, ITourMapService tourMapService) {
+    public TourLogic(ITourRepository tourRepository, ITourMapService tourMapService) {
         this.tourRepository = tourRepository;
         this.tourMapService = tourMapService;
 
-        allTours.setAll(tourRepository.getAll()); //load all tours from db in constructor
+        allTours.setAll(this.tourRepository.getAll()); //load all tours from db in constructor
     }
 
     public ObservableList<Tour> getAllToursList() {

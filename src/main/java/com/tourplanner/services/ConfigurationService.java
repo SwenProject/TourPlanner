@@ -1,11 +1,13 @@
 package com.tourplanner.services;
 
+import com.tourplanner.services.interfaces.IConfigurationService;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class ConfigurationService {
+public class ConfigurationService implements IConfigurationService {
     private final Properties properties;
 
     public ConfigurationService(String filePath) throws IOException {
@@ -21,6 +23,7 @@ public class ConfigurationService {
         properties.load(inputStream);
     }
 
+    @Override
     public void checkConfig(){
 
         //check for db config
@@ -49,6 +52,7 @@ public class ConfigurationService {
             throw new IllegalArgumentException("Missing configuration value for key: " + key);
     }
 
+    @Override
     public String getStringConfig(String key) {
         String value = properties.getProperty(key);
         if (value == null || value.isEmpty()) {

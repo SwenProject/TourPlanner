@@ -1,20 +1,24 @@
 package com.tourplanner.controller;
 
 import com.tourplanner.logic.TourLogic;
-import com.tourplanner.logic.TourMapServiceMapQuest;
+import com.tourplanner.services.TourMapServiceMapQuest;
+import com.tourplanner.repositories.ITourRepository;
 import com.tourplanner.repositories.TourRepository;
 import com.tourplanner.services.*;
+import com.tourplanner.services.interfaces.IConfigurationService;
+import com.tourplanner.services.interfaces.IFileImportExportService;
+import com.tourplanner.services.interfaces.ITourMapService;
 
 public class ControllerFactory {
 
-    private final ConfigurationService config;
-    private final TourRepository tourRepository;
+    private final IConfigurationService config;
+    private final ITourRepository tourRepository;
     private final ITourMapService tourMapService;
-    private final TourLogic tourLogic;
     private final IFileImportExportService fileImportExportService;
+    private final TourLogic tourLogic;
     private final PdfService pdfService;
 
-    public ControllerFactory(ConfigurationService config) {
+    public ControllerFactory(IConfigurationService config) {
         this.config = config;
         this.tourRepository = new TourRepository(config);
         this.tourMapService = new TourMapServiceMapQuest(config);

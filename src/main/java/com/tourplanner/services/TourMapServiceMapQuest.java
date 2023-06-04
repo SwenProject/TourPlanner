@@ -1,4 +1,4 @@
-package com.tourplanner.logic;
+package com.tourplanner.services;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Random;
 
-import com.tourplanner.services.ConfigurationService;
+import com.tourplanner.services.interfaces.IConfigurationService;
 import javafx.application.Platform;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,15 +20,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.tourplanner.models.Tour;
-import com.tourplanner.services.ITourMapService;
+import com.tourplanner.services.interfaces.ITourMapService;
 
 public class TourMapServiceMapQuest implements ITourMapService {
 
-    private final ConfigurationService config;
+    private final IConfigurationService config;
 
     private static final Logger logger = LogManager.getLogger(TourMapServiceMapQuest.class);
 
-    public TourMapServiceMapQuest(ConfigurationService config) {
+    public TourMapServiceMapQuest(IConfigurationService config) {
         this.config = config;
     }
 

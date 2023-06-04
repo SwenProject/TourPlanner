@@ -2,8 +2,8 @@ package com.tourplanner.controller;
 
 import com.tourplanner.TourPlannerApp;
 import com.tourplanner.logic.TourLogic;
-import com.tourplanner.services.ConfigurationService;
-import com.tourplanner.services.IFileImportExportService;
+import com.tourplanner.services.interfaces.IConfigurationService;
+import com.tourplanner.services.interfaces.IFileImportExportService;
 import com.tourplanner.services.PdfService;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -23,7 +23,7 @@ import java.util.Objects;
 public class NewImportExportController {
 
     private final TourLogic tourLogic;
-    private final ConfigurationService config;
+    private final IConfigurationService config;
     private final IFileImportExportService fileImportExportService;
     private final PdfService pdfService;
 
@@ -31,7 +31,7 @@ public class NewImportExportController {
 
     private static final Logger logger = LogManager.getLogger(NewImportExportController.class);
 
-    public NewImportExportController(TourLogic tourLogic, ConfigurationService config, IFileImportExportService fileImportExportService, PdfService pdfService) {
+    public NewImportExportController(TourLogic tourLogic, IConfigurationService config, IFileImportExportService fileImportExportService, PdfService pdfService) {
         this.tourLogic = tourLogic;
         this.config = config;
         this.fileImportExportService = fileImportExportService;

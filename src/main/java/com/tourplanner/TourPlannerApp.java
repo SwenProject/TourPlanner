@@ -2,6 +2,7 @@ package com.tourplanner;
 
 import com.tourplanner.controller.ControllerFactory;
 import com.tourplanner.services.ConfigurationService;
+import com.tourplanner.services.interfaces.IConfigurationService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,6 +10,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
+import java.util.Objects;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.Configurator;
 
@@ -18,7 +21,7 @@ public class TourPlannerApp extends Application {
     public void start(Stage stage) throws IOException {
 
         // load config
-        ConfigurationService config = new ConfigurationService("config.properties");
+        IConfigurationService config = new ConfigurationService("config.properties");
         //check that all config values are set
         config.checkConfig();
 
@@ -36,7 +39,7 @@ public class TourPlannerApp extends Application {
         // Scene scene = new Scene(fxmlLoader.load(), 700, 700);
 
         stage.initStyle(StageStyle.DECORATED);
-        stage.getIcons().add(new Image(TourPlannerApp.class.getResourceAsStream("images/app_icon.png")));
+        stage.getIcons().add(new Image(Objects.requireNonNull(TourPlannerApp.class.getResourceAsStream("images/app_icon.png"))));
         stage.setTitle("Tour Planner");
         stage.setScene(scene);
         stage.setMaximized(true);
