@@ -51,7 +51,6 @@ public class PdfService {
             //add logo image
             Image logoImage = new Image(ImageDataFactory.create("./src/main/resources/com/tourplanner/images/app_icon.png")).setMaxHeight(40).setOpacity(0.7f);
             //add header
-
             Table titleTable = new Table(UnitValue.createPercentArray(new float[]{5, 90, 5})).useAllAvailableWidth();
             titleTable.setMarginTop(-20);
             titleTable.addCell(new Cell().setBorder(Border.NO_BORDER));
@@ -96,12 +95,10 @@ public class PdfService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        //create the pdf
         try (PdfWriter writer = new PdfWriter(path)) {
-
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
-
             document.setFont(customFont);
             document.setFontColor(WebColors.getRGBColor("#3D405B"));
 
@@ -118,6 +115,7 @@ public class PdfService {
 
             for (Tour tour : tours) {
                 Cell cell = new Cell().add(new Paragraph(tour.getName()));
+                //to create a border around the table
                 cell.setBorder(Border.NO_BORDER)
                         .setBorderLeft(new SolidBorder(WebColors.getRGBColor("#E07A5F"), 1f))
                         .setBorderRight(new SolidBorder(WebColors.getRGBColor("#E07A5F"), 1f))
@@ -132,7 +130,6 @@ public class PdfService {
 
                 row++;
             }
-
             document.add(content);
 
         //TOUR PAGES
@@ -145,7 +142,6 @@ public class PdfService {
                         .setFontSize(18)
                         .setBold()
                         .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER);
-
                 document.add(header);
 
                 //add the tour start and destination to the page
@@ -156,18 +152,13 @@ public class PdfService {
                         .setMarginBottom(20);
                 document.add(startAndDestination);
 
-               //add the tour image to the page
+               //add the tour image to the page (if Map is not available, add a placeholder image)
                 addMapImage(tour.getPathToMapImage(), document);
-
-                PdfFont font = PdfFontFactory.createFont(fontPath, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
 
                 //create table for tour details
                 createTableForDetails(tour, document);
-
             }
             pdf.close();
-
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -201,8 +192,6 @@ public class PdfService {
                 "description and average rating. \n the average duration is calculated from the tour logs of each Tour.\n \n The following Tours are displayed:")
                 .setFontSize(15).setItalic().setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER);
         document.add(subtitle);
-
-
     }
 
     Duration calculateAverageDuration(List<TourLog> logs) {
@@ -212,13 +201,12 @@ public class PdfService {
             System.out.println(log.getTotalTime());
             System.out.println(averageDuration);
         }
-        System.out.println(logs.size());
+        //if there are no tourlogs, set averageDuration to 0
         if (logs.size() > 0) {
             averageDuration = averageDuration.dividedBy(logs.size());
         } else {
             averageDuration = Duration.ZERO;
         }
-        System.out.println(averageDuration);
         return averageDuration;
     }
 
@@ -232,15 +220,18 @@ public class PdfService {
         for (TourLog log : logs) {
             averageRating += log.getRating();
         }
+        //if there are no tourlogs, set averageRating to 0
         if (logs.size() > 0) {
             averageRating = averageRating / logs.size();
         } else {
             averageRating = 0;
         }
+        //round to int
         return ((int) Math.round(averageRating));
     }
 
     private void addMapImage(String pathToMapImage, Document document) {
+        //add plaxeholder image if no map image is available
         if (pathToMapImage == null || pathToMapImage.equals("error") || pathToMapImage.equals("loading")) {
             Image noMapImage = null;
             try {
@@ -252,7 +243,7 @@ public class PdfService {
                 throw new RuntimeException(e);
             }
             document.add(noMapImage);
-            //create paragraph
+            //add text to placeholder image
             Paragraph noMapParagraph = new Paragraph("No Map Image available for this Tour")
                     .setBold()
                     .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
@@ -274,28 +265,29 @@ public class PdfService {
             } catch (MalformedURLException e) {
                 throw new RuntimeException(e);
             }
+            //next page in case there is a Map image, so the tour details are on the next page
             document.add(new AreaBreak());
-
         }
     }
 
     private void createLogsParagraphs(List<TourLog> tourLogs, Document document) {
+        //add tour logs
         if (tourLogs.size() > 0) {
             for (TourLog log : tourLogs) {
                 Paragraph p = new Paragraph()
                         .setBorder(new SolidBorder(1))
                         .setBackgroundColor(WebColors.getRGBColor("#F4F1DE")).setPadding(5);
-                //parse date
+                //format and add date
                 Date date = log.getDate();
                 SimpleDateFormat formatter = new SimpleDateFormat("dd MM YYYY HH:mm:ss");
                 String formattedDate = formatter.format(date);
-
                 p.add(new Text(formattedDate).setItalic());
                 p.add(new Text("\n"));
 
                 p.add(new Text("Comment:\n")
                         .setFontSize(10)
                         .setItalic());
+                //add comment of "" if null
                 if(log.getComment() == null){
                     p.add(new Text(""));
                 }else {
@@ -306,6 +298,7 @@ public class PdfService {
                 p.add(new Text("Total Time:\n")
                         .setFontSize(10)
                         .setItalic());
+                //
                 p.add(new Text(totalTimeToString(log.getTotalTime())));
                 p.add(new Text("\n"));
 
@@ -433,7 +426,6 @@ public class PdfService {
                     .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                     .setBorder(Border.NO_BORDER));
         }
-
         document.add(table);
     }
 
