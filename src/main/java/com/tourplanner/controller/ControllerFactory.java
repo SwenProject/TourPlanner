@@ -11,6 +11,7 @@ import com.tourplanner.services.interfaces.ITourMapService;
 
 public class ControllerFactory {
 
+    //interfaces for dependency injection
     private final IConfigurationService config;
     private final ITourRepository tourRepository;
     private final ITourMapService tourMapService;

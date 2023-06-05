@@ -80,7 +80,6 @@ public class PdfService {
             document.add(logsTitle);
             createLogsParagraphs(tour.getTourLogs(), document);
 
-
             pdf.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -231,7 +230,7 @@ public class PdfService {
     }
 
     private void addMapImage(String pathToMapImage, Document document) {
-        //add plaxeholder image if no map image is available
+        //add placeholder image if no map image is available
         if (pathToMapImage == null || pathToMapImage.equals("error") || pathToMapImage.equals("loading")) {
             Image noMapImage = null;
             try {
@@ -307,6 +306,7 @@ public class PdfService {
                 document.add(p);
             }
         } else {
+            //add placeholder image if no tour logs are available
             Image noLogsImage = null;
             try {
                 noLogsImage = new Image(ImageDataFactory.create("./src/main/resources/com/tourplanner/images/no_logs.png"))
@@ -317,6 +317,7 @@ public class PdfService {
             } catch (MalformedURLException e) {
                 throw new RuntimeException(e);
             }
+            //add text to placeholder image
             Paragraph noLogs = new Paragraph("No Tour Logs available for this Tour").setFontSize(12)
                     .setBold()
                     .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
@@ -340,8 +341,7 @@ public class PdfService {
                 .setMarginTop(20)
                 .setMarginBottom(10);
         document.add(details);
-
-
+        //create table
         Table table = new Table(UnitValue.createPercentArray(new float[]{30, 70})).useAllAvailableWidth();
         table.setHorizontalAlignment(com.itextpdf.layout.properties.HorizontalAlignment.CENTER);
         table.setMarginTop(20);
@@ -371,7 +371,7 @@ public class PdfService {
         table.addCell(new Cell().add(new Paragraph("Distance"))
                 .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                 .setBorder(Border.NO_BORDER));
-
+        //if distance is 0 or less, display error
         String  distance = (tour.getDistance() > 0) ? String.valueOf(tour.getDistance()) : "Error";
         table.addCell(new Cell().add(new Paragraph(distance))
                 .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
@@ -380,6 +380,7 @@ public class PdfService {
         table.addCell(new Cell().add(new Paragraph("Description"))
                 .setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f)
                 .setBorder(Border.NO_BORDER));
+        //no description available
         if (tour.getDescription() == null) {
             table.addCell(new Cell().add(new Paragraph("No Description available"))
                     .setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f)
@@ -416,6 +417,7 @@ public class PdfService {
         table.addCell(new Cell().add(new Paragraph("Average Duration"))
                 .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                 .setBorder(Border.NO_BORDER));
+        //if average duration is valid format like 1:30, display it, else display "no logs available"
         if (averageDuration != Duration.ZERO) {
             String averageDurationString = String.format("%d:%02d", averageDuration.getSeconds() / 3600, (averageDuration.getSeconds() % 3600) / 60);
             table.addCell(new Cell().add(new Paragraph(averageDurationString))

@@ -19,6 +19,8 @@ public class TourPlannerApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        //TODO loading stage - > loading scene (stagestyle undecorated)
+        //Load fxml for loading stage
 
         // load config
         IConfigurationService config = new ConfigurationService("config.properties");
