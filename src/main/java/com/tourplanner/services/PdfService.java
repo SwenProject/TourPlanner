@@ -1,8 +1,6 @@
 package com.tourplanner.services;
 
-import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.colors.WebColors;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
@@ -11,8 +9,6 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.*;
-import com.itextpdf.layout.properties.BackgroundImage;
-import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.layout.properties.VerticalAlignment;
 import com.tourplanner.models.Tour;
@@ -33,6 +29,65 @@ public class PdfService {
     //set the custom font for the pdf
     String fontPath = "./src/main/resources/com/tourplanner/fonts/jetbrains_mono/JetBrainsMono-Regular.ttf";
 
+    public void createPdfSingleTour(Tour tour, String path) {
+
+        PdfFont customFont = null;
+        try {
+            customFont = PdfFontFactory.createFont(fontPath, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        //String fontPath
+        String fontPath = "./src/main/resources/com/tourplanner/fonts/jetbrains_mono/JetBrainsMono-Regular.ttf";
+
+        //create the pdf
+        try (PdfWriter writer = new PdfWriter(path)) {
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+            document.setFont(customFont);
+            document.setFontColor(WebColors.getRGBColor("#3D405B"));
+
+            //add logo image
+            Image logoImage = new Image(ImageDataFactory.create("./src/main/resources/com/tourplanner/images/app_icon.png")).setMaxHeight(40).setOpacity(0.7f);
+            //add header
+
+            Table titleTable = new Table(UnitValue.createPercentArray(new float[]{5, 90, 5})).useAllAvailableWidth();
+            titleTable.setMarginTop(-20);
+            titleTable.addCell(new Cell().setBorder(Border.NO_BORDER));
+            titleTable.addCell(new Cell().add(new Paragraph(tour.getName()))
+                    .setFontSize(20).setBold()
+                    .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
+                    .setBorder(Border.NO_BORDER));
+
+            titleTable.addCell(new Cell().add(logoImage).setVerticalAlignment(VerticalAlignment.MIDDLE).setBorder(Border.NO_BORDER));
+            titleTable.addCell(new Cell().setBorder(Border.NO_BORDER));
+            String subheader = tour.getStartingPoint() + " - " + tour.getDestinationPoint();
+            titleTable.addCell(new Cell().add(new Paragraph(subheader))
+                    .setFontSize(12).setBold()
+                    .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
+                    .setBorder(Border.NO_BORDER));
+
+            document.add(titleTable);
+
+            //add the tour map image
+            addMapImage(tour.getPathToMapImage(), document);
+
+            //add tour details table
+            createTableForDetails(tour, document);
+
+            //add logs
+            Paragraph logsTitle = new Paragraph("Tour Logs").setFontSize(15).setBold().setMarginTop(15);
+            document.add(logsTitle);
+            createLogsParagraphs(tour.getTourLogs(), document);
+
+
+            pdf.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void createPdfSummary(List<Tour> tours, String path) {
 
         PdfFont customFont = null;
@@ -50,10 +105,8 @@ public class PdfService {
             document.setFont(customFont);
             document.setFontColor(WebColors.getRGBColor("#3D405B"));
 
-            //TITLE PAGE
+        //TITLE PAGE
             addSummaryTitlePage(document, tours);
-
-
             //create table for tour names
             Table content = new Table(UnitValue.createPercentArray(1))
                     .setHorizontalAlignment(com.itextpdf.layout.properties.HorizontalAlignment.CENTER);
@@ -81,10 +134,8 @@ public class PdfService {
             }
 
             document.add(content);
-//---------------------------------------------------------------
-            //TOUR PAGES
-            //for each tour in tours
 
+        //TOUR PAGES
             for (Tour tour : tours) {
                 //create a new page
                 document.add(new AreaBreak());
@@ -105,48 +156,13 @@ public class PdfService {
                         .setMarginBottom(20);
                 document.add(startAndDestination);
 
-                String pathToImageString = tour.getPathToMapImage();
-                //if there is no Map image available
-                if (pathToImageString == null || pathToImageString.equals("error") || pathToImageString.equals("loading")) {
-                    Image noMapImage = new Image(ImageDataFactory.create("./src/main/resources/com/tourplanner/images/tour_map_error.png"))
-                            .setMaxHeight(50)
-                            .setHorizontalAlignment(com.itextpdf.layout.properties.HorizontalAlignment.CENTER)
-                            .setMarginTop(50);
-                    document.add(noMapImage);
-                    //create paragraph
-                    Paragraph noMapParagraph = new Paragraph("No Map Image available for this Tour")
-                            .setBold()
-                            .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
-                            .setMarginTop(5)
-                            .setFontColor(WebColors.getRGBColor("#3D405B"))
-                            .setFontSize(12)
-                            .setMarginBottom(40);
+               //add the tour image to the page
+                addMapImage(tour.getPathToMapImage(), document);
 
-                    document.add(noMapParagraph);
-                }
-                //Map image available
-                else {
-                    Path pathToImage = Paths.get(tour.getPathToMapImage());
-                    File imageFile = pathToImage.toFile();
-                    document.add(new Image(ImageDataFactory.create(imageFile.toURI().toString())).setMaxHeight(500).setHorizontalAlignment(com.itextpdf.layout.properties.HorizontalAlignment.CENTER).setMarginTop(50));
-                    document.add(new AreaBreak());
-
-                }
                 PdfFont font = PdfFontFactory.createFont(fontPath, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
 
-                Paragraph details = new Paragraph("Tour Details")
-                        .setItalic()
-                        .setFontSize(12)
-                        .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
-                        .setMarginTop(20)
-                        .setMarginBottom(10);
-
-                document.add(details);
                 //create table for tour details
-
-
-                Table detailsTable = createTableForDetails(tour);
-                document.add(detailsTable);
+                createTableForDetails(tour, document);
 
             }
             pdf.close();
@@ -206,8 +222,6 @@ public class PdfService {
         return averageDuration;
     }
 
-
-
     int calculateAverageRating(List<TourLog> logs) {
 
         double averageRating = 0;
@@ -226,97 +240,42 @@ public class PdfService {
         return ((int) Math.round(averageRating));
     }
 
-
-    public void createPdfSingleTour(Tour tour, String path) {
-
-        PdfFont customFont = null;
-        try {
-            customFont = PdfFontFactory.createFont(fontPath, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        //String fontPath
-        String fontPath = "./src/main/resources/com/tourplanner/fonts/jetbrains_mono/JetBrainsMono-Regular.ttf";
-
-        //create the pdf
-        try (PdfWriter writer = new PdfWriter(path)) {
-            PdfDocument pdf = new PdfDocument(writer);
-            Document document = new Document(pdf);
-            document.setFont(customFont);
-            document.setFontColor(WebColors.getRGBColor("#3D405B"));
-
-            //add logo image
-            Image logoImage = new Image(ImageDataFactory.create("./src/main/resources/com/tourplanner/images/app_icon.png")).setMaxHeight(40).setOpacity(0.7f);
-            //add header
-
-            Table titleTable = new Table(UnitValue.createPercentArray(new float[]{5, 90, 5})).useAllAvailableWidth();
-            titleTable.setMarginTop(-20);
-            titleTable.addCell(new Cell().setBorder(Border.NO_BORDER));
-            titleTable.addCell(new Cell().add(new Paragraph(tour.getName()))
-                    .setFontSize(20).setBold()
-                    .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
-                    .setBorder(Border.NO_BORDER));
-
-            titleTable.addCell(new Cell().add(logoImage).setVerticalAlignment(VerticalAlignment.MIDDLE).setBorder(Border.NO_BORDER));
-            titleTable.addCell(new Cell().setBorder(Border.NO_BORDER));
-            String subheader = tour.getStartingPoint() + " - " + tour.getDestinationPoint();
-            titleTable.addCell(new Cell().add(new Paragraph(subheader))
-                    .setFontSize(12).setBold()
-                    .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
-                    .setBorder(Border.NO_BORDER));
-
-            document.add(titleTable);
-            //subheader
-
-            //add the tour map image
-            String pathToImageString = tour.getPathToMapImage();
-
-            //if there is no Map image available
-            if (pathToImageString == null || pathToImageString.equals("error") || pathToImageString.equals("loading")) {
-                Image noMapImage = new Image(ImageDataFactory.create("./src/main/resources/com/tourplanner/images/tour_map_error.png"))
+    private void addMapImage(String pathToMapImage, Document document) {
+        if (pathToMapImage == null || pathToMapImage.equals("error") || pathToMapImage.equals("loading")) {
+            Image noMapImage = null;
+            try {
+                noMapImage = new Image(ImageDataFactory.create("./src/main/resources/com/tourplanner/images/tour_map_error.png"))
                         .setMaxHeight(50)
                         .setHorizontalAlignment(com.itextpdf.layout.properties.HorizontalAlignment.CENTER)
-                        .setMarginTop(50)
-                        .setOpacity(0.5f);
-
-                document.add(noMapImage);
-                //create paragraph
-                Paragraph noMapParagraph = new Paragraph("No Map Image available for this Tour")
-                        .setBold()
-                        .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
-                        .setMarginTop(5)
-                        .setFontColor(WebColors.getRGBColor("#3D405B"))
-                        .setMarginBottom(50)
-                        .setOpacity(0.5f);
-                document.add(noMapParagraph);
+                        .setMarginTop(50);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
             }
-            //Map image available
-            else {
-                Path pathToImage = Paths.get(tour.getPathToMapImage());
-                File imageFile = pathToImage.toFile();
-                document.add(new Image(ImageDataFactory.create(imageFile.toURI().toString()))
-                        .setMaxHeight(500)
+            document.add(noMapImage);
+            //create paragraph
+            Paragraph noMapParagraph = new Paragraph("No Map Image available for this Tour")
+                    .setBold()
+                    .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
+                    .setMarginTop(5)
+                    .setFontColor(WebColors.getRGBColor("#3D405B"))
+                    .setFontSize(12)
+                    .setMarginBottom(40);
+
+            document.add(noMapParagraph);
+        }
+        //Map image available
+        else {
+            Path pathToImage = Paths.get(pathToMapImage);
+            File imageFile = pathToImage.toFile();
+            try {
+                document.add(new Image(ImageDataFactory.create(imageFile.toURI().toString())).setMaxHeight(500)
                         .setHorizontalAlignment(com.itextpdf.layout.properties.HorizontalAlignment.CENTER)
                         .setMarginTop(50));
-                //create new page
-                document.add(new AreaBreak());
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
             }
+            document.add(new AreaBreak());
 
-
-
-            Table detailsTable = createTableForDetails(tour);
-            document.add(detailsTable);
-
-            //add logs
-            Paragraph logsTitle = new Paragraph("Tour Logs").setFontSize(15).setBold().setMarginTop(15);
-            document.add(logsTitle);
-            createLogsParagraphs(tour.getTourLogs(), document);
-
-
-            pdf.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -377,8 +336,18 @@ public class PdfService {
         }
     }
 
-    Table createTableForDetails(Tour tour) {
+    void createTableForDetails(Tour tour, Document document) {
+
         Duration averageDuration = calculateAverageDuration(tour.getTourLogs());
+
+        Paragraph details = new Paragraph("Tour Details")
+                .setItalic()
+                .setFontSize(12)
+                .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
+                .setMarginTop(20)
+                .setMarginBottom(10);
+        document.add(details);
+
 
         Table table = new Table(UnitValue.createPercentArray(new float[]{30, 70})).useAllAvailableWidth();
         table.setHorizontalAlignment(com.itextpdf.layout.properties.HorizontalAlignment.CENTER);
@@ -409,18 +378,20 @@ public class PdfService {
         table.addCell(new Cell().add(new Paragraph("Distance"))
                 .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                 .setBorder(Border.NO_BORDER));
-        table.addCell(new Cell().add(new Paragraph(String.valueOf(tour.getDistance())))
+
+        String  distance = (tour.getDistance() > 0) ? String.valueOf(tour.getDistance()) : "Error";
+        table.addCell(new Cell().add(new Paragraph(distance))
                 .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                 .setBorder(Border.NO_BORDER));
         //Description
         table.addCell(new Cell().add(new Paragraph("Description"))
                 .setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f)
                 .setBorder(Border.NO_BORDER));
-        if(tour.getDescription() == null){
+        if (tour.getDescription() == null) {
             table.addCell(new Cell().add(new Paragraph("No Description available"))
                     .setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f)
                     .setBorder(Border.NO_BORDER));
-        }else {
+        } else {
             table.addCell(new Cell().add(new Paragraph(tour.getDescription()))
                     .setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f)
                     .setBorder(Border.NO_BORDER));
@@ -429,7 +400,7 @@ public class PdfService {
         table.addCell(new Cell().add(new Paragraph("Rating"))
                 .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                 .setBorder(Border.NO_BORDER));
-        if(tour.getTourLogs().size() > 0) {
+        if (tour.getTourLogs().size() > 0) {
             table.addCell(new Cell().add(new Paragraph(String.valueOf(calculateAverageRating(tour.getTourLogs()))))
                     .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                     .setBorder(Border.NO_BORDER));
@@ -452,23 +423,21 @@ public class PdfService {
         table.addCell(new Cell().add(new Paragraph("Average Duration"))
                 .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                 .setBorder(Border.NO_BORDER));
-        if(averageDuration != Duration.ZERO) {
+        if (averageDuration != Duration.ZERO) {
             String averageDurationString = String.format("%d:%02d", averageDuration.getSeconds() / 3600, (averageDuration.getSeconds() % 3600) / 60);
             table.addCell(new Cell().add(new Paragraph(averageDurationString))
                     .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                     .setBorder(Border.NO_BORDER));
-        }else {
+        } else {
             table.addCell(new Cell().add(new Paragraph("No Logs available"))
                     .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                     .setBorder(Border.NO_BORDER));
         }
 
-        return table;
-
-
+        document.add(table);
     }
 
-    private String durationToString(Duration duration) {
+    protected String durationToString(Duration duration) {
         if (duration == null || duration.getSeconds() == -1) { //-1 is loading, null is for new tours
             return "No Logs available";
         } else if (duration.getSeconds() == -2) { //-2 is error

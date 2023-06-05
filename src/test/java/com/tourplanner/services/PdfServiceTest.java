@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class PdfServiceTest{
     Tour tour1;
     Tour tour2;
@@ -51,6 +53,7 @@ class PdfServiceTest{
         log1.setDifficulty(Difficulty.MEDIUM);
         log1.setDate(new Date(2023-1900, Calendar.AUGUST, 3, 22, 30, 18));
         log1.setComment("Es war schrecklich!");
+
 
         TourLog log2 = new TourLog();
         log2.setRating(4);
