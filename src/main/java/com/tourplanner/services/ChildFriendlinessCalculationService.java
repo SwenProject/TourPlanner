@@ -1,5 +1,6 @@
 package com.tourplanner.services;
 
+import com.tourplanner.enums.Difficulty;
 import com.tourplanner.enums.TransportType;
 import com.tourplanner.models.Tour;
 import com.tourplanner.models.TourLog;
@@ -36,8 +37,8 @@ public class ChildFriendlinessCalculationService {
         }
 
         //calculate the child friendliness of a tour by using the average difficulty and the average total time and the distance
-        if (tour.getTransportType() == TransportType.CAR) { //when it is a car tour, it is child-friendly
-            tour.setChildFriendlinessScore(1);
+        if (tour.getTransportType() == TransportType.CAR && calculateAverageTotalTime(tour) > 10 * 3600) { //when it is a car tour, it is child-friendly
+            tour.setChildFriendlinessScore(0);
         } else if (calculateAverageDifficulty(tour) > 1) { // if the difficulty is higher than medium, the tour is not child-friendly
             tour.setChildFriendlinessScore(0);
 

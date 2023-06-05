@@ -83,13 +83,20 @@
                                 <Label fx:id="childFriendlyLabel" styleClass="child-friendliness-label"/>
                             </HBox>
                         </VBox>
-                        <VBox styleClass="viewModeRight" HBox.hgrow="ALWAYS" minWidth="200">
-                            <StackPane>
+                        <VBox styleClass="viewModeRight" HBox.hgrow="ALWAYS" minWidth="200" spacing="10">
+                            <StackPane styleClass="description" minWidth="200">
                                 <TextArea fx:id="description" wrapText="true" editable="false"/>
                                 <VBox fx:id="noDescriptionContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
                                     <Region styleClass="no-description-icon" />  <!--after textarea so that it is in front-->
-                                    <Label styleClass="no-description-text" text="no description" />
+                                    <Label styleClass="no-description-text" text="no description"/>
                                 </VBox>
+                            </StackPane>
+                            <!--TODO: add a text area for the description mapping for AI-->
+                            <StackPane styleClass="aiDescription" minWidth="200" alignment="BOTTOM_RIGHT">
+                                <TextArea fx:id="aiDescription" wrapText="true" editable="false" promptText="click the load button to generate AI description..."/>
+                                <HBox styleClass="aiGeneratorButton" alignment="BOTTOM_RIGHT">
+                                    <Button fx:id="loadAiDescriptionButton"/>
+                                </HBox>
                             </StackPane>
                         </VBox>
                     </HBox>
