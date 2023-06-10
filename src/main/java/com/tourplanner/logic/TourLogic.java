@@ -5,6 +5,7 @@ import com.tourplanner.models.Tour;
 import com.tourplanner.repositories.ITourRepository;
 import com.tourplanner.services.*;
 import com.tourplanner.services.interfaces.ITourMapService;
+import com.tourplanner.services.tasks.TourMapRequestTask;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,12 +14,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.util.concurrent.Semaphore;
 
 public class TourLogic {
     private final ITourRepository tourRepository;
     private final ITourMapService tourMapService;
-    private final Semaphore tourMapRequestLock = new Semaphore(1); //semaphore to ensure that only one api request is made at a time
     private final ObservableList<Tour> allTours = FXCollections.observableArrayList();
     private final FilteredList<Tour> searchedTours = new FilteredList<>(allTours);
     private final ListProperty<Tour> searchedToursListProperty = new SimpleListProperty<>(searchedTours);
@@ -84,7 +83,7 @@ public class TourLogic {
         this.popularityCalculationService.calculatePopularity(selectedTourProperty.get());
 
         //create new task for api request (to run async)
-        TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(selectedTourProperty.get(), tourMapService, tourMapRequestLock); //create new task
+        TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(selectedTourProperty.get(), tourMapService); //create new task
 
         if(selectedTourProperty.get().isNew()) {
             selectedTourProperty.get().setIsNew(false); //tour is not new anymore
@@ -121,7 +120,7 @@ public class TourLogic {
 
 
         //create new task for api request (to run async)
-        TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(tour, tourMapService, tourMapRequestLock); //create new task
+        TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(tour, tourMapService); //create new task
 
         //set callback of task to db save function
         tourMapRequestTask.setCallback(tourRepository::save);

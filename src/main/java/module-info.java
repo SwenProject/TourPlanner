@@ -27,4 +27,6 @@ module TourPlanner {
     opens com.tourplanner.services to javafx.fxml;
     exports com.tourplanner.services.interfaces;
     opens com.tourplanner.services.interfaces to javafx.fxml;
+    exports com.tourplanner.services.tasks;
+    opens com.tourplanner.services.tasks to javafx.fxml;
 }

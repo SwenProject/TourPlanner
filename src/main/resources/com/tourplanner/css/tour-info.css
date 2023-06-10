@@ -107,6 +107,15 @@
     -fx-text-fill: rgb(61, 64, 91);
 }
 
+.text-field {
+    -fx-background-radius: 5;
+    -fx-min-height: 40px;
+    /*-fx-padding: 10px;*/
+    -fx-background-color: #F4F1DE;
+    -fx-prompt-text-fill: rgba(224, 122, 95, 0.50);
+    -fx-text-fill: rgb(61, 64, 91);
+}
+
 .text-area {
     -fx-min-height: 260px;
     -fx-background-color: #F4F1DE;
