@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           prefHeight="300.0" prefWidth="600.0"
+           stylesheets="@../css/loading-screen.css"
+           styleClass="loading_screen_container">
+
+    <HBox styleClass="icon_container" prefHeight="20">
+        <ImageView styleClass="loading_screen_app-icon">
+            <Image url="@../images/tourPlanner_logo_black.png"/>
+        </ImageView>
+    </HBox>
+
+    <HBox styleClass="loading_container" spacing="10" alignment="CENTER">
+        <Label text="loading"/>
+        <ProgressIndicator minWidth="15" maxWidth="15" minHeight="15" maxHeight="15"/>
+    </HBox>
+
+    <ProgressBar progress="0.5"/>
+
+</VBox>

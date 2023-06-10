@@ -1,0 +1,61 @@
+@font-face {
+    -fx-font-family: "JetBrains Mono NL Regular";
+    -fx-font-weight: 400;
+    src: url("../fonts/jetbrains_mono/JetBrainsMonoNL-Regular.ttf");
+}
+
+.root {
+    -fx-font-family: "JetBrains Mono NL Regular";
+}
+
+.loading_screen_container {
+    -fx-alignment: center;
+    -fx-background-color: #F4F1DE;
+}
+
+.icon_container {
+    -fx-padding: 0 0 40px 0;
+    -fx-alignment: center;
+}
+
+.loading_container {
+    -fx-font-size: 15px;
+    -fx-text-fill: #3D405B;
+    -fx-padding: 0 0 20px 0;
+}
+
+.progress-indicator:indeterminate .segment {
+    -fx-background-color: rgb(61, 64, 91);
+    -fx-padding: 0 0 5px 0;
+}
+
+.loading_screen_app-icon {
+    -fx-effect: dropshadow(gaussian, rgba(61, 64, 91, 0.44), 3, 0, 3, 3);
+
+}
+
+.loading_screen_spinner {
+    -fx-opacity: 0.5;
+}
+
+.progress-bar {
+    -fx-background-color: #E07A5F;
+    -fx-background-radius: 0;
+    -fx-max-height: 15;
+    -fx-min-height: 15;
+    -fx-min-width: 500;
+    -fx-max-width: 500;
+}
+
+.progress-bar .bar{
+    -fx-background-color: #E07A5F;
+    -fx-background-radius: 0;
+    -fx-padding: 1px;
+    -fx-background-insets: 0;
+}
+
+.progress-bar .track{
+    -fx-background-color: #D9D9D9;
+    -fx-background-radius: 0;
+}
+
