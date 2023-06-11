@@ -70,8 +70,6 @@ public class TourLogic {
 
         Tour newTour = new Tour();
 
-        tourRepository.persist(newTour);
-
         //set default selected Transport Type
         newTour.setTransportType(TransportType.CAR);
 
@@ -82,6 +80,10 @@ public class TourLogic {
     }
 
     public void recalculateTour(Tour tour){
+
+        if(tour.isNew()){
+            tourRepository.persist(tour);
+        }
 
         this.ratingCalculationService.calculateRating(tour);
         this.popularityCalculationService.calculatePopularity(tour);
@@ -135,12 +137,14 @@ public class TourLogic {
     }
 
     public void deleteTour(Tour tour){
-        tourRepository.delete(tour);
+        if(!tour.isNew()){
+            tourRepository.delete(tour);
+        }
         deleteFile(tour.getPathToMapImage());
-        allTours.remove(tour);
         if(selectedTourProperty.get() == tour){
             selectedTourProperty.set(null);
         }
+        allTours.remove(tour);
     }
 
     public static void deleteFile(String filePath) {

@@ -200,8 +200,6 @@ public class PdfService {
         Duration averageDuration = Duration.ZERO;
         for (TourLog log : logs) {
             averageDuration = averageDuration.plus(log.getTotalTime());
-            System.out.println(log.getTotalTime());
-            System.out.println(averageDuration);
         }
         //if there are no tourlogs, set averageDuration to 0
         if (logs.size() > 0) {
