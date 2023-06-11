@@ -28,24 +28,41 @@ public class TourRepository implements ITourRepository {
 
     @Override
     public void save(Tour tour) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(tour);
-        entityManager.getTransaction().commit();
-        //tour id should be set now and is in tour object
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(tour);
+            entityManager.getTransaction().commit();
+        } finally {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback(); // Rollback the transaction if it is still active
+            }
+        }
     }
 
     @Override
     public void update(Tour tour) {
-        entityManager.getTransaction().begin();
-        entityManager.merge(tour);
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(tour);
+            entityManager.getTransaction().commit();
+        } finally {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback(); // Rollback the transaction if it is still active
+            }
+        }
     }
 
     @Override
     public void delete(Tour tour) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(tour);
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(tour);
+            entityManager.getTransaction().commit();
+        } finally {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback(); // Rollback the transaction if it is still active
+            }
+        }
     }
 
     @Override

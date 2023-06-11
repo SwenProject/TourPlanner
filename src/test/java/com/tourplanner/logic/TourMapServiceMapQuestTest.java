@@ -33,7 +33,7 @@ class TourMapServiceMapQuestTest {
 
     @Test
     @DisplayName("calculate route from Vienna to Graz with car")
-    void calculateRouteViennaToGrazWithCar() {
+    void calculateRouteViennaToGrazWithCar() throws IOException {
 
         //arrange
         Tour tour = new Tour();
@@ -61,7 +61,7 @@ class TourMapServiceMapQuestTest {
 
     @Test
     @DisplayName("calculate route from Vienna to Graz by foot")
-    void calculateRouteViennaToGrazByFoot() {
+    void calculateRouteViennaToGrazByFoot() throws IOException {
 
         //arrange
         Tour tour = new Tour();
@@ -89,7 +89,7 @@ class TourMapServiceMapQuestTest {
 
     @Test
     @DisplayName("calculate route from Vienna to Graz by bike")
-    void calculateRouteViennaToGrazByBike() {
+    void calculateRouteViennaToGrazByBike() throws IOException {
 
         //arrange
         Tour tour = new Tour();
@@ -117,7 +117,7 @@ class TourMapServiceMapQuestTest {
 
     @Test
     @DisplayName("calculate route with specific addresses")
-    void calculateRouteSpecificAddresses() {
+    void calculateRouteSpecificAddresses() throws IOException {
 
         //arrange
         Tour tour = new Tour();
@@ -145,7 +145,7 @@ class TourMapServiceMapQuestTest {
 
     @Test
     @DisplayName("calculate route with coordinates instead of addresses")
-    void calculateRouteCoordinates() {
+    void calculateRouteCoordinates() throws IOException {
 
         //arrange
         Tour tour = new Tour();

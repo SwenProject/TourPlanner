@@ -44,6 +44,8 @@ public class Tour {
     private final IntegerProperty childFriendlinessScoreProperty = new SimpleIntegerProperty();
     @JsonIgnore
     private final IntegerProperty popularityScoreProperty = new SimpleIntegerProperty();
+    @JsonIgnore
+    private final StringProperty aiSummaryProperty = new SimpleStringProperty();
 
     // ------- Field for actual list (hibernates needs this as a reference) -------
     @JsonIgnore
@@ -115,6 +117,11 @@ public class Tour {
     @Transient
     public IntegerProperty getPopularityScoreProperty() {
         return popularityScoreProperty;
+    }
+
+    @Transient
+    public StringProperty getAiSummaryProperty() {
+        return aiSummaryProperty;
     }
 
     // ------- Getter and Setter for actual data so that the Tour can be saved to db -------
@@ -238,7 +245,16 @@ public class Tour {
         this.popularityScoreProperty.set(popularityScore);
     }
 
-    // ------- New Tour Boolean (not saved to db and only used to mark tours that were not yet saved to db)-------
+    @Column(name = "ai_summary", columnDefinition = "TEXT")
+    @JsonIgnore
+    public String getAiSummary() {
+        return aiSummaryProperty.get();
+    }
+    public void setAiSummary(String aiSummary) {
+        this.aiSummaryProperty.set(aiSummary);
+    }
+
+    // ------- Fields only used in frontend -------
 
     @Transient
     @JsonIgnore
@@ -253,6 +269,36 @@ public class Tour {
     @JsonIgnore
     public boolean isNew() {
         return this.isNew;
+    }
+
+    @Transient
+    @JsonIgnore
+    private final BooleanProperty distanceIsLoadingProperty = new SimpleBooleanProperty(false);
+
+    @Transient
+    @JsonIgnore
+    public BooleanProperty getDistanceIsLoadingProperty() {
+        return this.distanceIsLoadingProperty;
+    }
+
+    @Transient
+    @JsonIgnore
+    private final BooleanProperty imageIsLoadingProperty = new SimpleBooleanProperty(false);
+
+    @Transient
+    @JsonIgnore
+    public BooleanProperty getImageIsLoadingProperty() {
+        return this.imageIsLoadingProperty;
+    }
+
+    @Transient
+    @JsonIgnore
+    private final BooleanProperty aiSummaryIsLoadingProperty = new SimpleBooleanProperty(false);
+
+    @Transient
+    @JsonIgnore
+    public BooleanProperty getAiSummaryIsLoadingProperty() {
+        return this.aiSummaryIsLoadingProperty;
     }
 
     // ------- Default constructor for ORM -------

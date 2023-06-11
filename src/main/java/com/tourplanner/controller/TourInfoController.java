@@ -20,7 +20,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.time.Duration;
 import java.util.Objects;
 
 public class TourInfoController {
@@ -48,6 +47,11 @@ public class TourInfoController {
     public HBox durationSpinner;
     public TextArea description;
     public VBox noDescriptionContainer;
+    public TextArea aiSummary;
+    public VBox noAiSummaryContainer;
+    public VBox loadingAiSummaryContainer;
+    public Button generateAiSummaryButton;
+    public Button generateAiSummaryButton2;
     public Region transportTypeCarIcon;
     public Region transportTypeFeetIcon;
     public Region transportTypeBikeIcon;
@@ -58,6 +62,8 @@ public class TourInfoController {
     public Region ratingStar5;
     public Label childFriendlyLabel;
     public Button editTourButton;
+    public Button deleteTourButton;
+    public Button exportToPdfButton;
 
     //----EDIT MODE FXML ELEMENTS----
     public TextField tourNameEdit;
@@ -80,8 +86,8 @@ public class TourInfoController {
     private final ObjectProperty<TransportType> currentTransportType = new SimpleObjectProperty<>();
     private final IntegerProperty currentRating = new SimpleIntegerProperty();
     private final BooleanProperty distanceIsLoading = new SimpleBooleanProperty(false);
-    private final BooleanProperty durationIsLoading = new SimpleBooleanProperty(false);
     private final BooleanProperty imageIsLoading = new SimpleBooleanProperty(false);
+    private final BooleanProperty aiSummaryIsLoading = new SimpleBooleanProperty(false);
 
     private static final Logger logger = LogManager.getLogger(TourInfoController.class);
 
@@ -127,10 +133,10 @@ public class TourInfoController {
         distanceIcon.managedProperty().bind(distanceIsLoading.not());
 
         //bind duration loading spinner to durationIsLoading property
-        durationSpinner.visibleProperty().bind(durationIsLoading);
-        durationSpinner.managedProperty().bind(durationIsLoading);
-        durationIcon.visibleProperty().bind(durationIsLoading.not());
-        durationIcon.managedProperty().bind(durationIsLoading.not());
+        durationSpinner.visibleProperty().bind(distanceIsLoading);
+        durationSpinner.managedProperty().bind(distanceIsLoading);
+        durationIcon.visibleProperty().bind(distanceIsLoading.not());
+        durationIcon.managedProperty().bind(distanceIsLoading.not());
 
         //add listener to currentTransportType property to change the transportType selector in edit mode
         currentTransportType.addListener((observable, oldValue, newValue) -> onTransportTypeChanged(newValue));
@@ -142,8 +148,23 @@ public class TourInfoController {
         noDescriptionContainer.visibleProperty().bind(description.textProperty().isEmpty());
         noDescriptionContainer.managedProperty().bind(description.textProperty().isEmpty());
 
-        //bind editTourButton to durationIsLoading and imageIsLoading property (disables button while route calculation is in progress)
-        editTourButton.disableProperty().bind(imageIsLoading.or(durationIsLoading));
+        //bind noAiSummaryContainer to aiSummary text
+        noAiSummaryContainer.visibleProperty().bind(aiSummary.textProperty().isEmpty().and(aiSummaryIsLoading.not()));
+        noAiSummaryContainer.managedProperty().bind(aiSummary.textProperty().isEmpty().and(aiSummaryIsLoading.not()));
+
+        //bind loadingAiSummaryContainer to aiSummaryIsLoading property
+        loadingAiSummaryContainer.visibleProperty().bind(aiSummaryIsLoading);
+        loadingAiSummaryContainer.managedProperty().bind(aiSummaryIsLoading);
+
+        //bind buttons to be disabled while a request is in progress
+        editTourButton.disableProperty().bind(imageIsLoading.or(distanceIsLoading).or(aiSummaryIsLoading));
+        deleteTourButton.disableProperty().bind(editTourButton.disableProperty());
+        exportToPdfButton.disableProperty().bind(editTourButton.disableProperty());
+        generateAiSummaryButton2.disableProperty().bind(editTourButton.disableProperty());
+
+        //bind generateAiSummaryButton to disappear while a request is in progress or when noAiSummaryContainer is visible
+        generateAiSummaryButton.visibleProperty().bind(imageIsLoading.or(distanceIsLoading).or(aiSummaryIsLoading).not().and(noAiSummaryContainer.visibleProperty().not()));
+        generateAiSummaryButton.managedProperty().bind(imageIsLoading.or(distanceIsLoading).or(aiSummaryIsLoading).not().and(noAiSummaryContainer.visibleProperty().not()));
 
         //bind childFriendlyLabel to imageIsLoading property (disables label while the tour calculation is in progress)
         childFriendlyLabel.visibleProperty().bind(imageIsLoading.not());
@@ -190,6 +211,7 @@ public class TourInfoController {
         currentTransportType.bindBidirectional(newTour.getTransportTypeProperty());
         currentRating.bindBidirectional(newTour.getRatingProperty());
         description.textProperty().bindBidirectional(newTour.getDescriptionProperty());
+        aiSummary.textProperty().bind(newTour.getAiSummaryProperty());
 
         //distance needs a string converter because it is a double
         distance.textProperty().bind(Bindings.createStringBinding(() -> {
@@ -231,9 +253,11 @@ public class TourInfoController {
             }
         }, newTour.getPopularityScoreProperty()));
 
-        distanceIsLoading.bind(newTour.getDistanceProperty().isEqualTo(-1));
-        durationIsLoading.bind(newTour.getDurationProperty().isEqualTo(Duration.ofSeconds(-1)));
-        imageIsLoading.bind(newTour.getPathToMapImageProperty().isEqualTo("loading"));
+        //bind loading properties to properties of tour
+        distanceIsLoading.bind(newTour.getDistanceIsLoadingProperty());
+        imageIsLoading.bind(newTour.getImageIsLoadingProperty());
+        aiSummaryIsLoading.bind(newTour.getAiSummaryIsLoadingProperty());
+
         childFriendlyLabel.textProperty().bind(Bindings.createStringBinding(() -> {
             if (newTour.getChildFriendlinessScoreProperty().get() == 0){
                 return "child-friendly: no";
@@ -431,5 +455,9 @@ public class TourInfoController {
             String filePath = selectedFile.getAbsolutePath();
             this.pdfService.createPdfSingleTour(tourLogic.getSelectedTourProperty().get(), filePath);
         }
+    }
+
+    public void onGenerateAiSummary(){
+        tourLogic.generateAiSummaryForSelectedTour();
     }
 }

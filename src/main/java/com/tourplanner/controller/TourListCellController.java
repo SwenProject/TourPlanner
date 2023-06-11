@@ -71,14 +71,14 @@ public class TourListCellController {
         tourRatingLabel.textProperty().bind(tour.getRatingProperty().asString());
         currentTransportType.bind(tour.getTransportTypeProperty());
         tourDistanceLabel.textProperty().bind(Bindings.createStringBinding(() -> {
-            if (tour.getDistanceProperty().get() == 0.0 || tour.getDistanceProperty().get() == -1.0){ //-1 is loading, 0 is for new tours
+            if (tour.getDistanceIsLoadingProperty().get()){
                 return "calculating...";
-            } else if (tour.getDistanceProperty().get() == -2.0) { //-2 is error
+            } else if (tour.getDistanceProperty().get() == -2.0 || tour.getDistanceProperty().get() == 0.0 || tour.getDistanceProperty().get() == -1.0) {
                 return "-";
             } else { //otherwise show distance
                 return String.format("~%.0fkm", tour.getDistanceProperty().get());
             }
-        }, tour.getDistanceProperty()));
+        }, tour.getDistanceProperty(), tour.getDistanceIsLoadingProperty()));
     }
 
     public HBox getTourListCell() {

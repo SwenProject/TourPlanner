@@ -36,9 +36,14 @@ public class ConfigurationService implements IConfigurationService {
         checkForConfig("mapApi.routeCalculationEndpoint");
         checkForConfig("mapApi.imageEndpoint");
         checkForConfig("mapApi.key");
-
-        if(properties.getProperty("mapApi.key") == null || properties.getProperty("mapApi.key").isEmpty() || properties.getProperty("mapApi.key").equals("<YOUR API KEY HERE>"))
+        if(properties.getProperty("mapApi.key").equals("<YOUR API KEY HERE>"))
             throw new IllegalArgumentException("Missing configuration value for key: " + "mapApi.key");
+
+        //check for openAi api config
+        checkForConfig("openAi.model");
+        checkForConfig("openAi.key");
+        if(properties.getProperty("openAi.key").equals("<YOUR API KEY HERE>"))
+            throw new IllegalArgumentException("Missing configuration value for key: " + "openAi.key");
 
         //check for tour export config
         checkForConfig("tourExport.fileExtension");

@@ -7,8 +7,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
@@ -17,61 +15,67 @@ import java.util.Objects;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.Configurator;
 
+
 public class TourPlannerApp extends Application {
 
+    Scene mainScene;
+
+    public static void main(String[] args) {
+        System.setProperty("javafx.preloader", TourPlannerPreloader.class.getCanonicalName());
+        launch(args);
+    }
+
     @Override
-    public void start(Stage stage) throws IOException {
-        //TODO loading stage - > loading scene (stagestyle undecorated)
-        Stage loadingStage = new Stage();
-        //Load fxml for loading stage
-        FXMLLoader loadingScreenFxmlLoader = new FXMLLoader(TourPlannerApp.class.getResource("views/loading_screen.fxml"));
-        Scene loadingScene = new Scene(loadingScreenFxmlLoader.load());
-        loadingScene.setFill(Color.TRANSPARENT);
+    public void init() throws Exception {
 
-        loadingStage.initStyle(StageStyle.UNDECORATED);
-        loadingStage.setScene(loadingScene);
-        loadingStage.setAlwaysOnTop(true);
-        loadingStage.getIcons().add(new Image(Objects.requireNonNull(TourPlannerApp.class.getResourceAsStream("images/app_icon.png"))));
-        loadingStage.show();
+        //load config
+        IConfigurationService config = new ConfigurationService("config.properties");
+        config.checkConfig(); //check that all config values are set
 
-        //start actual application later so that loading screen is shown immediately
-        Platform.runLater(() -> {
-            try {
-                // load config
-                IConfigurationService config = null;
-                config = new ConfigurationService("config.properties");
-
-                //check that all config values are set
-                config.checkConfig();
+        notifyPreloader(new TourPlannerPreloader.ProgressNotification(0.1));
 
         // set log level for log4j
         Configurator.setRootLevel(Level.toLevel(config.getStringConfig("log.logLevel")));
 
+        notifyPreloader(new TourPlannerPreloader.ProgressNotification(0.2));
+
         FXMLLoader fxmlLoader = new FXMLLoader(TourPlannerApp.class.getResource("views/main-view.fxml"));
+
+        notifyPreloader(new TourPlannerPreloader.ProgressNotification(0.3));
+
+        //fake loading progress while constructing ControllerFactory
+        Thread thread = new Thread(() -> {
+            try {
+                for(double i = 0.3; i < 0.9; i += 0.1) {
+                    notifyPreloader(new TourPlannerPreloader.ProgressNotification(i));
+                    Thread.sleep(700);
+                }
+            } catch (InterruptedException ignored) {
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
 
         ControllerFactory controllerFactory = new ControllerFactory(config);
         fxmlLoader.setControllerFactory(controllerFactory::create); //set ControllerFactory for fxmlLoader
 
-                Scene scene = new Scene(fxmlLoader.load());
+        thread.interrupt();
+        notifyPreloader(new TourPlannerPreloader.ProgressNotification(1));
 
-                stage.initStyle(StageStyle.DECORATED);
-                stage.getIcons().add(new Image(Objects.requireNonNull(TourPlannerApp.class.getResourceAsStream("images/app_icon.png"))));
-                stage.setTitle("Tour Planner");
-                stage.setScene(scene);
-                stage.setMaximized(true);
-                stage.setMinHeight(800);
-                stage.setMinWidth(950);
-
-                stage.show(); //show actual stage
-                Thread.sleep(500); //we wait a bit before closing the loading stage
-                //loadingStage.hide();
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        this.mainScene = new Scene(fxmlLoader.load());
     }
 
-    public static void main(String[] args) {
-        launch();
+    @Override
+    public void start(Stage stage) throws IOException {
+        stage.initStyle(StageStyle.DECORATED);
+        stage.getIcons().add(new Image(Objects.requireNonNull(TourPlannerApp.class.getResourceAsStream("images/app_icon.png"))));
+        stage.setTitle("Tour Planner");
+        stage.setScene(this.mainScene);
+        stage.setMaximized(true);
+        stage.setMinHeight(800);
+        stage.setMinWidth(950);
+        stage.show();
     }
+
 }

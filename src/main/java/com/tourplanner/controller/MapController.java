@@ -2,10 +2,7 @@ package com.tourplanner.controller;
 
 import com.tourplanner.logic.TourLogic;
 import com.tourplanner.models.Tour;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,6 +17,7 @@ public class MapController {
     private final TourLogic tourLogic;
 
     private final StringProperty currentPathToImage = new SimpleStringProperty();
+    private final BooleanProperty imageIsLoading = new SimpleBooleanProperty(false);
     public ImageView mapImage;
     public VBox noMapContainer;
     public VBox mapErrorContainer;
@@ -40,10 +38,10 @@ public class MapController {
         noMapContainer.managedProperty().bind(currentPathToImage.isNull());
         mapImageContainer.visibleProperty().bind(currentPathToImage.isNotNull().and(currentPathToImage.isNotEqualTo("loading").and(currentPathToImage.isNotEqualTo("error"))).and(imageLoadingProgress.isEqualTo(1)));
         mapImageContainer.managedProperty().bind(currentPathToImage.isNotNull().and(currentPathToImage.isNotEqualTo("loading").and(currentPathToImage.isNotEqualTo("error"))).and(imageLoadingProgress.isEqualTo(1)));
-        mapErrorContainer.visibleProperty().bind(currentPathToImage.isEqualTo("error"));
-        mapErrorContainer.managedProperty().bind(currentPathToImage.isEqualTo("error"));
-        loadingSpinner.visibleProperty().bind(currentPathToImage.isEqualTo("loading"));
-        loadingSpinner.managedProperty().bind(currentPathToImage.isEqualTo("loading"));
+        mapErrorContainer.visibleProperty().bind(currentPathToImage.isEqualTo("error").or(currentPathToImage.isEqualTo("loading").and(imageIsLoading.not())));
+        mapErrorContainer.managedProperty().bind(currentPathToImage.isEqualTo("error").or(currentPathToImage.isEqualTo("loading").and(imageIsLoading.not())));
+        loadingSpinner.visibleProperty().bind(imageIsLoading);
+        loadingSpinner.managedProperty().bind(imageIsLoading);
 
         //call loadTour when current tour changes
         tourLogic.getSelectedTourProperty().addListener((observable, oldValue, newValue) -> loadTour(newValue));
@@ -65,10 +63,13 @@ public class MapController {
         if(tour == null){
             currentPathToImage.unbind();
             currentPathToImage.set(null);
+            imageIsLoading.unbind();
+            imageIsLoading.set(false);
             return;
         }
 
         currentPathToImage.bind(tour.getPathToMapImageProperty());
+        imageIsLoading.bind(tour.getImageIsLoadingProperty());
     }
 
     private void resizeImage(){

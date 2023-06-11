@@ -4,7 +4,9 @@ import com.tourplanner.enums.TransportType;
 import com.tourplanner.models.Tour;
 import com.tourplanner.repositories.ITourRepository;
 import com.tourplanner.services.*;
+import com.tourplanner.services.interfaces.IAiSummaryService;
 import com.tourplanner.services.interfaces.ITourMapService;
+import com.tourplanner.services.tasks.AiSummaryTask;
 import com.tourplanner.services.tasks.TourMapRequestTask;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -18,6 +20,7 @@ import java.io.File;
 public class TourLogic {
     private final ITourRepository tourRepository;
     private final ITourMapService tourMapService;
+    private final IAiSummaryService aiSummaryService;
     private final ObservableList<Tour> allTours = FXCollections.observableArrayList();
     private final FilteredList<Tour> searchedTours = new FilteredList<>(allTours);
     private final ListProperty<Tour> searchedToursListProperty = new SimpleListProperty<>(searchedTours);
@@ -29,11 +32,10 @@ public class TourLogic {
 
     private static final Logger logger = LogManager.getLogger(TourLogic.class);
 
-
-
-    public TourLogic(ITourRepository tourRepository, ITourMapService tourMapService) {
+    public TourLogic(ITourRepository tourRepository, ITourMapService tourMapService, IAiSummaryService aiSummaryService) {
         this.tourRepository = tourRepository;
         this.tourMapService = tourMapService;
+        this.aiSummaryService = aiSummaryService;
 
         allTours.setAll(this.tourRepository.getAll()); //load all tours from db in constructor
     }
@@ -113,6 +115,14 @@ public class TourLogic {
 
     }
 
+    public void generateAiSummaryForSelectedTour(){
+        AiSummaryTask aiSummaryTask = new AiSummaryTask(selectedTourProperty.get(), aiSummaryService, tourRepository::update);
+
+        Thread thread = new Thread(aiSummaryTask);
+        thread.setDaemon(true); //abort request if ui is closed
+        thread.start();
+    }
+
     public void addTour(Tour tour){
 
         this.ratingCalculationService.calculateRating(tour);
@@ -125,11 +135,12 @@ public class TourLogic {
         //set callback of task to db save function
         tourMapRequestTask.setCallback(tourRepository::save);
 
+        this.getAllToursList().add(tour);
+
         Thread thread = new Thread(tourMapRequestTask);
         thread.setDaemon(true); //abort request if ui is closed
         thread.start();
 
-        this.getAllToursList().add(tour);
     }
 
     public void deleteSelectedTour(){
@@ -162,6 +173,11 @@ public class TourLogic {
     }
 
     public static void deleteFile(String filePath) {
+
+        if (filePath == null) {
+            return;
+        }
+
         File file = new File(filePath);
 
         if (file.exists()) {

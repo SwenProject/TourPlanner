@@ -32,16 +32,18 @@ class ConfigurationServiceTest {
         //Simulate a config file as a string
         //here db.password is missing (both the key and the value)
         String configFileData = """
-        db.driver=org.example.Driver
-        db.url=jdbc:postgresql://localhost:5432/db
-        db.username=admin
-        
-        mapApi.routeCalculationEndpoint=http://example.com/route
-        mapApi.imageEndpoint=http://example.com/image
-        mapApi.key=API_KEY
-        tourExport.fileExtension=tours
-        log.logLevel=DEBUG
-        """;
+                db.driver=org.example.Driver
+                db.url=jdbc:postgresql://localhost:5432/db
+                db.username=admin
+                        
+                mapApi.routeCalculationEndpoint=http://example.com/route
+                mapApi.imageEndpoint=http://example.com/image
+                mapApi.key=API_KEY
+                openAi.model=gpt-3.5-turbo
+                openAi.key=API_KEY
+                tourExport.fileExtension=tours
+                log.logLevel=DEBUG
+                """;
 
         InputStream inputStream = new ByteArrayInputStream(configFileData.getBytes());
 
@@ -67,6 +69,8 @@ class ConfigurationServiceTest {
         mapApi.routeCalculationEndpoint=http://example.com/route
         mapApi.imageEndpoint=http://example.com/image
         mapApi.key=API_KEY
+        openAi.model=gpt-3.5-turbo
+        openAi.key=API_KEY
         tourExport.fileExtension=tours
         log.logLevel=DEBUG
         """;
@@ -95,6 +99,8 @@ class ConfigurationServiceTest {
         mapApi.routeCalculationEndpoint=http://example.com/route
         mapApi.imageEndpoint=http://example.com/image
         mapApi.key=<YOUR API KEY HERE>
+        openAi.model=gpt-3.5-turbo
+        openAi.key=API_KEY
         tourExport.fileExtension=tours
         log.logLevel=DEBUG
         """;
@@ -122,6 +128,8 @@ class ConfigurationServiceTest {
         mapApi.routeCalculationEndpoint=http://example.com/route
         mapApi.imageEndpoint=http://example.com/image
         mapApi.key=API_KEY
+        openAi.model=gpt-3.5-turbo
+        openAi.key=API_KEY
         tourExport.fileExtension=tours
         log.logLevel=DEBUG
         """;
@@ -149,6 +157,8 @@ class ConfigurationServiceTest {
         mapApi.routeCalculationEndpoint=http://example.com/route
         mapApi.imageEndpoint=http://example.com/image
         mapApi.key=API_KEY
+        openAi.model=gpt-3.5-turbo
+        openAi.key=API_KEY
         tourExport.fileExtension=tours
         log.logLevel=DEBUG
         """;
@@ -177,6 +187,8 @@ class ConfigurationServiceTest {
         mapApi.routeCalculationEndpoint=http://example.com/route
         mapApi.imageEndpoint=http://example.com/image
         mapApi.key=API_KEY
+        openAi.model=gpt-3.5-turbo
+        openAi.key=API_KEY
         tourExport.fileExtension=tours
         log.logLevel=DEBUG
         """;

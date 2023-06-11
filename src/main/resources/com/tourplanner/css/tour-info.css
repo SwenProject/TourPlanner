@@ -30,7 +30,7 @@
 }
 
 .description > .text-area {
-    -fx-min-height: 120px;
+    -fx-min-height: 140px;
     -fx-background-color: #F9DCA3;
     -fx-border-radius: 5px;
     -fx-border-color: rgb(61, 64, 91);
@@ -38,19 +38,18 @@
 }
 
 .aiDescription > .text-area {
-    -fx-padding: 10px 0 0 0;
-    -fx-min-height: 120px;
+    -fx-min-height: 140px;
     -fx-background-color: #F9DCA3;
     -fx-border-radius: 5px;
     -fx-border-color: rgb(61, 64, 91);
     -fx-text-fill: rgb(61, 64, 91);
 }
 
-.aiGeneratorButton {
+.aiGeneratorButtonContainer {
     -fx-padding: 0 10px 10px 0;
 }
 
-.aiGeneratorButton > .button {
+.aiGeneratorButtonContainer > .aiGeneratorButton {
     -fx-shape: "M142.9 142.9c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5c0 0 0 0 0 0H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5c7.7-21.8 20.2-42.3 37.8-59.8zM16 312v7.6 .7V440c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l41.6-41.6c87.6 86.5 228.7 86.2 315.8-1c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.2 62.2-162.7 62.5-225.3 1L185 329c6.9-6.9 8.9-17.2 5.2-26.2s-12.5-14.8-22.2-14.8H48.4h-.7H40c-13.3 0-24 10.7-24 24z";
     -fx-background-color: #3D405B;
     -fx-max-height: 25px;
@@ -391,6 +390,29 @@
 .no-description-text {
     -fx-font-family: "JetBrains Mono NL Bold";
     -fx-text-fill: rgba(61, 64, 91, 0.3);
+    -fx-font-size: 20px;
+    -fx-padding: 10px 0 0 0;
+}
+
+/*-----------ICON WHEN THERE IS NO AI summary-----------*/
+
+.no-ai-summary-icon {
+    -fx-opacity: 0.3;
+    -fx-shape: "M418.4 157.9c35.3-8.3 61.6-40 61.6-77.9c0-44.2-35.8-80-80-80c-43.4 0-78.7 34.5-80 77.5L136.2 151.1C121.7 136.8 101.9 128 80 128c-44.2 0-80 35.8-80 80s35.8 80 80 80c12.2 0 23.8-2.7 34.1-7.6L259.7 407.8c-2.4 7.6-3.7 15.8-3.7 24.2c0 44.2 35.8 80 80 80s80-35.8 80-80c0-27.7-14-52.1-35.4-66.4l37.8-207.7zM156.3 232.2c2.2-6.9 3.5-14.2 3.7-21.7l183.8-73.5c3.6 3.5 7.4 6.7 11.6 9.5L317.6 354.1c-5.5 1.3-10.8 3.1-15.8 5.5L156.3 232.2z";
+    -fx-background-color: #3D405B;
+    -fx-max-height: 65px;
+    -fx-max-width: 61px;
+    -fx-min-height: 65px;
+    -fx-min-width: 61px;
+}
+
+.no-ai-summary-button {
+    -fx-min-width: 200px;
+}
+
+.loading-ai-summary-text {
+    -fx-font-family: "JetBrains Mono NL Bold";
+    -fx-text-fill: rgb(61, 64, 91);
     -fx-font-size: 20px;
     -fx-padding: 10px 0 0 0;
 }

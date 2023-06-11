@@ -5,6 +5,6 @@ import org.json.JSONException;
 
 import java.io.IOException;
 
-public interface ITourMapService {
-    void calculateRoute(Tour tour) throws JSONException, IOException;
+public interface IAiSummaryService {
+    String generateAiSummary(Tour tour) throws JSONException, IOException;
 }

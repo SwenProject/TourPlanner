@@ -83,20 +83,28 @@
                                 <Label fx:id="childFriendlyLabel" styleClass="child-friendliness-label"/>
                             </HBox>
                         </VBox>
-                        <VBox styleClass="viewModeRight" HBox.hgrow="ALWAYS" minWidth="200" spacing="10">
-                            <StackPane styleClass="description" minWidth="200">
+                        <VBox styleClass="viewModeRight" HBox.hgrow="ALWAYS" minWidth="350" spacing="10">
+                            <StackPane styleClass="description" minWidth="350">
                                 <TextArea fx:id="description" wrapText="true" editable="false"/>
                                 <VBox fx:id="noDescriptionContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
-                                    <Region styleClass="no-description-icon" />  <!--after textarea so that it is in front-->
+                                    <Region styleClass="no-description-icon" />
                                     <Label styleClass="no-description-text" text="no description"/>
                                 </VBox>
                             </StackPane>
-                            <!--TODO: add a text area for the description mapping for AI-->
-                            <StackPane styleClass="aiDescription" minWidth="200" alignment="BOTTOM_RIGHT">
-                                <TextArea fx:id="aiDescription" wrapText="true" editable="false" promptText="click the load button to generate AI description..."/>
-                                <HBox styleClass="aiGeneratorButton" alignment="BOTTOM_RIGHT">
-                                    <Button fx:id="loadAiDescriptionButton"/>
-                                </HBox>
+                            <StackPane styleClass="aiDescription" minWidth="350" alignment="BOTTOM_RIGHT">
+                                <TextArea fx:id="aiSummary" wrapText="true" editable="false"/>
+                                <VBox styleClass="aiGeneratorButtonContainer" maxWidth="35" maxHeight="35">
+                                    <Button styleClass="aiGeneratorButton" onAction="#onGenerateAiSummary" fx:id="generateAiSummaryButton"/>
+                                </VBox>
+                                <VBox fx:id="noAiSummaryContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
+                                    <Region styleClass="no-ai-summary-icon" />
+                                    <Region minHeight="10"/> <!--for spacing-->
+                                    <Button fx:id="generateAiSummaryButton2" styleClass="no-ai-summary-button, greenButton" onAction="#onGenerateAiSummary" text="generate AI summary"/>
+                                </VBox>
+                                <VBox fx:id="loadingAiSummaryContainer" VBox.vgrow="ALWAYS" alignment="CENTER">
+                                    <ProgressIndicator minWidth="70" maxWidth="70" minHeight="70" maxHeight="70"/>
+                                    <Label styleClass="loading-ai-summary-text" text="generating..."/>
+                                </VBox>
                             </StackPane>
                         </VBox>
                     </HBox>
@@ -106,7 +114,7 @@
         <!--Buttons are at the bottom of the BorderPane-->
         <bottom>
             <HBox styleClass="tourInfoButtonBar" spacing="10" minHeight="50" alignment="CENTER_RIGHT">
-                <Button onAction="#onExportToPdf" styleClass="orangeButton">
+                <Button fx:id="exportToPdfButton" onAction="#onExportToPdf" styleClass="orangeButton">
                     <graphic>
                         <HBox alignment="CENTER">
                             <Label styleClass="buttonTextBig">Export</Label>
@@ -115,7 +123,7 @@
                     </graphic>
                 </Button>
                 <Region HBox.hgrow="ALWAYS"/> <!--for spacing-->
-                <Button text="Delete Tour" onAction="#onDeleteTour"/>
+                <Button fx:id="deleteTourButton" text="Delete Tour" onAction="#onDeleteTour"/>
                 <Button fx:id="editTourButton" text="Edit Tour" onAction="#onEditTour" styleClass="greenButton"/>
             </HBox>
         </bottom>

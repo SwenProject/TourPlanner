@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -25,6 +22,6 @@
         <ProgressIndicator minWidth="15" maxWidth="15" minHeight="15" maxHeight="15"/>
     </HBox>
 
-    <ProgressBar progress="0.5"/>
+    <ProgressBar fx:id="progressBar" progress="0.0"/>
 
 </VBox>
