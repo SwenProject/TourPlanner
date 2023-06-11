@@ -177,7 +177,7 @@ public class TourLogsController {
             if (response == buttonTypeDelete) {
                 logger.info("Deleting tour log");
                 currentTourLogs.remove(tourLog);
-                tourLogic.updateSelectedTourWithoutRecalculating();
+                tourLogic.recalculateTourWithoutRoute(tourLogic.getSelectedTourProperty().get());
             } else if (response == buttonTypeCancel) {
                 logger.info("Tour log deletion cancelled");
                 //do nothing
@@ -213,7 +213,7 @@ public class TourLogsController {
             tourLog.setTotalTime(Duration.ofHours(Integer.parseInt(logTotalTimeEditHours.getText())).plusMinutes(Integer.parseInt(logTotalTimeEditMinutes.getText())));
             tourLog.setDate(new Date());
             currentTourLogs.add(tourLog);
-            tourLogic.updateSelectedTourWithoutRecalculating();
+            tourLogic.recalculateTourWithoutRoute(tourLogic.getSelectedTourProperty().get());
             editMode.set(false);
             return;
         }
@@ -224,7 +224,7 @@ public class TourLogsController {
         tourLog.setRating(logRatingEdit.get());
         tourLog.setTotalTime(Duration.ofHours(Integer.parseInt(logTotalTimeEditHours.getText())).plusMinutes(Integer.parseInt(logTotalTimeEditMinutes.getText())));
         editMode.set(false);
-        tourLogic.updateSelectedTourWithoutRecalculating();
+        tourLogic.recalculateTourWithoutRoute(tourLogic.getSelectedTourProperty().get());
     }
 
     public void onAddLog() {

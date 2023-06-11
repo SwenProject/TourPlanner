@@ -66,6 +66,7 @@ public class TourLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     public Long getId() {
         return idProperty.get();
     }

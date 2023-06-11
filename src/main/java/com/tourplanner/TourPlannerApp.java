@@ -7,6 +7,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
@@ -75,7 +77,19 @@ public class TourPlannerApp extends Application {
         stage.setMaximized(true);
         stage.setMinHeight(800);
         stage.setMinWidth(950);
+
+        //add event handler for F11 key to toggle fullscreen
+        stage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            if (KeyCode.F11.equals(event.getCode())) {
+                stage.setFullScreen(!stage.isFullScreen());
+            }
+        });
+
         stage.show();
+
+        //set always on top to true and then false so that the window is always focused when the app starts
+        stage.setAlwaysOnTop(true);
+        stage.setAlwaysOnTop(false);
     }
 
 }

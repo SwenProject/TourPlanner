@@ -3,9 +3,8 @@ package com.tourplanner.repositories;
 import com.tourplanner.models.Tour;
 
 import com.tourplanner.services.interfaces.IConfigurationService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -24,55 +23,32 @@ public class TourRepository implements ITourRepository {
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("tourPU", dbCredentials);
         entityManager = entityManagerFactory.createEntityManager();
+
+        entityManager.getTransaction().begin();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            // Commit any pending changes
+            entityManager.getTransaction().commit();
+
+            // Close resources
+            entityManager.close();
+            entityManagerFactory.close();
+        }));
     }
 
     @Override
-    public void save(Tour tour) {
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(tour);
-            entityManager.getTransaction().commit();
-        } finally {
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback(); // Rollback the transaction if it is still active
-            }
-        }
-    }
-
-    @Override
-    public void update(Tour tour) {
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.merge(tour);
-            entityManager.getTransaction().commit();
-        } finally {
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback(); // Rollback the transaction if it is still active
-            }
-        }
+    public void persist(Tour tour) {
+        entityManager.persist(tour);
     }
 
     @Override
     public void delete(Tour tour) {
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.remove(tour);
-            entityManager.getTransaction().commit();
-        } finally {
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback(); // Rollback the transaction if it is still active
-            }
-        }
+        entityManager.remove(tour);
     }
 
     @Override
     public ArrayList<Tour> getAll() {
         return new ArrayList<>(entityManager.createQuery("SELECT t FROM Tour t", Tour.class).getResultList());
-    }
-
-    @Override
-    public Tour getById(long id) {
-        return entityManager.find(Tour.class, id);
     }
 
 }

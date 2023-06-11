@@ -9,19 +9,16 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.function.Consumer;
 
 public class AiSummaryTask extends Task<Void> {
     private final Tour tour;
-    private final Consumer<Tour> callback;
     private final IAiSummaryService aiSummaryService;
 
     private static final Logger logger = LogManager.getLogger(TourMapRequestTask.class);
 
-    public AiSummaryTask(Tour tour, IAiSummaryService aiSummaryService, Consumer<Tour> callback) {
+    public AiSummaryTask(Tour tour, IAiSummaryService aiSummaryService) {
         this.tour = tour;
         this.aiSummaryService = aiSummaryService;
-        this.callback = callback;
     }
 
     @Override
@@ -32,7 +29,6 @@ public class AiSummaryTask extends Task<Void> {
         Platform.runLater(() -> {
             tour.setAiSummary("");
             tour.getAiSummaryIsLoadingProperty().set(true);
-            callback.accept(tour); //update tour in db in case the app is closed before the api request is finished
         });
 
 
@@ -42,7 +38,6 @@ public class AiSummaryTask extends Task<Void> {
             Platform.runLater(() -> {
                 tour.setAiSummary(aiSummary);
                 tour.getAiSummaryIsLoadingProperty().set(false);
-                callback.accept(tour); //update tour in db using the supplied callback function
             });
             logger.info("AI summary generated");
         } catch (IOException | JSONException e) {
@@ -50,7 +45,6 @@ public class AiSummaryTask extends Task<Void> {
             Platform.runLater(() -> {
                 tour.setAiSummary("");
                 tour.getAiSummaryIsLoadingProperty().set(false);
-                callback.accept(tour); //update tour in db using the supplied callback function
             });
             e.printStackTrace();
         }

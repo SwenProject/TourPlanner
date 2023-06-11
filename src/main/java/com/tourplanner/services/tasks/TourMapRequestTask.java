@@ -13,11 +13,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
-import java.util.function.Consumer;
 
 public class TourMapRequestTask extends Task<Void> {
     private final Tour tour;
-    private Consumer<Tour> callback;
     private final ITourMapService tourMapService;
     private final ChildFriendlinessCalculationService childFriendlinessCalculationService = new ChildFriendlinessCalculationService();
     private static final Logger logger = LogManager.getLogger(TourMapRequestTask.class);
@@ -25,10 +23,6 @@ public class TourMapRequestTask extends Task<Void> {
     public TourMapRequestTask(Tour tour, ITourMapService tourMapService) {
         this.tour = tour;
         this.tourMapService = tourMapService;
-    }
-
-    public void setCallback(Consumer<Tour> callback) {
-        this.callback = callback;
     }
 
     @Override
@@ -72,7 +66,6 @@ public class TourMapRequestTask extends Task<Void> {
 
         Platform.runLater(() -> {
             childFriendlinessCalculationService.calculateChildFriendliness(tour); //calculate child friendliness
-            callback.accept(tour); //update tour in db using the supplied callback function
         });
 
         return null;

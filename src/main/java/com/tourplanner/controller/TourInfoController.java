@@ -180,12 +180,12 @@ public class TourInfoController {
 
     private void loadTour(Tour oldTour, Tour newTour){
 
+        if (editMode.get()){
+            cancelEdit(oldTour); //if we are still in edit mode when new tour is loaded, cancel edit
+        }
+
         if(newTour != null && newTour.isNew()){
             editMode.set(true); // if the new tour is a new tour, switch to edit mode
-        } else if (oldTour != null && oldTour.isNew()){
-            editMode.set(false); //if the old tour was a new tour, switch back to view mode
-        } else if (editMode.get()){
-            onCancelEdit(); //if we are still in edit mode when new tour is loaded, cancel edit
         }
 
         //if the old tour is not null, unbind all old properties
@@ -288,32 +288,19 @@ public class TourInfoController {
         //check if saveTourButton is disabled (so that the user can't save a tour by pressing enter while the button is disabled)
         if(saveTourButton.isDisabled()) return;
 
-        //if tour was a new tour, always save it
-        if(tourLogic.getSelectedTourProperty().get().isNew()) {
-            logger.info("Saving new tour: \"" + tourLogic.getSelectedTourProperty().get().getName() + "\"");
-            tourLogic.saveSelectedTour();
-            editMode.set(false);
-            return;
-        }
-
         //else check if any of the fields relevant for the route calculation have changed
-        //this includes startingPoint, destinationPoint and transportType
-        if(!tourLogic.getSelectedTourProperty().get().getStartingPointProperty().get().equals(previousStartingPoint) ||
+        if(tourLogic.getSelectedTourProperty().get().isNew() || //if tour is new we definitely need to recalculate the route
+                !tourLogic.getSelectedTourProperty().get().getStartingPointProperty().get().equals(previousStartingPoint) ||
                 !tourLogic.getSelectedTourProperty().get().getDestinationPointProperty().get().equals(previousDestinationPoint) ||
                 tourLogic.getSelectedTourProperty().get().getTransportTypeProperty().get() != previousTransportType ||
                 tourLogic.getSelectedTourProperty().get().getDistance() == -2 || //if distance is -2, there was an error
                 tourLogic.getSelectedTourProperty().get().getDistance() == -1 //if distance is -1, the route calculation was still in process when the app was closed
         ) {
-
-            logger.info("Recalculating route and saving tour \"" + tourLogic.getSelectedTourProperty().get().getName() + "\"");
-
-            //if they have changed, use saveSelectedTour to recalculate the route
-            tourLogic.saveSelectedTour();
+            logger.info("Calculating route and other info for tour \"" + tourLogic.getSelectedTourProperty().get().getName() + "\"");
+            tourLogic.recalculateTour(tourLogic.getSelectedTourProperty().get()); //if they have changed, recalculate the route
         } else {
-            logger.info("Saving tour \"" + tourLogic.getSelectedTourProperty().get().getName() + "\". Route has not changed.");
-
-            //if they haven't changed, just update the tour
-            tourLogic.updateSelectedTourWithoutRecalculating();
+            logger.info("Calculating info for tour \"" + tourLogic.getSelectedTourProperty().get().getName() + "\". Route has not changed.");
+            tourLogic.recalculateTourWithoutRoute(tourLogic.getSelectedTourProperty().get()); //if they haven't changed, just recalculate the tour without the route
         }
 
         //disable edit mode
@@ -321,15 +308,20 @@ public class TourInfoController {
     }
 
     public void onCancelEdit() {
+        cancelEdit(tourLogic.getSelectedTourProperty().get());
+    }
 
+    private void cancelEdit(Tour editedTour){
         //disable edit mode
         editMode.set(false);
 
+        if(editedTour == null) return;
+
         //if tour was a new tour, cancelling deletes it
         //this sets the selected tour to null, which will hide the tour info
-        if(tourLogic.getSelectedTourProperty().get().isNew()) {
+        if(editedTour.isNew()) {
             logger.info("Cancelling creation of new tour");
-            tourLogic.deleteSelectedTour();
+            tourLogic.deleteTour(editedTour);
             return;
         }
 
@@ -409,7 +401,7 @@ public class TourInfoController {
         alert.showAndWait().ifPresent(response -> {
             if (response == buttonTypeDelete) {
                 logger.info("Deleting tour \"" + tourLogic.getSelectedTourProperty().get().getName() + "\"");
-                tourLogic.deleteSelectedTour();
+                tourLogic.deleteTour(tourLogic.getSelectedTourProperty().get());
             } else if (response == buttonTypeCancel) {
                 logger.info("User cancelled deleting tour");
                 //do nothing
@@ -458,6 +450,6 @@ public class TourInfoController {
     }
 
     public void onGenerateAiSummary(){
-        tourLogic.generateAiSummaryForSelectedTour();
+        tourLogic.generateAiSummary(tourLogic.getSelectedTourProperty().get());
     }
 }

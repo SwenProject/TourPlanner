@@ -70,6 +70,8 @@ public class TourLogic {
 
         Tour newTour = new Tour();
 
+        tourRepository.persist(newTour);
+
         //set default selected Transport Type
         newTour.setTransportType(TransportType.CAR);
 
@@ -79,24 +81,17 @@ public class TourLogic {
         selectedTourProperty.set(newTour);
     }
 
-    public void saveSelectedTour(){
+    public void recalculateTour(Tour tour){
 
-        this.ratingCalculationService.calculateRating(selectedTourProperty.get());
-        this.popularityCalculationService.calculatePopularity(selectedTourProperty.get());
+        this.ratingCalculationService.calculateRating(tour);
+        this.popularityCalculationService.calculatePopularity(tour);
 
         //create new task for api request (to run async)
-        TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(selectedTourProperty.get(), tourMapService); //create new task
+        TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(tour, tourMapService); //create new task
 
-        if(selectedTourProperty.get().isNew()) {
-            selectedTourProperty.get().setIsNew(false); //tour is not new anymore
-            //set callback of task to db save function
-            tourMapRequestTask.setCallback(tourRepository::save);
-
-            allTours.add(selectedTourProperty.get()); //add new tour to all tours list
-        } else { //tour is not new and has an id
-
-            //set callback of task to db update function
-            tourMapRequestTask.setCallback(tourRepository::update);
+        if(tour.isNew()) {
+            tour.setIsNew(false); //tour is not new anymore
+            allTours.add(tour); //add new tour to all tours list
         }
 
         Thread thread = new Thread(tourMapRequestTask);
@@ -104,19 +99,15 @@ public class TourLogic {
         thread.start();
     }
 
-    public void updateSelectedTourWithoutRecalculating(){
+    public void recalculateTourWithoutRoute(Tour tour){
 
-        this.ratingCalculationService.calculateRating(selectedTourProperty.get());
-        this.popularityCalculationService.calculatePopularity(selectedTourProperty.get());
-        this.childFriendlinessCalculationService.calculateChildFriendliness(selectedTourProperty.get());
-
-
-        tourRepository.update(selectedTourProperty.get());
-
+        this.ratingCalculationService.calculateRating(tour);
+        this.popularityCalculationService.calculatePopularity(tour);
+        this.childFriendlinessCalculationService.calculateChildFriendliness(tour);
     }
 
-    public void generateAiSummaryForSelectedTour(){
-        AiSummaryTask aiSummaryTask = new AiSummaryTask(selectedTourProperty.get(), aiSummaryService, tourRepository::update);
+    public void generateAiSummary(Tour tour){
+        AiSummaryTask aiSummaryTask = new AiSummaryTask(tour, aiSummaryService);
 
         Thread thread = new Thread(aiSummaryTask);
         thread.setDaemon(true); //abort request if ui is closed
@@ -125,15 +116,15 @@ public class TourLogic {
 
     public void addTour(Tour tour){
 
+        tour.setIsNew(false);
+
+        tourRepository.persist(tour);
+
         this.ratingCalculationService.calculateRating(tour);
         this.popularityCalculationService.calculatePopularity(tour);
 
-
         //create new task for api request (to run async)
         TourMapRequestTask tourMapRequestTask = new TourMapRequestTask(tour, tourMapService); //create new task
-
-        //set callback of task to db save function
-        tourMapRequestTask.setCallback(tourRepository::save);
 
         this.getAllToursList().add(tour);
 
@@ -143,33 +134,13 @@ public class TourLogic {
 
     }
 
-    public void deleteSelectedTour(){
-
-        deleteFile(selectedTourProperty.get().getPathToMapImage());
-
-        if(selectedTourProperty.get().isNew()) { //tour is new and has no id
-            selectedTourProperty.set(null);
-            //no need to delete the new tour from db or all tours list because it was never saved (has no id)
-            return;
-        }
-
-        //if the tour is not new, delete it from db and all tours list
-        tourRepository.delete(selectedTourProperty.get());
-        allTours.remove(selectedTourProperty.get());
-        selectedTourProperty.set(null);
-    }
-
-    //to delete specific tour e.g. in tour list edit mode
     public void deleteTour(Tour tour){
-
+        tourRepository.delete(tour);
         deleteFile(tour.getPathToMapImage());
-
+        allTours.remove(tour);
         if(selectedTourProperty.get() == tour){
             selectedTourProperty.set(null);
         }
-
-        tourRepository.delete(tour);
-        allTours.remove(tour);
     }
 
     public static void deleteFile(String filePath) {
