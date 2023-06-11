@@ -187,19 +187,4 @@ class PdfServiceTest{
             Files.deleteIfExists(tempDir);
         }
     }
-
-    @Test
-    @DisplayName("Create PDF summary of one tour in PDFs folder")
-    void testCreateBothInPDFSDir() {
-        //arrange
-        Path filePath_summary = Paths.get(".\\src\\main\\resources\\com\\tourplanner\\Pdfs", "test-pdf-summary.pdf");
-        Path filePath_single = Paths.get(".\\src\\main\\resources\\com\\tourplanner\\Pdfs", "test-pdf-single.pdf");
-
-        tour1.setPopularityScore(2);
-        //act
-        pdf_service.createPdfSummary(tours, filePath_summary.toString());
-        pdf_service.createPdfSingleTour(tour1, filePath_single.toString());
-    }
-
-
 }
