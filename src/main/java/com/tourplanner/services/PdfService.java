@@ -75,7 +75,10 @@ public class PdfService {
             //add tour details table
             createTableForDetails(tour, document);
 
+            //add new page
+            document.add(new AreaBreak());
             //add logs
+
             Paragraph logsTitle = new Paragraph("Tour Logs").setFontSize(15).setBold().setMarginTop(15);
             document.add(logsTitle);
             createLogsParagraphs(tour.getTourLogs(), document);
@@ -303,6 +306,10 @@ public class PdfService {
 
                 p.add(new Text("Difficulty:\n").setFontSize(10).setItalic());
                 p.add(new Text(String.valueOf(log.getDifficulty().toString())));
+
+                p.add(new Text("\n"));
+                p.add(new Text("Rating:\n").setFontSize(10).setItalic());
+                p.add(new Text(log.getRating() + "/5"));
                 document.add(p);
             }
         } else {
@@ -368,11 +375,12 @@ public class PdfService {
                 .setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f)
                 .setBorder(Border.NO_BORDER));
         //Distance
-        table.addCell(new Cell().add(new Paragraph("Distance"))
+        table.addCell(new Cell().add(new Paragraph("Distance in KM"))
                 .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                 .setBorder(Border.NO_BORDER));
         //if distance is 0 or less, display error
-        String  distance = (tour.getDistance() > 0) ? String.valueOf(tour.getDistance()) : "Error";
+        Double roundedDistance = (double) Math.round(tour.getDistance() * 100) / 100;
+        String  distance = (roundedDistance > 0) ? String.valueOf(roundedDistance) : "Error";
         table.addCell(new Cell().add(new Paragraph(distance))
                 .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                 .setBorder(Border.NO_BORDER));
@@ -395,7 +403,7 @@ public class PdfService {
                 .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                 .setBorder(Border.NO_BORDER));
         if (tour.getTourLogs().size() > 0) {
-            table.addCell(new Cell().add(new Paragraph(String.valueOf(calculateAverageRating(tour.getTourLogs()))))
+            table.addCell(new Cell().add(new Paragraph(String.valueOf(calculateAverageRating(tour.getTourLogs())) + "/5"))
                     .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                     .setBorder(Border.NO_BORDER));
         } else {
@@ -428,7 +436,66 @@ public class PdfService {
                     .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
                     .setBorder(Border.NO_BORDER));
         }
+        //Childfriendlyness Score
+        table.addCell(new Cell().add(new Paragraph("Childfriendly"))
+                .setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f)
+                .setBorder(Border.NO_BORDER));
+        if(tour.getChildFriendlinessScore() == 1){
+            table.addCell(new Cell().add(new Paragraph("Yes"))
+                    .setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f)
+                    .setBorder(Border.NO_BORDER));
+        } else if(tour.getChildFriendlinessScore() == 0){
+            table.addCell(new Cell().add(new Paragraph("No"))
+                    .setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f)
+                    .setBorder(Border.NO_BORDER));
+        }else {
+            table.addCell(new Cell().add(new Paragraph("Error"))
+                    .setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f)
+                    .setBorder(Border.NO_BORDER));
+        }
+
+        //popularity
+        table.addCell(new Cell().add(new Paragraph("Popularity"))
+                .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
+                .setBorder(Border.NO_BORDER));
+        String popularity = popularityScoreToString(tour.getPopularityScore());
+        table.addCell(new Cell().add(new Paragraph(popularity))
+                .setBackgroundColor(WebColors.getRGBColor("#FFE0AF"), 0.5f)
+                .setBorder(Border.NO_BORDER));
+
+        //ai summary
+        table.addCell(new Cell().add(new Paragraph("AI summary"))
+                .setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f)
+                .setBorder(Border.NO_BORDER));
+        if(tour.getAiSummary() == null){
+            table.addCell(new Cell().add(new Paragraph("No AI summary available"))
+                    .setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f)
+                    .setBorder(Border.NO_BORDER));
+        } else {
+            table.addCell(new Cell().add(new Paragraph(tour.getAiSummary()))
+                    .setBackgroundColor(WebColors.getRGBColor("#F2CC8F"), 0.5f)
+                    .setBorder(Border.NO_BORDER));
+        }
+
         document.add(table);
+    }
+
+    private String popularityScoreToString(int popularityScore) {
+        if (popularityScore == 0){
+            return "No Ratings available";
+        } else if (popularityScore == 1){
+            return "not popular 1/5";
+        } else if (popularityScore == 2){
+            return "somewhat popular 2/5";
+        } else if (popularityScore == 3){
+            return "popular 3/5";
+        } else if (popularityScore == 4){
+            return "very popular 4/5";
+        } else if (popularityScore== 5){
+            return "extremely popular 5/5";
+        } else {
+            return "(error!)";
+        }
     }
 
     protected String durationToString(Duration duration) {

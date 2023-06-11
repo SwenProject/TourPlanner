@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,7 +34,7 @@ class PdfServiceTest{
         tour1.setDescription("Eine super TourEine super Tour Eine super Tour Eine super Tour Eine super Tour Eine super Tour Eine super Tour Eine super Tour Eine super Tour");
         tour1.setDistance(300.);
         tour1.setPathToMapImage("./src/test/resources/com/tourplanner/services/testMapImages/testMapImage1.jpeg");
-        tour1.setPathToMapImage(null);
+       // tour1.setPathToMapImage(null);
         tour1.setDuration(Duration.ofHours(2));
         tour1.setTransportType(TransportType.CAR);
 
@@ -69,6 +70,8 @@ class PdfServiceTest{
         tours.add(tour1);
         tours.add(tour2);
     }
+
+
 
     @Test
     @DisplayName("Create PDF summary of multiple tours")
@@ -184,5 +187,19 @@ class PdfServiceTest{
             Files.deleteIfExists(tempDir);
         }
     }
+
+    @Test
+    @DisplayName("Create PDF summary of one tour in PDFs folder")
+    void testCreateBothInPDFSDir() {
+        //arrange
+        Path filePath_summary = Paths.get(".\\src\\main\\resources\\com\\tourplanner\\Pdfs", "test-pdf-summary.pdf");
+        Path filePath_single = Paths.get(".\\src\\main\\resources\\com\\tourplanner\\Pdfs", "test-pdf-single.pdf");
+
+        tour1.setPopularityScore(2);
+        //act
+        pdf_service.createPdfSummary(tours, filePath_summary.toString());
+        pdf_service.createPdfSingleTour(tour1, filePath_single.toString());
+    }
+
 
 }
