@@ -91,8 +91,8 @@
                                     <Label styleClass="no-description-text" text="no description"/>
                                 </VBox>
                             </StackPane>
-                            <StackPane styleClass="aiDescription" minWidth="350" alignment="BOTTOM_RIGHT">
-                                <TextArea fx:id="aiSummary" wrapText="true" editable="false"/>
+                            <StackPane styleClass="aiDescription" minWidth="350" alignment="BOTTOM_RIGHT" VBox.vgrow="ALWAYS" maxHeight="Infinity">
+                                <TextArea fx:id="aiSummary" wrapText="true" editable="false" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
                                 <VBox styleClass="aiGeneratorButtonContainer" maxWidth="35" maxHeight="35">
                                     <Button styleClass="aiGeneratorButton" onAction="#onGenerateAiSummary" fx:id="generateAiSummaryButton"/>
                                 </VBox>

@@ -1,15 +1,17 @@
 <img src="docs/logo.png" width="500" alt="Logo">
 
-#### Tour Planner - A JavaFX application for planning tours
+#### Tour Planner - A JavaFX application for planning tours, with AI!
 
 This app allows users to **create and manage tours**. It features a **UI built with JavaFX** and the **MVVM architecture**.
 Routes are calculated using the **MapQuest API** and persistence is managed with **Hibernate** and the **JPA**.
 **itext7** is used to generate PDF reports. Tours can be imported and exported as JSON files using **Jackson**.
 
+A summary of the tour and it's comments can be automatically generated using OpenAI's **GPT-3**.
+
 > ### Notice
 > The real world applications of this project are very limited.
 > It was created as a university project to learn about the technologies used. Please view this as more of a
-> showcase on how UIs can be designed in JavaFX.
+> showcase on how UIs can be designed in JavaFX. It also demonstrates the use of large language models like GPT-3 for summarizing user comments.
 
 ## Table of Contents
 - [Features](#features)
@@ -29,6 +31,7 @@ Routes are calculated using the **MapQuest API** and persistence is managed with
 - Generate PDF reports
 - Export tours as JSON files
 - Import  tours from JSON files
+- Generate a summary of the tour and it's comments using GPT-3
 
 ## Dependencies
 - JavaFX
@@ -37,6 +40,7 @@ Routes are calculated using the **MapQuest API** and persistence is managed with
 - itext7
 - Jackson
 - MapQuest API
+- OpenAI API
 - JUnit
 - Mockito
 - Log4j
@@ -46,9 +50,10 @@ Routes are calculated using the **MapQuest API** and persistence is managed with
 1. Clone the repository
 2. Rename `template_config.properties` to `config.properties`
 3. Get a [MapQuest API key](https://developer.mapquest.com/documentation/) and add it to `config.properties`
-4. Create a postgres database and add the connection information to `config.properties`
+4. Get an [OpenAI API key](https://platform.openai.com/docs/api-reference) and add it to `config.properties`
+5. Create a postgres database and add the connection information to `config.properties`
 (there is no need to create any tables as hibernate does this automatically at startup)
-5. Start the application
+6. Start the application
 
 ## Configuration
 The application can be configured by editing the `config.properties` file.
@@ -64,6 +69,10 @@ MapQuest API configuration:
 - `mapApi.imageEndpoint` - The endpoint for the map image API (default is mapQuest static map v5 API)
 - `mapApi.key` - The API key for the MapQuest API
 
+OpenAI API configuration:
+- `openAi.model` - The model to use for the OpenAI API (default is `gpt-3.5-turbo`)
+- `openAi.key` - The API key for the OpenAI API
+
 Tour export configuration:
 - `tourExport.fileExtension` - The file extension for exported tours (default is `.json`)
 
@@ -71,6 +80,9 @@ Logging:
 - `logging.level` - The logging level (default is `INFO`)
 
 ## Screenshots
+*Loading screen*  
+<img src="docs/loading-screen.png" alt="Loading screen">  
+
 *Tourplanner with no tours*  
 <img src="docs/no-tours.png" alt="Tourplanner with no tours">  
 
@@ -92,11 +104,17 @@ Logging:
 *Delete confirmation*  
 <img src="docs/tour-delete.png" width="500" alt="Delete confirmation">  
 
+*AI summary*  
+<img src="docs/ai-summary.png" width="500" alt="AI summary">
+
 *Export tours*  
 <img src="docs/export-tours.png" width="500" alt="Export tours">  
 
 *Advanced search*  
 <img src="docs/advanced-search.png" width="500" alt="Advanced search">  
+
+*PDF summary*  
+<img src="docs/summarize-report.png" width="400" alt="Tour in PDF report">
 
 *Tour in PDF report*  
 <img src="docs/pdf-tour.png" width="400" alt="Tour in PDF report"> 
@@ -131,7 +149,7 @@ This object provides the controllers with functions like `createNewTour()` and `
 It also talks to the repository for persistence and uses several services for calculating different tour values.
 
 ### Repository
-The repository uses hibernate to persist and update the tour objects.
+The repository uses hibernate to persist tour objects.
 It uses the Jakarta Persistence API so the OR-mapper can be changed from hibernate to something else easily.
 
 ### Persistence
