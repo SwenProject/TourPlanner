@@ -16,8 +16,10 @@ import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.awt.Desktop;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 public class NewImportExportController {
@@ -168,6 +170,14 @@ public class NewImportExportController {
             logger.info("File selected. Exporting tours to pdf.");
             String filePath = selectedFile.getAbsolutePath();
             this.pdfService.createPdfSummary(tourLogic.getAllToursList(), filePath);
+
+            //open pdf file with default pdf viewer
+            try {
+                logger.info("Opening pdf file with default pdf viewer.");
+                Desktop.getDesktop().open(new File(filePath));
+            } catch (IOException e) {
+                logger.error("Error opening pdf file with default pdf viewer.", e);
+            }
         }
     }
 }

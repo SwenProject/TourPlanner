@@ -9,6 +9,10 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -19,7 +23,9 @@ import javafx.stage.StageStyle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 public class TourInfoController {
@@ -446,6 +452,14 @@ public class TourInfoController {
             logger.info("File selected. Exporting tours to pdf.");
             String filePath = selectedFile.getAbsolutePath();
             this.pdfService.createPdfSingleTour(tourLogic.getSelectedTourProperty().get(), filePath);
+
+            //open pdf file with default pdf viewer
+            try {
+                logger.info("Opening pdf file with default pdf viewer.");
+                Desktop.getDesktop().open(new File(filePath));
+            } catch (IOException e) {
+                logger.error("Error opening pdf file with default pdf viewer.", e);
+            }
         }
     }
 
